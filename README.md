@@ -1,5 +1,5 @@
 # LocalAlias Bash Script
-This script works in parallel with the following lines that I have added to my bashrc file:
+This script works in parallel with the following lines that I have added to my `~/.bashrc` file:
 
 ``` bash
 source localAlias
@@ -19,7 +19,7 @@ Essentially, what it does is provide me with the ability to setup aliases that a
 
 ### Screenshot Walk-Through
 
-Normally, when we enter an invalid command in a bash terminal, we are greeted with an error message and a suggestion for what commands we could have meant instead. The snippet above (placed in my bashrc file) reroutes this "invalid" command to the `LocalAlias` function instead. Here's how creating a local-alias looks.
+Normally, when we enter an invalid command in a bash terminal, we are greeted with an error message and a suggestion for what commands we could have meant instead. The snippet above (placed in my `~/.bashrc` file) reroutes this "invalid" command to the `LocalAlias` function instead. Here's how creating a local-alias looks:
 
 ![Create Alias](img/create.png "Create Alias")
 
@@ -27,12 +27,12 @@ Normally, when we enter an invalid command in a bash terminal, we are greeted wi
 
 ![Create Alias #3](img/create3.png "Create Alias #3")
 
-This alias will then be stored in the current directory (the /home/bryan/ directory in this case) in the .localaliases file. If we were to look inside that file, this is what we would find:
+This alias will then be stored in the current directory (the `/home/bryan/` directory in this case) in a hidden file named `.localaliases`. If we were to look inside the `.localaliases` file, this is what we would find:
 ```
 Test='echo "This is a TEST!!!"'
 ```
 
-If I now run the `Test` command, it is redirected to the `LocalAlias` function once again. This time, however, the function reads the newly created entry in the .localaliases file, and runs the command that is associated with `Test`, like so:
+If I now run the `Test` command, it is redirected to the `LocalAlias` function once again. This time, however, the function reads the newly created entry in the `.localaliases` file and runs the command that is associated with `Test`, like so:
 
 ![final](img/final.png)
 
