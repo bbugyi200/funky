@@ -10,6 +10,20 @@ source /home/bryan/Dropbox/dotfiles/.globrc
 SEP="="
 LOCALALIAS_FILE="./.lshrc"
 
+read -d '' awkScript <<-'EOF'
+BEGIN { 
+    printf "set -- %s\\n", args
+}
+$0 ~ my_func " ()" {flag=1; next}
+/^}$/{flag=0} 
+{
+    if (flag) {
+        gsub(/  [ ]*/, "")
+        print $0
+    }
+}
+EOF
+
 
 eval set -- $(getopt -o "da:ef:pr:x:" -l "debug,alias:,edit,function:,print,remove:,execute:" -- "$@")
 
@@ -96,6 +110,34 @@ add_alias() {
     exit 0
 }
 
+add_function () {
+    if [[ ! -s $LOCALALIAS_FILE ]]; then
+        touch $LOCALALIAS_FILE
+        printf "$ARG () {}\n\n" > $LOCALALIAS_FILE
+    else
+        sed -i "1 i\\$ARG () {}\n" $LOCALALIAS_FILE
+    fi
+    vim -c "/$ARG () {\zs}\ze" -c 'normal n' +startinsert $LOCALALIAS_FILE
+}
+
+la_print () {
+    if [[ -f $LOCALALIAS_FILE ]]; then
+        if [[ -n "$1" ]]; then
+            ARG=$1; shift
+            if func_exists; then
+                sed -n "/$ARG ()/,/^$/p" $LOCALALIAS_FILE | pygmentize -l zsh
+            else
+                cat $LOCALALIAS_FILE | grep $ARG$SEP | pygmentize -l zsh
+            fi
+        else
+            pygmentize -l zsh $LOCALALIAS_FILE
+        fi
+    else
+        echo "$LOCALALIAS_FILE does not exist!"
+        exit 1
+    fi
+}
+
 
 case $action in
     'alias' )
@@ -103,27 +145,12 @@ case $action in
         add_alias;;
     'function' )
         remove
-        sed -i "1 i\\$ARG () {}\n" $LOCALALIAS_FILE
-        vim -c "/$ARG () {\zs}\ze" -c 'normal n' +startinsert $LOCALALIAS_FILE
-        exit 0;;
+        add_function;;
     'remove' )
-        remove;;
+        remove
+        la_print;;
     'print' )
-        if [[ -f $LOCALALIAS_FILE ]]; then
-            if [[ -n "$1" ]]; then
-                ARG=$1; shift
-                if func_exists; then
-                    sed -n "/$ARG ()/,/^$/p" $LOCALALIAS_FILE | pygmentize -l zsh
-                else
-                    cat $LOCALALIAS_FILE | grep $ARG$SEP | pygmentize -l zsh
-                fi
-            else
-                pygmentize -l zsh $LOCALALIAS_FILE
-            fi
-        else
-            echo "$LOCALALIAS_FILE does not exist!"
-            exit 1
-        fi;;
+        la_print "$@";;
     'edit' )
         if [[ -n "$1" ]]; then
             ARG=$1; shift
@@ -143,16 +170,19 @@ case $action in
             /bin/zsh -c "$CMD $@"
             exit 0
         elif func_exists; then
-            printf "The command '$ARG' is defined locally in $LOCALALIAS_FILE as a function, but $(basename $0) is only equipped to handle aliases!"
+            /bin/zsh -c "$(awk -v my_func=$ARG -v args="$@" "$awkScript" $LOCALALIAS_FILE)"
         else
-            printf "Create a new local alias for $ARG? (y/n): "
+            printf "Create a new local (a)lias/(f)unction for $ARG?: "
             read -n 1 CHOICE
             echo
 
-            if [ "$CHOICE" != "y" ]; then
+            if [ "$CHOICE" == "a" ]; then
+                add_alias
+            elif [ "$CHOICE" == "f" ]; then
+                add_function
+            else
                 exit 1
             fi
 
-            add_alias
         fi;;
 esac
