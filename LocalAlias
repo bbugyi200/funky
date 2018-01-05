@@ -30,30 +30,30 @@ eval set -- $(getopt -o "da:ef:pr:x:" -l "debug,alias:,edit,function:,print,remo
 action='print'
 while [[ -n "$1" ]]; do
     case $1 in
-        '-d' | '--debug' )
+        -d|--debug )
             PS4='$LINENO: '
             set -x;;
-        '-x' | '--execute' )
+        -x|--execute )
             action='execute'
             shift
             WORD="$1";;
-        '-e' | '--edit' )
+        -e|--edit )
             action='edit';;
-        '-f' | '--function' )
+        -f|--function )
             action='function'
             shift
             WORD="$1";;
-        '-p' | '--print' )
+        -p|--print )
             action="print";;
-        '-a' | '--alias' )
+        -a|--alias )
             action='alias'
             shift
             WORD="$1";;
-        '-r' | '--remove' )
+        -r|--remove )
             action='remove'
             shift
             WORD="$1";;
-        '--' )
+        -- )
             shift
             break;;
     esac
