@@ -4,7 +4,7 @@
 # can be used to customize shell commands locally.
 
 shopt -s expand_aliases
-source /home/bryan/Dropbox/dotfiles/.globrc
+source /home/bryan/Dropbox/dotfiles/extras/globrc
 
 
 SEP="="
@@ -36,23 +36,23 @@ while [[ -n "$1" ]]; do
         '-x' | '--execute' )
             action='execute'
             shift
-            ARG="$1";;
+            WORD="$1";;
         '-e' | '--edit' )
             action='edit';;
         '-f' | '--function' )
             action='function'
             shift
-            ARG="$1";;
+            WORD="$1";;
         '-p' | '--print' )
             action="print";;
         '-a' | '--alias' )
             action='alias'
             shift
-            ARG="$1";;
+            WORD="$1";;
         '-r' | '--remove' )
             action='remove'
             shift
-            ARG="$1";;
+            WORD="$1";;
         '--' )
             shift
             break;;
@@ -63,7 +63,7 @@ done
 
 func_exists() {
     if [[ -f $LOCALALIAS_FILE ]]; then
-        FUNC_EXISTS=$(cat $LOCALALIAS_FILE | grep -E "$ARG[ ]?\\(\\)")
+        FUNC_EXISTS=$(cat $LOCALALIAS_FILE | grep -E "$WORD[ ]?\\(\\)")
     fi
 
     if [[ -n "$FUNC_EXISTS" ]]; then
@@ -75,14 +75,14 @@ func_exists() {
 
 remove() {
     if func_exists; then
-        sed -i "/$ARG ()/,/^$/d" $LOCALALIAS_FILE
+        sed -i "/$WORD ()/,/^$/d" $LOCALALIAS_FILE
     else
-        sed -i "/$ARG$SEP/d" $LOCALALIAS_FILE
+        sed -i "/$WORD$SEP/d" $LOCALALIAS_FILE
     fi
 }
 
 add_alias() {
-    printf "$ARG$SEP''\033[1D" 
+    printf "$WORD$SEP''\033[1D" 
     IFS=
     read -n 1 C
     while [[ "$C" != "" ]]; do
@@ -102,32 +102,32 @@ add_alias() {
             Q='"'
         fi
 
-        printf "$ARG$SEP$Q$CMD$Q\033[1D" 
+        printf "$WORD$SEP$Q$CMD$Q\033[1D" 
         read -n 1 C
     done
 
-    printf "alias $ARG$SEP$Q$CMD$Q\n" >> $LOCALALIAS_FILE
+    printf "alias $WORD$SEP$Q$CMD$Q\n" >> $LOCALALIAS_FILE
     exit 0
 }
 
 add_function () {
     if [[ ! -s $LOCALALIAS_FILE ]]; then
         touch $LOCALALIAS_FILE
-        printf "$ARG () {}\n\n" > $LOCALALIAS_FILE
+        printf "$WORD () {}\n\n" > $LOCALALIAS_FILE
     else
-        sed -i "1 i\\$ARG () {}\n" $LOCALALIAS_FILE
+        sed -i "1 i\\$WORD () {}\n" $LOCALALIAS_FILE
     fi
-    vim -c "/$ARG () {\zs}\ze" -c 'normal n' +startinsert $LOCALALIAS_FILE
+    vim -c "/$WORD () {\zs}\ze" -c 'normal n' +startinsert $LOCALALIAS_FILE
 }
 
 la_print () {
     if [[ -f $LOCALALIAS_FILE ]]; then
         if [[ -n "$1" ]]; then
-            ARG=$1; shift
+            WORD=$1; shift
             if func_exists; then
-                sed -n "/$ARG ()/,/^$/p" $LOCALALIAS_FILE | pygmentize -l zsh
+                sed -n "/$WORD ()/,/^$/p" $LOCALALIAS_FILE | pygmentize -l zsh
             else
-                cat $LOCALALIAS_FILE | grep $ARG$SEP | pygmentize -l zsh
+                cat $LOCALALIAS_FILE | grep $WORD$SEP | pygmentize -l zsh
             fi
         else
             pygmentize -l zsh $LOCALALIAS_FILE
@@ -153,26 +153,25 @@ case $action in
         la_print "$@";;
     'edit' )
         if [[ -n "$1" ]]; then
-            ARG=$1; shift
+            WORD=$1; shift
             if func_exists; then
-                vim -c "/$ARG ()" -c "normal nj^" $LOCALALIAS_FILE
+                vim -c "/$WORD ()" -c "normal nj^" $LOCALALIAS_FILE
             else
-                vim -c "/$ARG=['\"]\zs.\ze" -c "normal n" $LOCALALIAS_FILE
+                vim -c "/$WORD=['\"]\zs.\ze" -c "normal n" $LOCALALIAS_FILE
             fi
         else
             vim $LOCALALIAS_FILE
         fi;;
     'execute' )
-        DEF=$(grep -s "alias $ARG$SEP" "$LOCALALIAS_FILE")
-        CMD=${DEF/"alias $ARG$SEP"}; CMD=${CMD/#[\"\']}; CMD=${CMD/%[\"\']}
+        DEF=$(grep -s "alias $WORD$SEP" "$LOCALALIAS_FILE")
+        CMD=${DEF/"alias $WORD$SEP"}; CMD=${CMD/#[\"\']}; CMD=${CMD/%[\"\']}
 
         if [ -n "$CMD" ]; then
             /bin/zsh -c "$CMD $@"
-            exit 0
         elif func_exists; then
-            /bin/zsh -c "$(awk -v my_func=$ARG -v args="$@" "$awkScript" $LOCALALIAS_FILE)"
+            /bin/zsh -c "$(awk -v my_func=$WORD -v args="$@" "$awkScript" $LOCALALIAS_FILE)"
         else
-            printf "Create a new local (a)lias/(f)unction for $ARG?: "
+            printf "Create a new local (a)lias/(f)unction for $WORD?: "
             read -n 1 CHOICE
             echo
 
