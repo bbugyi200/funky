@@ -74,9 +74,9 @@ func_exists() {
 
 remove() {
     if func_exists; then
-        sed -i "/$WORD ()/,/^$/d" $LOCALALIAS_FILE
+        sed -i "/$WORD ()/,/^$/d" $LOCALALIAS_FILE 2> /dev/null
     else
-        sed -i "/$WORD=/d" $LOCALALIAS_FILE
+        sed -i "/$WORD=/d" $LOCALALIAS_FILE 2> /dev/null
     fi
 }
 
@@ -111,7 +111,6 @@ add_alias() {
 
 add_function () {
     if [[ ! -s $LOCALALIAS_FILE ]]; then
-        touch $LOCALALIAS_FILE
         printf "$WORD () {}\n\n" > $LOCALALIAS_FILE
     else
         sed -i "1 i\\$WORD () {}\n" $LOCALALIAS_FILE
