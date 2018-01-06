@@ -26,30 +26,30 @@ EOF
 
 eval set -- $(getopt -o "da:ef:pr:x:" -l "debug,alias:,edit,function:,print,remove:,execute:" -- "$@")
 
-action='print'
+option='print'
 while [[ -n "$1" ]]; do
     case $1 in
         -d|--debug )
             PS4='$LINENO: '
             set -x;;
         -x|--execute )
-            action='execute'
+            option='execute'
             shift
             WORD="$1";;
         -e|--edit )
-            action='edit';;
+            option='edit';;
         -f|--function )
-            action='function'
+            option='function'
             shift
             WORD="$1";;
         -p|--print )
-            action="print";;
+            option="print";;
         -a|--alias )
-            action='alias'
+            option='alias'
             shift
             WORD="$1";;
         -r|--remove )
-            action='remove'
+            option='remove'
             shift
             WORD="$1";;
         -- )
@@ -137,7 +137,7 @@ la_print () {
 }
 
 
-case $action in
+case $option in
     'alias' )
         remove
         add_alias;;
