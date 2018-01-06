@@ -1,13 +1,12 @@
 #!/bin/bash
 
-# Allows me to have a .localaliases file in any directory that I want which
-# can be used to customize shell commands locally.
-
-shopt -s expand_aliases
-source /home/bryan/Dropbox/dotfiles/extras/globrc
-
-
-SEP="="
+################################################################################
+# LocalAlias                                                                   #
+#                                                                              #
+# Allows you to create and use aliases and functions that are local to the     #
+# directory that they were created in.                                         #
+################################################################################
+    
 LOCALALIAS_FILE="./.lshrc"
 
 read -d '' awkScript <<-'EOF'
@@ -77,12 +76,12 @@ remove() {
     if func_exists; then
         sed -i "/$WORD ()/,/^$/d" $LOCALALIAS_FILE
     else
-        sed -i "/$WORD$SEP/d" $LOCALALIAS_FILE
+        sed -i "/$WORD=/d" $LOCALALIAS_FILE
     fi
 }
 
 add_alias() {
-    printf "$WORD$SEP''\033[1D" 
+    printf "$WORD=''\033[1D" 
     IFS=
     read -n 1 C
     while [[ "$C" != "" ]]; do
@@ -102,11 +101,11 @@ add_alias() {
             Q='"'
         fi
 
-        printf "$WORD$SEP$Q$CMD$Q\033[1D" 
+        printf "$WORD=$Q$CMD$Q\033[1D" 
         read -n 1 C
     done
 
-    printf "alias $WORD$SEP$Q$CMD$Q\n" >> $LOCALALIAS_FILE
+    printf "alias $WORD=$Q$CMD$Q\n" >> $LOCALALIAS_FILE
     exit 0
 }
 
@@ -127,7 +126,7 @@ la_print () {
             if func_exists; then
                 sed -n "/$WORD ()/,/^$/p" $LOCALALIAS_FILE | pygmentize -l zsh
             else
-                cat $LOCALALIAS_FILE | grep $WORD$SEP | pygmentize -l zsh
+                cat $LOCALALIAS_FILE | grep $WORD= | pygmentize -l zsh
             fi
         else
             pygmentize -l zsh $LOCALALIAS_FILE
@@ -163,8 +162,8 @@ case $action in
             vim $LOCALALIAS_FILE
         fi;;
     'execute' )
-        DEF=$(grep -s "alias $WORD$SEP" "$LOCALALIAS_FILE")
-        CMD=${DEF/"alias $WORD$SEP"}; CMD=${CMD/#[\"\']}; CMD=${CMD/%[\"\']}
+        DEF=$(grep -s "alias $WORD=" "$LOCALALIAS_FILE")
+        CMD=${DEF/"alias $WORD="}; CMD=${CMD/#[\"\']}; CMD=${CMD/%[\"\']}
 
         if [ -n "$CMD" ]; then
             /bin/zsh -c "$CMD $@"
