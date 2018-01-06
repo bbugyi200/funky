@@ -5,7 +5,7 @@ I use this script to setup aliases and/or functions that are local to a particul
 
 # Integration with ZSH
 
-The above example doesn't seem to useful at first glance. When integrated into ZSH, however, it becomes pretty powerful. Placing the below function (`command_not_found_handler`) in your `zshrc` file will override the shell's default behavior for handling invalid commands. Instead of displaying an error message when you type in a bad command, the shell will now attempt to evaluate the command using LocalAlias.
+The above example doesn't seem to useful at first. When integrated into ZSH, however, it becomes pretty powerful. Placing the below function (`command_not_found_handler`) in your `zshrc` file will override the shell's default behavior for handling invalid commands. Instead of displaying an error message when you type in a bad command, the shell will now attempt to evaluate the command using LocalAlias.
 
 ``` bash
 command_not_found_handler() {
