@@ -29,4 +29,5 @@ Command-line options for `LocalAlias`:
 -e [word] | --edit [word]           Edit .lshrc. If [word] is provided, the cursor will start on [word]'s' definition.
 -x &lt;word> | --execute &lt;word>        Execute the alias/function defined for &lt;word> if one exists. Otherwise, prompt user to add &lt;word> as an alias/function.
 -p [word] | --print [word]          Prints the either the contents of .lshrc or (if [word] is provided) just the definition for [word]. This option is the default.
+-d | --debug                        Enable debug mode.
 </pre>
