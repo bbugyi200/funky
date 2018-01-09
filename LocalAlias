@@ -125,10 +125,10 @@ la_print () {
             if func_exists; then
                 sed -n "/$WORD ()/,/^$/p" $LOCALALIAS_FILE | pygmentize -l zsh
             else
-                cat $LOCALALIAS_FILE | grep $WORD= | pygmentize -l zsh
+                cat $LOCALALIAS_FILE | grep "alias $WORD.*=" | sort | pygmentize -l zsh
             fi
         else
-            pygmentize -l zsh $LOCALALIAS_FILE
+            pygmentize -l zsh $LOCALALIAS_FILE | sort
         fi
     else
         echo "$LOCALALIAS_FILE does not exist!"
