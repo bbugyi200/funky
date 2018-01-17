@@ -128,7 +128,7 @@ la_print () {
                 cat $LOCALALIAS_FILE | grep "alias $WORD.*=" | sort | pygmentize -l zsh
             fi
         else
-            pygmentize -l zsh $LOCALALIAS_FILE | sort
+            pygmentize -l zsh $LOCALALIAS_FILE
         fi
     else
         echo "$LOCALALIAS_FILE does not exist!"
