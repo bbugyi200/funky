@@ -125,7 +125,7 @@ add_function () {
 la_print () {
     if [[ -f $LOCALALIAS_FILE ]]; then
         if [ "$verbose" = true ]; then
-            echo "===== Local Aliases ====="
+            printf "========== Local Aliases ==========\n"
         fi
 
         if [[ -n "$1" ]]; then
