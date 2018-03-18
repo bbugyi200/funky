@@ -24,7 +24,7 @@ $0 ~ my_func " ()" {flag=1; next}
 EOF
 
 
-eval set -- $(getopt -o "da:ef:pvcr:x:" -l "debug,alias:,edit,function:,print,verbose,color,remove:,execute:" -- "$@")
+eval set -- $(getopt -o "da:ef:pr:x:" -l "debug,alias:,edit,function:,print,remove:,execute:" -- "$@")
 
 option='print'
 while [[ -n "$1" ]]; do
