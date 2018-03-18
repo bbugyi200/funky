@@ -24,7 +24,7 @@ $0 ~ my_func " ()" {flag=1; next}
 EOF
 
 
-eval set -- $(getopt -o "da:ef:pr:x:" -l "debug,alias:,edit,function:,print,remove:,execute:" -- "$@")
+eval set -- $(getopt -o "da:ef:pvcr:x:" -l "debug,alias:,edit,function:,print,verbose,color,remove:,execute:" -- "$@")
 
 option='print'
 while [[ -n "$1" ]]; do
@@ -44,6 +44,10 @@ while [[ -n "$1" ]]; do
             WORD="$1";;
         -p|--print )
             option="print";;
+        -v|--verbose )
+            verbose=true;;
+        -c|--color )
+            color=true;;
         -a|--alias )
             option='alias'
             shift
@@ -120,15 +124,29 @@ add_function () {
 
 la_print () {
     if [[ -f $LOCALALIAS_FILE ]]; then
+        if [ "$verbose" = true ]; then
+            echo "===== Local Aliases ====="
+        fi
+
         if [[ -n "$1" ]]; then
             WORD=$1; shift
             if func_exists; then
-                sed -n "/$WORD ()/,/^$/p" $LOCALALIAS_FILE
+                output=$(sed -n "/$WORD ()/,/^$/p" $LOCALALIAS_FILE)
             else
-                cat $LOCALALIAS_FILE | grep "alias $WORD.*=" | sort
+                output$(cat $LOCALALIAS_FILE | grep "alias $WORD.*=" | sort)
             fi
         else
-            cat $LOCALALIAS_FILE
+            output=$(cat $LOCALALIAS_FILE)
+        fi
+
+        if [[ "$color" = true ]]; then
+            echo "$output" | pygmentize -l sh
+        else
+            echo "$output"
+        fi
+
+        if [ "$verbose" = true ]; then
+            echo
         fi
     else
         echo "$LOCALALIAS_FILE does not exist!"
