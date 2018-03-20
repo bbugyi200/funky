@@ -125,7 +125,7 @@ add_function () {
 la_print () {
     if [[ -f $LOCALALIAS_FILE ]]; then
         if [ "$verbose" = true ]; then
-            printf "========== Local Aliases ==========\n"
+            printf "\n========== Local Aliases ==========\n"
         fi
 
         if [[ -n "$1" ]]; then
@@ -182,10 +182,23 @@ case $option in
         DEF=$(grep -s "alias $WORD=" "$LOCALALIAS_FILE")
         CMD=${DEF/"alias $WORD="}; CMD=${CMD/#[\"\']}; CMD=${CMD/%[\"\']}
 
+        if [[ "$CMD" == "@T "* ]]; then
+            CMD="${CMD:3}"
+            use_tmux=true
+        fi
+
         if [ -n "$CMD" ]; then
-            /bin/zsh -c "$CMD $@"
+            FINAL_CMD="$CMD $@"
         elif func_exists; then
-            /bin/zsh -c "$(awk -v my_func=$WORD -v args="$@" "$awkScript" $LOCALALIAS_FILE)"
+            FINAL_CMD="$(awk -v my_func=$WORD -v args="$@" "$awkScript" $LOCALALIAS_FILE)"
+        fi
+
+        if [[ -n "$FINAL_CMD" ]]; then
+            if [[ -n "$TMUX" ]] && [[ $use_tmux = true ]]; then
+                tmux send-keys "$FINAL_CMD" "Enter"
+            else
+                /bin/zsh -c "$FINAL_CMD"
+            fi
         else
             printf "Create a new local (a)lias/(f)unction for $WORD?: "
             read -n 1 CHOICE
