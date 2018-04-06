@@ -43,3 +43,7 @@ Command-line options for `LocalAlias`:
 -c | --color                        Colorize output (requires `pygmentize`)
 -d | --debug                        Enable debug mode.
 </pre>
+
+# Additional Features
+
+If you preface an alias with `@T ` (e.g. `alias cdd='@T cd /home/john/Downloads'`), the aliased command will be run using `tmux send-keys`. This is useful for aliasing commands that you need to run in the current shell (the `cd` command being a good example). Obviously, you will need to have tmux installed and be running inside a tmux session for this to work.
