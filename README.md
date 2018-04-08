@@ -13,7 +13,7 @@ A better way to make use of this script is described in the [Integration with ZS
 
 # Installation Notes
 
-Installing LocalAlias is as simple as copying the script to a directory that is on your systems `PATH`. An ideal location for unix systems would be `/usr/local/bin`.
+Installing LocalAlias is as simple as copying the script to a directory that is on your system's `PATH`. An ideal location for unix systems would be `/usr/local/bin`.
 
 ### Dependencies
 
@@ -46,4 +46,5 @@ Command-line options for `LocalAlias`:
 
 # Additional Features
 
+### Tmux Integration
 If you preface an alias with `@T ` (e.g. `alias cdd='@T cd /home/john/Downloads'`), the aliased command will be run using `tmux send-keys`. This is useful for aliasing commands that you need to run in the current shell (the `cd` command being a good example). Obviously, you will need to have tmux installed and be running inside a tmux session for this to work.
