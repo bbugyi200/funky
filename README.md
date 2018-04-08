@@ -5,7 +5,7 @@ NOTE: I have aliased `LocalAlias` to `la`.
 ![Demonstration](img/demo.gif "Demonstration")
 
 # LocalAlias Bash Script
-I use this script to setup aliases and/or functions that are local to a particular directory. Local aliases are stored in a hidden file named `.lshrc` in the current directory. One way to use this script is manually. For example, you could run `LocalAlias` -a' to add an alias and then `LocalAlias -x` to execute that alias, like so:
+I use this script to setup aliases and/or functions that are local to a particular directory. Local aliases are stored in a hidden file named `.lshrc` in the current directory. One way to use this script is manually. For example, you could run `LocalAlias -a` to add an alias and then `LocalAlias -x` to execute that alias, like so:
 
 ![Create Alias](img/trial.png "Create Alias")
 
