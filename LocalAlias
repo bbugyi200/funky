@@ -133,7 +133,7 @@ la_print () {
             if func_exists; then
                 output=$(sed -n "/$WORD ()/,/^$/p" $LOCALALIAS_FILE)
             else
-                output$(cat $LOCALALIAS_FILE | grep "alias $WORD.*=" | sort)
+                output=$(cat $LOCALALIAS_FILE | grep "alias $WORD.*=" | sort)
             fi
         else
             output=$(cat $LOCALALIAS_FILE)
