@@ -38,6 +38,7 @@ def init_logger(*, debug=False):
         fh.setFormatter(formatter)
         fh.setLevel(logging.DEBUG)
         root.addHandler(fh)
+        root.debug('Debug mode enabled.')
 
 
 def _getFormatter(*, verbose=False):

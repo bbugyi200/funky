@@ -11,16 +11,30 @@ import sys
 import localalias
 from localalias import commands
 from localalias.utils import log
+from localalias.utils.log import logger
 
-_LALIAS_METAVAR = 'Local_Alias_Name'
+_LALIAS_METAVAR = 'LocalAliasName'
 
 
 def main(argv=None):
-    if argv is None:
-        argv = sys.argv[1:]
-    args = _parse_args(argv)
-    log.init_logger(debug=args.debug)
-    _run(args)
+    try:
+        logger.debug('Starting localalias.')
+        if argv is None:
+            argv = sys.argv[1:]
+        parser = _get_argparser()
+        args = parser.parse_args(argv)
+        log.init_logger(debug=args.debug)
+        _validate_args(args)
+        _run(args)
+    except ArgumentError as e:
+        logger.error('%s\n', str(e))
+        parser.print_usage()
+    except RuntimeError as e:
+        logger.error(str(e))
+        sys.exit(1)
+    except Exception as e:
+        logger.exception('{}: {}'.format(type(e).__name__, str(e)))
+        raise
 
 
 def _run(args):
@@ -31,11 +45,11 @@ def _run(args):
     pass
 
 
-def _parse_args(argv):
+def _get_argparser():
     """Get command-line arguments.
 
     Returns:
-        argparse.Namespace object.
+        argparse.ArgumentParser object.
     """
     parser = argparse.ArgumentParser(prog='localalias', description=localalias.__doc__)
     parser.add_argument('lalias', nargs='?', default=None, metavar=_LALIAS_METAVAR,
@@ -60,7 +74,7 @@ def _parse_args(argv):
             const=Action.EXECUTE, help='Execute an existing local alias/function.')
     action.set_defaults(action=Action.EXECUTE)
 
-    return _validate_args(parser.parse_args(argv))
+    return parser
 
 
 class Action(enum.Enum):
@@ -92,5 +106,9 @@ def _validate_args(args):
             assert args.lalias is not None
         return args
     except AssertionError as e:
-        msg = 'Must specify a {} when using the {} command.'
-        raise ValueError(msg.format(_LALIAS_METAVAR, Action.opt_map(args.action)))
+        msg = 'Must also provide {} when using the {} option.'
+        raise ArgumentError(msg.format(_LALIAS_METAVAR, Action.opt_map(args.action)))
+
+
+class ArgumentError(ValueError):
+    """Raised when the command-line arguments fail validation."""
