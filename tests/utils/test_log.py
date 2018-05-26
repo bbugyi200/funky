@@ -10,22 +10,15 @@ import pytest
 import localalias.utils.log as log
 
 
-@pytest.mark.parametrize('debug,HandlerTypes', [
-    (False, logging.StreamHandler),
-    (True, (logging.StreamHandler, logging.FileHandler))
-])
-def test_init_logger(debug,HandlerTypes):
-    """Tests that logger handlers are initialized properly."""
-    logger = mock.Mock()
-    logger.handlers = []
-    logger.addHandler = lambda h: logger.handlers.append(h)
-    log.init_logger(logger, debug=debug)
-    for handler in logger.handlers:
-        assert isinstance(handler, HandlerTypes)
+@pytest.mark.parametrize('debug',[False, True])
+def test_init_logger(debug):
+    """Tests that loggers are initialized properly."""
+    log.init_logger(debug=debug)
+    assert log.logger.isEnabledFor(logging.DEBUG) == debug
 
 
 def test_logger():
-    log.init_logger(log.logger, debug=True)
+    log.init_logger(debug=True)
     log.logger.debug('TEST')
     logfile = '/home/{}/.local/share/localalias/debug.log'.format(getpass.getuser())
     assert os.path.isfile(logfile)

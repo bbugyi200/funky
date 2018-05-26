@@ -14,20 +14,22 @@ import localalias.utils.xdg as xdg
 logger = logging.getLogger("localalias")
 
 
-def init_logger(logger, *, debug=False):
+def init_logger(*, debug=False):
     """Initializes the main logger.
 
     Args:
         logger: logging.Logger object.
         debug: True if debugging is enabled.
     """
-    logger.setLevel(logging.DEBUG)
+    root = logging.getLogger()
+    level = logging.DEBUG if debug else logging.INFO
+    root.setLevel(level)
 
     sh = logging.StreamHandler()
     formatter = _getFormatter()
     sh.setFormatter(formatter)
-    sh.setLevel(logging.DEBUG if debug else logging.INFO)
-    logger.addHandler(sh)
+    sh.setLevel(level)
+    root.addHandler(sh)
 
     if debug:
         logfile_path = '{}/debug.log'.format(xdg.getdir('data'))
@@ -35,7 +37,7 @@ def init_logger(logger, *, debug=False):
         formatter = _getFormatter(verbose=True)
         fh.setFormatter(formatter)
         fh.setLevel(logging.DEBUG)
-        logger.addHandler(fh)
+        root.addHandler(fh)
 
 
 def _getFormatter(*, verbose=False):
