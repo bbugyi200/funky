@@ -1,10 +1,7 @@
 """Loggers and utilities related to logging.
 
-===== Public Interface =====
 Attributes:
     logger: main logging.Logger object.
-
-Functions: init_logger
 """
 
 import logging
@@ -15,12 +12,7 @@ logger = logging.getLogger("localalias")
 
 
 def init_logger(*, debug=False):
-    """Initializes the main logger.
-
-    Args:
-        logger: logging.Logger object.
-        debug: True if debugging is enabled.
-    """
+    """Initializes the main logger."""
     root = logging.getLogger()
     level = logging.DEBUG if debug else logging.INFO
     root.setLevel(level)
@@ -42,7 +34,7 @@ def init_logger(*, debug=False):
 
 
 def _getFormatter(*, verbose=False):
-    """ Get log formatter.
+    """Get log formatter.
 
     Args:
         verbose: True if a more verbose log format is desired.

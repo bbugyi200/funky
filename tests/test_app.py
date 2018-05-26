@@ -9,11 +9,11 @@ from localalias import app
 
 
 @pytest.mark.parametrize('argv,action,lalias,debug', [
-    (['-a', 'new_alias', '--debug'], app.Actions.ADD, 'new_alias', True),
-    (['--show'], app.Actions.SHOW, None, False),
-    (['--remove', 'new_alias', '-d'], app.Actions.REMOVE, 'new_alias', True)
+    (['-a', 'new_alias', '--debug'], app._Actions.ADD, 'new_alias', True),
+    (['--show'], app._Actions.SHOW, None, False),
+    (['--remove', 'new_alias', '-d'], app._Actions.REMOVE, 'new_alias', True)
 ])
-@mock.patch('localalias.app.Actions.cmd_map')
+@mock.patch('localalias.app._Actions.cmd_map')
 def test_main(cmd_map,argv,action,lalias,debug):
     """Tests that arguments are parsed correctly."""
     cmd_map.return_value = (mock.Mock(), tuple(), dict())
