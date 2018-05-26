@@ -1,4 +1,11 @@
-"""Loggers and utilities related to logging."""
+"""Loggers and utilities related to logging.
+
+===== Public Interface =====
+Attributes:
+    logger: main logging.Logger object.
+
+Functions: init_logger
+"""
 
 import logging
 
