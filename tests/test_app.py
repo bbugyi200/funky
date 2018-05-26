@@ -9,19 +9,21 @@ from localalias import app
 
 
 @pytest.mark.parametrize('argv,action,lalias,debug', [
-    (['-a', 'new_alias', '--debug'], app.Action.ADD, 'new_alias', True),
-    (['--show'], app.Action.SHOW, None, False),
-    (['--remove', 'new_alias', '-d'], app.Action.REMOVE, 'new_alias', True)
+    (['-a', 'new_alias', '--debug'], app.Actions.ADD, 'new_alias', True),
+    (['--show'], app.Actions.SHOW, None, False),
+    (['--remove', 'new_alias', '-d'], app.Actions.REMOVE, 'new_alias', True)
 ])
-@mock.patch('localalias.app._run')
-def test_main(run,argv,action,lalias,debug):
+@mock.patch('localalias.app.Actions.cmd_map')
+def test_main(cmd_map,argv,action,lalias,debug):
     """Tests that arguments are parsed correctly."""
+    cmd_map.return_value = (mock.Mock(), tuple(), dict())
     app.main(argv)
-    run.assert_called_once_with(argparse.Namespace(lalias=lalias, action=action, debug=debug))
+    cmd_map.assert_called_once_with(argparse.Namespace(lalias=lalias, action=action, debug=debug))
 
 
 @pytest.mark.parametrize('argv', [['-a'], ['-x'], ['-r']])
-def test_main_failure(argv):
+@mock.patch('localalias.utils.log.logger')
+def test_main_failure(logger,argv):
     """Tests that bad arguments raise a ValueError."""
-    with pytest.raises(ValueError):
-        app.main(argv)
+    app.main(argv)
+    logger.error.called_once()

@@ -19,13 +19,16 @@ _LALIAS_METAVAR = 'LocalAliasName'
 def main(argv=None):
     try:
         logger.debug('Starting localalias.')
+
         if argv is None:
             argv = sys.argv[1:]
+
         parser = _get_argparser()
         args = parser.parse_args(argv)
         log.init_logger(debug=args.debug)
         _validate_args(args)
-        _run(args)
+        cmd, pargs, kwargs = Actions.cmd_map(args)
+        cmd(*pargs, **kwargs)
     except ArgumentError as e:
         logger.error('%s\n', str(e))
         parser.print_usage()
@@ -35,14 +38,6 @@ def main(argv=None):
     except Exception as e:
         logger.exception('{}: {}'.format(type(e).__name__, str(e)))
         raise
-
-
-def _run(args):
-    """Runs localalias.
-
-    Decides on what commands to run based on @args.
-    """
-    pass
 
 
 def _get_argparser():
@@ -56,28 +51,28 @@ def _get_argparser():
             help='Name of the local alias/function.')
     parser.add_argument('-d', '--debug', action='store_true', help="Enable debug mode.")
     action = parser.add_mutually_exclusive_group()
-    action.add_argument('-a', Action.opt_map(Action.ADD), dest='action', action='store_const',
-            const=Action.ADD,
+    action.add_argument('-a', Actions.opt_map(Actions.ADD), dest='action', action='store_const',
+            const=Actions.ADD,
             help='Add a new local alias/function.')
-    action.add_argument('-r', Action.opt_map(Action.REMOVE), dest='action', action='store_const',
-            const=Action.REMOVE,
+    action.add_argument('-r', Actions.opt_map(Actions.REMOVE), dest='action', action='store_const',
+            const=Actions.REMOVE,
             help='Remove an existing local alias/function.')
-    action.add_argument('-e', Action.opt_map(Action.EDIT), dest='action', action='store_const',
-            const=Action.EDIT,
+    action.add_argument('-e', Actions.opt_map(Actions.EDIT), dest='action', action='store_const',
+            const=Actions.EDIT,
             help='Edit local .lshrc file manually.')
-    action.add_argument('-s', Action.opt_map(Action.SHOW), dest='action', action='store_const',
-            const=Action.SHOW,
+    action.add_argument('-s', Actions.opt_map(Actions.SHOW), dest='action', action='store_const',
+            const=Actions.SHOW,
             help='Show an existing local alias/function. If this command is given without an '
             'argument, all local aliases/functions in scope (with respect to the current '
             'directory) are displayed.')
-    action.add_argument('-x', Action.opt_map(Action.EXECUTE), dest='action', action='store_const',
-            const=Action.EXECUTE, help='Execute an existing local alias/function.')
-    action.set_defaults(action=Action.EXECUTE)
+    action.add_argument('-x', Actions.opt_map(Actions.EXECUTE), dest='action', action='store_const',
+            const=Actions.EXECUTE, help='Execute an existing local alias/function.')
+    action.set_defaults(action=Actions.EXECUTE)
 
     return parser
 
 
-class Action(enum.Enum):
+class Actions(enum.Enum):
     """Action Flags"""
     ADD = enum.auto()
     REMOVE = enum.auto()
@@ -86,12 +81,35 @@ class Action(enum.Enum):
     SHOW = enum.auto()
 
     @classmethod
-    def opt_map(cls, key):
+    def opt_map(cls, action):
         return {cls.ADD: '--add',
                 cls.REMOVE: '--remove',
                 cls.EDIT: '--edit',
                 cls.EXECUTE: '--execute',
-                cls.SHOW: '--show'}[key]
+                cls.SHOW: '--show'}[action]
+
+    @classmethod
+    def cmd_map(cls, action, args):
+        """Given @action, returns corresponding command function and parameters.
+
+        This function aims to insulate the rest of this module from the command API.
+
+        Returns:
+            3-Tuple consisting of (<callable command>, <positional args>, <keyword args>).
+        """
+        cmd = {cls.ADD: commands.add,
+               cls.REMOVE: commands.remove,
+               cls.EDIT: commands.edit,
+               cls.EXECUTE: commands.execute,
+               cls.SHOW: commands.show}[action]
+
+        pargs = [args.action, args.lalias]
+
+        kwargs = {}
+        if action == cls.SHOW:
+            kwargs['color'] = args.color
+
+        return cmd, pargs, kwargs
 
 
 def _validate_args(args):
@@ -102,12 +120,12 @@ def _validate_args(args):
         a ValueError exception is thrown.
     """
     try:
-        if args.action in [Action.ADD, Action.REMOVE, Action.EXECUTE]:
+        if args.action in [Actions.ADD, Actions.REMOVE, Actions.EXECUTE]:
             assert args.lalias is not None
         return args
     except AssertionError as e:
         msg = 'Must also provide {} when using the {} option.'
-        raise ArgumentError(msg.format(_LALIAS_METAVAR, Action.opt_map(args.action)))
+        raise ArgumentError(msg.format(_LALIAS_METAVAR, Actions.opt_map(args.action)))
 
 
 class ArgumentError(ValueError):
