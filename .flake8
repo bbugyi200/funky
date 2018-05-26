@@ -1,0 +1,5 @@
+# vim: set ft=cfg:
+
+[flake8]
+per-file-ignores =
+  test_*.py: F401
