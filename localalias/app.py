@@ -13,8 +13,6 @@ _LALIAS_METAVAR = 'LocalAliasName'
 
 def main(argv=None):
     try:
-        log.logger.debug('Starting localalias.')
-
         if argv is None:
             argv = sys.argv[1:]
 
@@ -22,8 +20,11 @@ def main(argv=None):
         args = parser.parse_args(argv)
         log.init_logger(debug=args.debug)
         _validate_args(args)
-        cmd, pargs, kwargs = _Actions.cmd_map(args)
-        cmd(*pargs, **kwargs)
+
+        log.logger.debug('Starting localalias.')
+
+        action_command = _Actions.cmd_map(args)
+        action_command()
     except ValueError as e:
         log.logger.error('%s\n', str(e))
         parser.print_usage()
@@ -45,6 +46,7 @@ def _get_argparser():
     parser.add_argument('lalias', nargs='?', default=None, metavar=_LALIAS_METAVAR,
             help='Name of the local alias/function.')
     parser.add_argument('-d', '--debug', action='store_true', help="Enable debug mode.")
+    parser.add_argument('-c', '--color', action='store_true', help="Colorize output.")
     action = parser.add_mutually_exclusive_group()
     action.add_argument('-a', _Actions.opt_map(_Actions.ADD), dest='action', action='store_const',
             const=_Actions.ADD,
@@ -54,14 +56,16 @@ def _get_argparser():
             help='Remove an existing local alias/function.')
     action.add_argument('-e', _Actions.opt_map(_Actions.EDIT), dest='action', action='store_const',
             const=_Actions.EDIT,
-            help='Edit local .lshrc file manually.')
+            help='Edit an existing local alias/function. If this command is given without '
+                 'an argument, the local .lshrc file will be opened using your default editor.')
     action.add_argument('-s', _Actions.opt_map(_Actions.SHOW), dest='action', action='store_const',
             const=_Actions.SHOW,
             help='Show an existing local alias/function. If this command is given without an '
-            'argument, all local aliases/functions in scope (with respect to the current '
-            'directory) are displayed.')
+                 'argument, all local aliases/functions in scope (with respect to the current '
+                 'directory) are displayed.')
     action.add_argument('-x', _Actions.opt_map(_Actions.EXECUTE), dest='action', action='store_const',
-            const=_Actions.EXECUTE, help='Execute an existing local alias/function.')
+            const=_Actions.EXECUTE, help='Execute an existing local alias/function. This is the '
+                                          'default action.')
     action.set_defaults(action=_Actions.EXECUTE)
 
     return parser
@@ -84,27 +88,27 @@ class _Actions(enum.Enum):
                 cls.SHOW: '--show'}[action]
 
     @classmethod
-    def cmd_map(cls, action, args):
-        """Given @action, returns corresponding command function and parameters.
+    def cmd_map(cls, args):
+        """Map from actions to commands.
 
         This function aims to insulate the rest of this module from the command API.
 
         Returns:
-            3-Tuple consisting of (<callable command>, <positional args>, <keyword args>).
+            Callable command.
         """
-        cmd = {cls.ADD: commands.add,
-               cls.REMOVE: commands.remove,
-               cls.EDIT: commands.edit,
-               cls.EXECUTE: commands.execute,
-               cls.SHOW: commands.show}[action]
+        cmd_builder = {cls.ADD: commands.Add,
+                       cls.REMOVE: commands.Remove,
+                       cls.EDIT: commands.Edit,
+                       cls.EXECUTE: commands.Execute,
+                       cls.SHOW: commands.Show}[args.action]
 
-        pargs = [args.action, args.lalias]
+        pargs = [args.lalias]
 
         kwargs = {}
-        if action == cls.SHOW:
+        if args.action == cls.SHOW:
             kwargs['color'] = args.color
 
-        return cmd, pargs, kwargs
+        return cmd_builder(*pargs, **kwargs)
 
 
 def _validate_args(args):
@@ -119,5 +123,5 @@ def _validate_args(args):
             assert args.lalias is not None
         return args
     except AssertionError as e:
-        msg = 'Must also provide {} when using the {} option.'
+        msg = 'You must also provide {} when using the {} option.'
         raise ValueError(msg.format(_LALIAS_METAVAR, _Actions.opt_map(args.action)))

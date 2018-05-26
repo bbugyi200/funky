@@ -16,9 +16,9 @@ from localalias import app
 @mock.patch('localalias.app._Actions.cmd_map')
 def test_main(cmd_map,argv,action,lalias,debug):
     """Tests that arguments are parsed correctly."""
-    cmd_map.return_value = (mock.Mock(), tuple(), dict())
+    cmd_map.return_value = mock.Mock()
     app.main(argv)
-    cmd_map.assert_called_once_with(argparse.Namespace(lalias=lalias, action=action, debug=debug))
+    cmd_map.assert_called_once_with(argparse.Namespace(lalias=lalias, color=False, action=action, debug=debug))
 
 
 @pytest.mark.parametrize('argv', [['-a'], ['-x'], ['-r']])

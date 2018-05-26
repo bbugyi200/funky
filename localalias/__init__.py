@@ -1,1 +1,1 @@
-"""A light-weight shell wrapper that facilitates the creation of localalized aliases and functions."""
+"""A light-weight shell wrapper that facilitates the creation, management, and execution of localalized aliases and functions."""
