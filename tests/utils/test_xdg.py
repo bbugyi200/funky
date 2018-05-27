@@ -8,6 +8,8 @@ import pytest
 
 import localalias.utils.xdg as xdg
 
+pytestmark = pytest.mark.usefixtures("debug_mode")
+
 user = getpass.getuser()
 
 

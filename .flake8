@@ -3,3 +3,4 @@
 [flake8]
 per-file-ignores =
   test_*.py: F401
+  conftest.py: F401

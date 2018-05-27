@@ -7,6 +7,8 @@ import pytest
 
 from localalias import app
 
+pytestmark = pytest.mark.usefixtures("debug_mode")
+
 
 @pytest.mark.parametrize('argv,action,lalias,debug', [
     (['-a', 'new_alias', '--debug'], app._Actions.ADD, 'new_alias', True),
