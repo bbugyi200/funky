@@ -1,16 +1,11 @@
-"""Tests command functionality."""
-
 import collections
 import json
 import os
 import tempfile
-import unittest.mock as mock
 
 import pytest
 
 from localalias import commands
-
-pytestmark = pytest.mark.usefixtures("debug_mode")
 
 
 @pytest.fixture
@@ -23,6 +18,7 @@ def cleandir():
 alias_dict = {'multiline': 'echo "Hello"\necho "world!"',
               'run': 'python main.py',
               'T': 'pytest test_main.py'}
+
 show_expected = {'run': 'run() {{ {0}; }}\n'.format(alias_dict['run']),
                  'T': 'T() {{ {0}; }}\n'.format(alias_dict['T']),
                  'multiline': 'multiline() {{\n\t{0}\n}}\n'.format(alias_dict['multiline'].replace('\n', '\n\t'))}
@@ -48,24 +44,3 @@ def cmd_args(request):
     Args = collections.namedtuple('Args', ['alias', 'color', 'expected'])
     args = Args(request.param[0], request.param[1], request.param[2])
     return args
-
-
-@pytest.fixture
-def show_cmd(cmd_args):
-    """Builds and returns show command."""
-    show_cmd = commands.Show(cmd_args.alias, color=cmd_args.color)
-    show_cmd.expected = cmd_args.expected
-    return show_cmd
-
-
-def test_show_command(capsys, cleandir, local_db, show_cmd):
-    """Tests show command."""
-    show_cmd()
-    captured = capsys.readouterr()
-    assert captured.out == show_cmd.expected
-
-
-def test_show_command_failure(cleandir, show_cmd):
-    """Tests show command fails properly when no local alias database exists."""
-    with pytest.raises(RuntimeError):
-        show_cmd()
