@@ -81,6 +81,7 @@ class _Actions(enum.Enum):
 
     @classmethod
     def opt_map(cls, action):
+        """Map from actions to long options."""
         return {cls.ADD: '--add',
                 cls.REMOVE: '--remove',
                 cls.EDIT: '--edit',
@@ -89,26 +90,14 @@ class _Actions(enum.Enum):
 
     @classmethod
     def cmd_map(cls, args):
-        """Map from actions to commands.
-
-        This function aims to insulate the rest of this module from the command API.
-
-        Returns:
-            Callable command.
-        """
+        """Map from actions to commands."""
         cmd_builder = {cls.ADD: commands.Add,
                        cls.REMOVE: commands.Remove,
                        cls.EDIT: commands.Edit,
                        cls.EXECUTE: commands.Execute,
                        cls.SHOW: commands.Show}[args.action]
 
-        pargs = [args.lalias]
-
-        kwargs = {}
-        if args.action == cls.SHOW:
-            kwargs['color'] = args.color
-
-        return cmd_builder(*pargs, **kwargs)
+        return cmd_builder(args.lalias, color=args.color)
 
 
 def _validate_args(args):

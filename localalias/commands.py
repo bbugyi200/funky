@@ -8,9 +8,11 @@ class Command(metaclass=ABCMeta):
 
     Args:
         lalias (str): local alias name.
+        color: if True, colorize output.
     """
-    def __init__(self, lalias):
+    def __init__(self, lalias, *, color):
         self.lalias = lalias
+        self.color = color
 
     @abstractmethod
     def __call__(self):
@@ -18,38 +20,25 @@ class Command(metaclass=ABCMeta):
 
 
 class Add(Command):
-    """Add command."""
     def __call__(self):
         pass
 
 
 class Remove(Command):
-    """Remove command."""
     def __call__(self):
         pass
 
 
 class Edit(Command):
-    """Edit command."""
     def __call__(self):
         pass
 
 
 class Execute(Command):
-    """Execute command."""
     def __call__(self):
         pass
 
 
 class Show(Command):
-    """Show command.
-
-    Args:
-        color: if True, colorize output.
-    """
-    def __init__(self, lalias, *, color=False):
-        super().__init__(lalias)
-        self.color = color
-
     def __call__(self):
         pass
