@@ -18,21 +18,22 @@ def main(argv=None):
 
         parser = _get_argparser()
         args = parser.parse_args(argv)
-        log.init_logger(debug=args.debug)
-        _validate_args(args)
 
-        log.logger.debug('Starting localalias.')
+        log.init_logger(debug=args.debug)
+        log.app.debug('Starting localalias.')
+
+        _validate_args(args)
 
         action_command = _Actions.cmd_map(args)
         action_command()
     except ValueError as e:
-        log.logger.error('%s\n', str(e))
+        log.app.error('%s\n', str(e))
         parser.print_usage()
     except RuntimeError as e:
-        log.logger.error(str(e))
+        log.app.error(str(e))
         sys.exit(1)
     except Exception as e:
-        log.logger.exception('{}: {}'.format(type(e).__name__, str(e)))
+        log.app.exception('{}: {}'.format(type(e).__name__, str(e)))
         raise
 
 

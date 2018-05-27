@@ -14,12 +14,13 @@ import localalias.utils.log as log
 def test_init_logger(debug):
     """Tests that loggers are initialized properly."""
     log.init_logger(debug=debug)
-    assert log.logger.isEnabledFor(logging.DEBUG) == debug
+    assert log.app.isEnabledFor(logging.DEBUG) == debug
 
 
-def test_logger():
+def test_logfile():
+    """Tests that the debugging logfile is working correctly."""
     log.init_logger(debug=True)
-    log.logger.debug('TEST')
+    log.app.debug('TEST')
     logfile = '/home/{}/.local/share/localalias/debug.log'.format(getpass.getuser())
     assert os.path.isfile(logfile)
     with open(logfile, 'r') as f:

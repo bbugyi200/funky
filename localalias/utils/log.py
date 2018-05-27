@@ -1,14 +1,12 @@
-"""Loggers and utilities related to logging.
-
-Attributes:
-    logger: main logging.Logger object.
-"""
+"""Loggers and utilities related to logging."""
 
 import logging
 
 import localalias.utils.xdg as xdg
 
-logger = logging.getLogger("localalias")
+# The different loggers used.
+app = logging.getLogger("app")
+commands = logging.getLogger("commands")
 
 
 def init_logger(*, debug=False):
@@ -28,7 +26,7 @@ def init_logger(*, debug=False):
         fh = logging.FileHandler(logfile_path)
         formatter = _getFormatter(verbose=True)
         fh.setFormatter(formatter)
-        fh.setLevel(logging.DEBUG)
+        fh.setLevel(level)
         root.addHandler(fh)
         root.debug('Debug mode enabled.')
 
