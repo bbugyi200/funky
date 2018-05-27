@@ -18,7 +18,7 @@ class Command(metaclass=ABCMeta):
 
     @abstractmethod
     def __call__(self):
-        log.commands.debug('Running {} command...'.format(self.__class__.__name__))
+        log.logger.debug('Running {} command...'.format(self.__class__.__name__))
 
 
 class Add(Command):

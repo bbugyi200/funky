@@ -22,7 +22,7 @@ def test_main(cmd_map,argv,action,lalias,debug):
 
 
 @pytest.mark.parametrize('argv', [['-a'], ['-x'], ['-r']])
-@mock.patch('localalias.utils.log.app')
+@mock.patch('localalias.utils.log.logger')
 def test_main_failure(logger,argv):
     """Tests that bad arguments raise a ValueError."""
     app.main(argv)

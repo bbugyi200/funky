@@ -1,12 +1,14 @@
-"""Loggers and utilities related to logging."""
+"""Loggers and utilities related to logging.
+
+Attributes:
+    logger: main logging.Logger object.
+"""
 
 import logging
 
 import localalias.utils.xdg as xdg
 
-# The different loggers used.
-app = logging.getLogger("app")
-commands = logging.getLogger("commands")
+logger = logging.getLogger("localalias")
 
 
 def init_logger(*, debug=False):

@@ -20,20 +20,20 @@ def main(argv=None):
         args = parser.parse_args(argv)
 
         log.init_logger(debug=args.debug)
-        log.app.debug('Starting localalias.')
+        log.logger.debug('Starting localalias.')
 
         _validate_args(args)
 
         action_command = _Actions.cmd_map(args)
         action_command()
     except ValueError as e:
-        log.app.error('%s\n', str(e))
+        log.logger.error('%s\n', str(e))
         parser.print_usage()
     except RuntimeError as e:
-        log.app.error(str(e))
+        log.logger.error(str(e))
         sys.exit(1)
     except Exception as e:
-        log.app.exception('{}: {}'.format(type(e).__name__, str(e)))
+        log.logger.exception('{}: {}'.format(type(e).__name__, str(e)))
         raise
 
 
@@ -48,6 +48,7 @@ def _get_argparser():
             help='Name of the local alias/function.')
     parser.add_argument('-d', '--debug', action='store_true', help="Enable debug mode.")
     parser.add_argument('-c', '--color', action='store_true', help="Colorize output.")
+
     action = parser.add_mutually_exclusive_group()
     action.add_argument('-a', _Actions.opt_map(_Actions.ADD), dest='action', action='store_const',
             const=_Actions.ADD,
@@ -66,7 +67,7 @@ def _get_argparser():
                  'directory) are displayed.')
     action.add_argument('-x', _Actions.opt_map(_Actions.EXECUTE), dest='action', action='store_const',
             const=_Actions.EXECUTE, help='Execute an existing local alias/function. This is the '
-                                          'default action.')
+                                         'default action.')
     action.set_defaults(action=_Actions.EXECUTE)
 
     return parser
