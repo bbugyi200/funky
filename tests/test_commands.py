@@ -20,11 +20,17 @@ def cleandir():
     os.chdir(newpath)
 
 
+alias_dict = {'multiline': 'echo "Hello"\necho "world!"',
+              'run': 'python main.py',
+              'T': 'pytest test_main.py'}
+show_expected = {'run': 'run() {{ {0}; }}\n'.format(alias_dict['run']),
+                 'T': 'T() {{ {0}; }}\n'.format(alias_dict['T']),
+                 'multiline': 'multiline() {{\n\t{0}\n}}\n'.format(alias_dict['multiline'].replace('\n', '\n\t'))}
+
+
 @pytest.fixture
 def local_db():
     """Setup/teardown a local alias database."""
-    alias_dict = {'run': 'python main.py',
-                   'T': 'pytest test_main.py'}
     filename = commands.Command.LOCALALIAS_DB_FILENAME
     with open(filename, 'w') as f:
         json.dump(alias_dict, f)
@@ -33,9 +39,10 @@ def local_db():
 
 
 @pytest.fixture(params=[
-    ('run', False, 'run() {\n\tpython main.py\n}\n'),
-    (None, False, 'run() {\n\tpython main.py\n}\n\nT() {\n\tpytest test_main.py\n}\n')
-], ids=['run', 'None'])
+    ('run', False, show_expected['run']),
+    ('multiline', False, show_expected['multiline']),
+    (None, False, '{0}\n{1}\n{2}'.format(show_expected['T'], show_expected['multiline'], show_expected['run']))
+], ids=['run', 'multiline', 'None'])
 def cmd_args(request):
     """Returns a named tuple of command arguments and expected results."""
     Args = collections.namedtuple('Args', ['alias', 'color', 'expected'])

@@ -53,8 +53,11 @@ class Execute(Command):
 
 class Show(Command):
     def show_alias(self, alias):
-        alias_def = self.alias_dict[alias].replace('\n', '\t\n')
-        print('{}() {{\n\t{}\n}}'.format(alias, alias_def))
+        alias_cmd_string = self.alias_dict[alias]
+        if '\n' in alias_cmd_string:
+            print('{0}() {{\n\t{1}\n}}'.format(alias, alias_cmd_string.replace('\n', '\n\t')))
+        else:
+            print('{0}() {{ {1}; }}'.format(alias, alias_cmd_string))
 
     def __call__(self):
         super().__call__()
@@ -62,7 +65,7 @@ class Show(Command):
             raise RuntimeError('No local aliases are defined in the current directory.')
 
         if self.alias is None:
-            for i, alias in enumerate(self.alias_dict):
+            for i, alias in enumerate(sorted(self.alias_dict)):
                 self.show_alias(alias)
                 if i < len(self.alias_dict) - 1:
                     print()
