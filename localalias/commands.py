@@ -10,7 +10,7 @@ from localalias.utils import log
 
 
 class Command(metaclass=ABCMeta):
-    """Base command class.
+    """Abstract base command class.
 
     Args:
         alias (str): local alias name.

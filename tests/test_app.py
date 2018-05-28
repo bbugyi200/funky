@@ -27,6 +27,5 @@ def test_main(cmd_map,argv,action,lalias,debug):
 @mock.patch('localalias.utils.log.logger')
 def test_main_failure(logger,argv):
     """Tests that bad arguments raise a ValueError."""
-    with pytest.raises(ValueError):
-        app.main(argv)
+    assert app.main(argv) == 1
     logger.error.called_once()

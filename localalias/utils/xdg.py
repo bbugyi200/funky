@@ -2,19 +2,17 @@
 
 import errno
 import getpass
-import inspect
 import os
 
 _user = getpass.getuser()
 
 
-def getdir(userdir, stack=None):
+def getdir(userdir):
     """ Get XDG User Directory.
 
     Args:
         userdir (str): one of the four defined XDG user directories ('config', 'data', 'runtime',
             or 'cache').
-        stack (optional): stack object (see inspect module)
 
     Returns:
         Full user directory path, as specified by the XDG standard.
@@ -30,10 +28,7 @@ def getdir(userdir, stack=None):
                'runtime': _getter_factory('XDG_RUNTIME_DIR', '/run/user/1000/localalias'),
                'cache': _getter_factory('XDG_CACHE_HOME', '/home/{}/.cache/localalias')}
 
-    if stack is None:
-        stack = inspect.stack()
-
-    return getters[userdir](stack)
+    return getters[userdir]()
 
 
 def _getter_factory(envvar, dirfmt):
@@ -47,7 +42,7 @@ def _getter_factory(envvar, dirfmt):
     Returns:
         Function that retrieves the full path for the desired XDG user directory.
     """
-    def _getter(stack):
+    def _getter():
         if envvar in os.environ:
             xdg_dir = '{}/localalias'.format(os.environ[envvar])
         else:
