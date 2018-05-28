@@ -30,7 +30,10 @@ def fake_db(alias_dict):
     with open(filename, 'w') as f:
         json.dump(alias_dict, f)
     yield alias_dict
-    os.remove(filename)
+    try:
+        os.remove(filename)
+    except FileNotFoundError as e:
+        pass
 
 
 @pytest.fixture(params=[

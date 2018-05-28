@@ -6,6 +6,7 @@ import unittest.mock as mock
 import pytest
 
 from localalias import commands
+import shared
 
 
 @pytest.fixture
@@ -21,10 +22,6 @@ def test_add(edit_alias, cleandir, add_cmd, alias_dict):
     alias_cmd_string = alias_dict[add_cmd.alias]
     edit_alias.return_value = alias_cmd_string
     add_cmd()
-
-    # loads aliases from database file
-    with open(commands.Command.LOCALALIAS_DB_FILENAME, 'r') as f:
-        loaded_aliases = json.load(f)
-
+    loaded_aliases = shared.load_aliases()
     assert loaded_aliases == {add_cmd.alias: alias_cmd_string}
     assert len(loaded_aliases) == 1
