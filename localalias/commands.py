@@ -13,9 +13,12 @@ from localalias.utils import log
 class Command(metaclass=ABCMeta):
     """Abstract base command class.
 
+    To use a command, the corresponding command class should be used to build a command instance.
+    A command instance is a callable object.
+
     Args:
         alias (str): local alias name.
-        color (bool): if True, colorize output.
+        color (bool): if True, colorize output (if command produces output).
     """
     LOCALALIAS_DB_FILENAME = '.localalias.json'
 

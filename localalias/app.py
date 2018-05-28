@@ -1,4 +1,8 @@
-"""Initialize and run localalias."""
+"""Initialize and run localalias.
+
+Do not execute this file directly. Use __main__.py by executing this modules containing directory.
+In other words, use `python localalias`.
+"""
 
 import argparse
 import enum
