@@ -70,7 +70,7 @@ class Show(Command):
     def __call__(self):
         super().__call__()
         if not self.alias_dict:
-            raise errors.LocalAliasError('No local aliases are defined in the current directory.')
+            raise errors.AliasNotDefinedError()
 
         if self.alias and self.alias not in self.alias_dict:
             raise errors.AliasNotDefinedError(self.alias)

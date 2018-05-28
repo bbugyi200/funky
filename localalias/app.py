@@ -114,5 +114,5 @@ def _validate_args(args):
             assert args.lalias is not None
         return args
     except AssertionError as e:
-        msg = 'You must also provide a {} when using the {} option.'
-        raise errors.ArgumentError(msg.format(_LALIAS_METAVAR, _Actions.opt_map(args.action)))
+        msg_fmt = 'You must also provide a {} when using the {} option.'
+        raise errors.ArgumentError(msg_fmt.format(_LALIAS_METAVAR, _Actions.opt_map(args.action)))

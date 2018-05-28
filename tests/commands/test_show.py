@@ -49,5 +49,5 @@ def test_show_all(capsys, cleandir, show_expected, fake_db):
 
 def test_show_failure(cleandir, show_cmd):
     """Tests show command fails properly when no local alias database exists."""
-    with pytest.raises(errors.LocalAliasError):
+    with pytest.raises(errors.AliasNotDefinedError):
         show_cmd()
