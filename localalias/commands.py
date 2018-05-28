@@ -123,8 +123,8 @@ class Edit(Command):
             raise errors.AliasNotDefinedError(self.alias)
 
         if self.alias is None:
-            for alias in self.alias_dict:
-                self.alias_dict[alias] = self.edit_alias
+            for alias in sorted(self.alias_dict):
+                self.alias_dict[alias] = self.edit_alias(alias)
         else:
             self.alias_dict[self.alias] = self.edit_alias()
         self.commit()
