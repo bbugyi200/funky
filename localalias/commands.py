@@ -6,7 +6,6 @@ import os
 import subprocess as sp
 import tempfile
 
-from localalias.errors import LocalAliasError, AliasNotDefinedError
 from localalias.utils import log
 
 
@@ -64,10 +63,10 @@ class Show(Command):
     def __call__(self):
         super().__call__()
         if not self.alias_dict:
-            raise LocalAliasError('No local aliases are defined in the current directory.')
+            raise RuntimeError('No local aliases are defined in the current directory.')
 
         if self.alias and self.alias not in self.alias_dict:
-            raise AliasNotDefinedError(self.alias)
+            raise _AliasNotDefinedError(self.alias)
 
         if self.alias is None:
             self.show_all()
@@ -104,7 +103,7 @@ class Edit(Command):
     def __call__(self):
         super().__call__()
         if self.alias not in self.alias_dict:
-            raise AliasNotDefinedError(self.alias)
+            raise _AliasNotDefinedError(self.alias)
         self.alias_dict[self.alias] = self.edit_alias()
         self.commit()
 
@@ -113,7 +112,7 @@ class Remove(Show):
     def __call__(self):
         Command.__call__(self)
         if self.alias not in self.alias_dict:
-            raise AliasNotDefinedError(self.alias)
+            raise _AliasNotDefinedError(self.alias)
         self.alias_dict.pop(self.alias)
         self.commit()
 
@@ -128,3 +127,10 @@ class Add(Edit):
         Command.__call__(self)
         self.alias_dict[self.alias] = self.edit_alias()
         self.commit()
+
+
+class _AliasNotDefinedError(RuntimeError):
+    """Raised when an undefined alias is referenced in a mannor that is not allowed."""
+    def __init__(self, alias):
+        msg_fmt = 'Local alias "{}" is not defined in the current directory.'.format(alias)
+        super().__init__(msg_fmt.format(alias))

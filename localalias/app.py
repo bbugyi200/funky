@@ -6,7 +6,6 @@ import sys
 
 import localalias
 from localalias import commands
-from localalias.errors import LocalAliasError
 from localalias.utils import log
 
 _LALIAS_METAVAR = 'LocalAliasName'
@@ -31,7 +30,7 @@ def main(argv=None):
         log.logger.error('%s\n', str(e))
         parser.print_usage()
         raise
-    except LocalAliasError as e:
+    except RuntimeError as e:
         log.logger.error(str(e))
         raise
     except Exception as e:
