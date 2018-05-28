@@ -8,6 +8,8 @@ import pytest
 from localalias import commands
 import shared
 
+pytestmark = pytest.mark.usefixtures("debug_mode")
+
 
 @pytest.fixture
 def add_cmd(cmd_args):
