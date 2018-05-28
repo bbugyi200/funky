@@ -5,6 +5,7 @@ import json
 import os
 import subprocess as sp
 import tempfile
+import time
 
 from localalias import errors
 from localalias.utils import log
@@ -35,12 +36,13 @@ class Command(metaclass=ABCMeta):
 
     def commit(self):
         """Saves alias changes to local database."""
+        log.logger.debug('Committing changes to local database: {}'.format(self.LOCALALIAS_DB_FILENAME))
         with open(self.LOCALALIAS_DB_FILENAME, 'w') as f:
             json.dump(self.alias_dict, f)
 
     @abstractmethod
     def __call__(self):
-        log.logger.debug('Running {} command...'.format(self.__class__.__name__))
+        log.logger.debug('Running {} command.'.format(self.__class__.__name__))
 
 
 class Execute(Command):
@@ -54,6 +56,7 @@ class Execute(Command):
         if alias is None:
             alias = self.alias
 
+        log.logger.debug('Executing command string mapped to "{}" local alias.'.format(alias))
         sp.call(['zsh', '-c', self.alias_dict[alias]])
 
     def __call__(self):
@@ -73,13 +76,16 @@ class Show(Command):
             show_output = '{0}() {{ {1}; }}'.format(alias, alias_cmd_string)
 
         if self.color:
+            log.logger.debug('Showing colorized output.')
             ps = sp.Popen(['pygmentize', '-l', 'zsh'], stdin=sp.PIPE)
             ps.communicate(input=show_output.encode())
         else:
+            log.logger.debug('Showing normal output.')
             print(show_output)
 
     def show_all(self):
         """Prints all defined alias definitions to stdout."""
+        log.logger.debug('Running show command for all defined aliases.')
         for i, alias in enumerate(sorted(self.alias_dict)):
             self.show(alias)
             if i < len(self.alias_dict) - 1:
@@ -123,10 +129,16 @@ class Edit(Command):
 
         if 'EDITOR' in os.environ:
             editor = os.environ['EDITOR']
+            log.logger.debug('Editor set to $EDITOR: {}'.format(editor))
         else:
             editor = 'vim'
+            log.logger.debug('Editor falling back to default: {}'.format(editor))
 
-        sp.check_call([editor, tf.name])
+        editor_cmd_list = [editor, tf.name]
+        try:
+            sp.check_call(editor_cmd_list)
+        except sp.CalledProcessError as e:
+            raise errors.LocalAliasError('Failed to open editor using: {}'.format(editor_cmd_list))
 
         tf = open(tf.name, 'r')
         edited_alias_cmd_string = tf.read()
@@ -141,6 +153,7 @@ class Edit(Command):
             raise errors.AliasNotDefinedError(self.alias)
 
         if self.alias is None:
+            log.logger.debug('Running edit command for all defined aliases.')
             for alias in sorted(self.alias_dict):
                 self.alias_dict[alias] = self.edit_alias(alias)
         else:
@@ -159,11 +172,17 @@ class Remove(Show):
         if self.alias_dict:
             self.show_all()
         else:
+            log.logger.debug('Removing {}.'.format(self.LOCALALIAS_DB_FILENAME))
             os.remove(self.LOCALALIAS_DB_FILENAME)
 
 
 class Add(Edit):
     def __call__(self):
         Command.__call__(self)
+        if self.alias in self.alias_dict:
+            msg_fmt = '{} local alias is already defined. Running edit command.'
+            log.logger.info(msg_fmt.format(self.alias))
+            time.sleep(1)
+
         self.alias_dict[self.alias] = self.edit_alias()
         self.commit()
