@@ -76,10 +76,12 @@ class Show(Command):
 
 class Edit(Command):
     def edit_alias(self):
-        """Opens up alias definition in $EDITOR for editing.
+        """Opens up alias definition using temp file in $EDITOR for editing.
 
-        Uses alias defined at instance creation time. If the alias does not already exist, a
-        new alias is defined using the users saved changes as its initial definition.
+        Uses alias defined at instance creation time.
+
+        Returns (str):
+            Contents of temp file after $EDITOR closes.
         """
         tf = tempfile.NamedTemporaryFile(suffix='.tmp', mode='w', delete=False)
         if self.alias in self.alias_dict:
