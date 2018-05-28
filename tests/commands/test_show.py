@@ -35,7 +35,8 @@ def test_show(capsys, cleandir, fake_db, show_cmd):
     assert captured.out == show_cmd.expected
 
 
-def test_show_none(capsys, cleandir, show_expected, fake_db):
+def test_show_all(capsys, cleandir, show_expected, fake_db):
+    """Tests show command when no specific alias is provided."""
     show_cmd = commands.Show(None, color=False)
     show_cmd()
     expected = '{0}\n{1}\n{2}'.format(show_expected['T'],

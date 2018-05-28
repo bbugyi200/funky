@@ -29,10 +29,10 @@ def main(argv=None):
     except ValueError as e:
         log.logger.error('%s\n', str(e))
         parser.print_usage()
-        raise
+        return 1
     except RuntimeError as e:
         log.logger.error(str(e))
-        raise
+        return 1
     except Exception as e:
         log.logger.exception('{}: {}'.format(type(e).__name__, str(e)))
         raise
