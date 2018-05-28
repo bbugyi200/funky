@@ -111,7 +111,7 @@ def _validate_args(args):
         a ValueError exception is thrown.
     """
     try:
-        if args.action in [_Actions.ADD, _Actions.REMOVE, _Actions.EXECUTE]:
+        if args.action in [_Actions.ADD, _Actions.REMOVE, _Actions.EXECUTE, _Actions.EDIT]:
             assert args.lalias is not None
         return args
     except AssertionError as e:

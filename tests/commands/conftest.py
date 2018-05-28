@@ -36,8 +36,7 @@ def fake_db(alias_dict):
 @pytest.fixture(params=[
     ('run', False),
     ('multiline', False),
-    (None, False)
-], ids=['run', 'multiline', 'None'])
+], ids=['run', 'multiline'])
 def cmd_args(request):
     """Returns a named tuple of command arguments and expected results."""
     Args = collections.namedtuple('Args', ['alias', 'color'])

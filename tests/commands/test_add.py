@@ -18,9 +18,6 @@ def add_cmd(cmd_args):
 @mock.patch('localalias.commands.Edit.edit_alias')
 def test_add(edit_alias, cleandir, add_cmd, alias_dict):
     """Tests add command."""
-    if add_cmd.alias is None:
-        return
-
     alias_cmd_string = alias_dict[add_cmd.alias]
     edit_alias.return_value = alias_cmd_string
     add_cmd()

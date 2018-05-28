@@ -24,12 +24,7 @@ def show_expected(alias_dict):
 def show_cmd(cmd_args, show_expected):
     """Builds and returns show command."""
     cmd = commands.Show(cmd_args.alias, color=cmd_args.color)
-    if cmd_args.alias is None:
-        cmd.expected = '{0}\n{1}\n{2}'.format(show_expected['T'],
-                                              show_expected['multiline'],
-                                              show_expected['run'])
-    else:
-        cmd.expected = show_expected[cmd_args.alias]
+    cmd.expected = show_expected[cmd_args.alias]
     return cmd
 
 
@@ -38,6 +33,16 @@ def test_show(capsys, cleandir, fake_db, show_cmd):
     show_cmd()
     captured = capsys.readouterr()
     assert captured.out == show_cmd.expected
+
+
+def test_show_none(capsys, cleandir, show_expected, fake_db):
+    show_cmd = commands.Show(None, color=False)
+    show_cmd()
+    expected = '{0}\n{1}\n{2}'.format(show_expected['T'],
+                                      show_expected['multiline'],
+                                      show_expected['run'])
+    captured = capsys.readouterr()
+    assert captured.out == expected
 
 
 def test_show_failure(cleandir, show_cmd):
