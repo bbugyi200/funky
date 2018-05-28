@@ -49,9 +49,15 @@ class Show(Command):
         """Print alias and alias command definition to stdout."""
         alias_cmd_string = self.alias_dict[alias]
         if '\n' in alias_cmd_string:
-            print('{0}() {{\n\t{1}\n}}'.format(alias, alias_cmd_string.replace('\n', '\n\t')))
+            show_output = '{0}() {{\n\t{1}\n}}'.format(alias, alias_cmd_string.replace('\n', '\n\t'))
         else:
-            print('{0}() {{ {1}; }}'.format(alias, alias_cmd_string))
+            show_output = '{0}() {{ {1}; }}'.format(alias, alias_cmd_string)
+
+        if self.color:
+            ps = sp.Popen(['pygmentize', '-l', 'zsh'], stdin=sp.PIPE)
+            ps.communicate(input=show_output.encode())
+        else:
+            print(show_output)
 
     def show_all(self):
         """Prints all defined alias definitions to stdout."""
@@ -83,7 +89,7 @@ class Edit(Command):
         Returns (str):
             Contents of temp file after $EDITOR closes.
         """
-        tf = tempfile.NamedTemporaryFile(suffix='.tmp', mode='w', delete=False)
+        tf = tempfile.NamedTemporaryFile(suffix='.zsh', mode='w', delete=False)
         if self.alias in self.alias_dict:
             tf.write(self.alias_dict[self.alias])
         tf.close()

@@ -69,7 +69,7 @@ def _get_argparser():
     action.add_argument('-x', _Actions.opt_map(_Actions.EXECUTE), dest='action', action='store_const',
             const=_Actions.EXECUTE, help='Execute an existing local alias/function. This is the '
                                          'default action.')
-    action.set_defaults(action=_Actions.EXECUTE)
+    action.set_defaults(action=_Actions.SHOW)
 
     return parser
 
@@ -115,5 +115,5 @@ def _validate_args(args):
             assert args.lalias is not None
         return args
     except AssertionError as e:
-        msg = 'You must also provide {} when using the {} option.'
+        msg = 'You must also provide a {} when using the {} option.'
         raise ValueError(msg.format(_LALIAS_METAVAR, _Actions.opt_map(args.action)))
