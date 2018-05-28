@@ -6,6 +6,7 @@ import os
 import subprocess as sp
 import tempfile
 
+from localalias import errors
 from localalias.utils import log
 
 
@@ -69,10 +70,10 @@ class Show(Command):
     def __call__(self):
         super().__call__()
         if not self.alias_dict:
-            raise RuntimeError('No local aliases are defined in the current directory.')
+            raise errors.LocalAliasError('No local aliases are defined in the current directory.')
 
         if self.alias and self.alias not in self.alias_dict:
-            raise _AliasNotDefinedError(self.alias)
+            raise errors.AliasNotDefinedError(self.alias)
 
         if self.alias is None:
             self.show_all()
@@ -81,17 +82,25 @@ class Show(Command):
 
 
 class Edit(Command):
-    def edit_alias(self):
+    def edit_alias(self, alias=None):
         """Opens up alias definition using temp file in $EDITOR for editing.
 
-        Uses alias defined at instance creation time.
+        Args:
+            alias (optional): The alias to edit. If not given, this function uses the alias defined
+                at instance creation time.
 
         Returns (str):
             Contents of temp file after $EDITOR closes.
         """
-        tf = tempfile.NamedTemporaryFile(suffix='.zsh', mode='w', delete=False)
-        if self.alias in self.alias_dict:
-            tf.write(self.alias_dict[self.alias])
+        if alias is None:
+            alias = self.alias
+
+        tf = tempfile.NamedTemporaryFile(prefix='{}.'.format(alias),
+                                         suffix='.zsh',
+                                         mode='w',
+                                         delete=False)
+        if alias in self.alias_dict:
+            tf.write(self.alias_dict[alias])
         tf.close()
 
         if 'EDITOR' in os.environ:
@@ -110,9 +119,14 @@ class Edit(Command):
 
     def __call__(self):
         super().__call__()
-        if self.alias not in self.alias_dict:
-            raise _AliasNotDefinedError(self.alias)
-        self.alias_dict[self.alias] = self.edit_alias()
+        if self.alias and self.alias not in self.alias_dict:
+            raise errors.AliasNotDefinedError(self.alias)
+
+        if self.alias is None:
+            for alias in self.alias_dict:
+                self.alias_dict[alias] = self.edit_alias
+        else:
+            self.alias_dict[self.alias] = self.edit_alias()
         self.commit()
 
 
@@ -120,7 +134,7 @@ class Remove(Show):
     def __call__(self):
         Command.__call__(self)
         if self.alias not in self.alias_dict:
-            raise _AliasNotDefinedError(self.alias)
+            raise errors.AliasNotDefinedError(self.alias)
         self.alias_dict.pop(self.alias)
         self.commit()
 
@@ -135,10 +149,3 @@ class Add(Edit):
         Command.__call__(self)
         self.alias_dict[self.alias] = self.edit_alias()
         self.commit()
-
-
-class _AliasNotDefinedError(RuntimeError):
-    """Raised when an undefined alias is referenced in a mannor that is not allowed."""
-    def __init__(self, alias):
-        msg_fmt = 'Local alias "{}" is not defined in the current directory.'.format(alias)
-        super().__init__(msg_fmt.format(alias))

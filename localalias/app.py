@@ -6,6 +6,7 @@ import sys
 
 import localalias
 from localalias import commands
+from localalias import errors
 from localalias.utils import log
 
 _LALIAS_METAVAR = 'LocalAliasName'
@@ -26,11 +27,11 @@ def main(argv=None):
 
         action_command = _Actions.cmd_map(args)
         action_command()
-    except ValueError as e:
+    except errors.ArgumentError as e:
         log.logger.error('%s\n', str(e))
         parser.print_usage()
         return 1
-    except RuntimeError as e:
+    except errors.LocalAliasError as e:
         log.logger.error(str(e))
         return 1
     except Exception as e:
@@ -64,11 +65,9 @@ def _get_argparser():
     action.add_argument('-s', _Actions.opt_map(_Actions.SHOW), dest='action', action='store_const',
             const=_Actions.SHOW,
             help='Show an existing local alias/function. If this command is given without an '
-                 'argument, all local aliases/functions in scope (with respect to the current '
-                 'directory) are displayed.')
+                 'argument, all local aliases/functions in scope are displayed. (default action)')
     action.add_argument('-x', _Actions.opt_map(_Actions.EXECUTE), dest='action', action='store_const',
-            const=_Actions.EXECUTE, help='Execute an existing local alias/function. This is the '
-                                         'default action.')
+            const=_Actions.EXECUTE, help='Execute an existing local alias/function.')
     action.set_defaults(action=_Actions.SHOW)
 
     return parser
@@ -111,9 +110,9 @@ def _validate_args(args):
         a ValueError exception is thrown.
     """
     try:
-        if args.action in [_Actions.ADD, _Actions.REMOVE, _Actions.EXECUTE, _Actions.EDIT]:
+        if args.action in [_Actions.ADD, _Actions.REMOVE, _Actions.EXECUTE]:
             assert args.lalias is not None
         return args
     except AssertionError as e:
         msg = 'You must also provide a {} when using the {} option.'
-        raise ValueError(msg.format(_LALIAS_METAVAR, _Actions.opt_map(args.action)))
+        raise errors.ArgumentError(msg.format(_LALIAS_METAVAR, _Actions.opt_map(args.action)))

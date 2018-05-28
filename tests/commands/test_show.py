@@ -5,6 +5,7 @@ import unittest.mock as mock
 import pytest
 
 from localalias import commands
+from localalias import errors
 
 pytestmark = pytest.mark.usefixtures("debug_mode")
 
@@ -48,5 +49,5 @@ def test_show_all(capsys, cleandir, show_expected, fake_db):
 
 def test_show_failure(cleandir, show_cmd):
     """Tests show command fails properly when no local alias database exists."""
-    with pytest.raises(RuntimeError):
+    with pytest.raises(errors.LocalAliasError):
         show_cmd()
