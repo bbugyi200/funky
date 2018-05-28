@@ -10,20 +10,20 @@ from localalias import app
 pytestmark = pytest.mark.usefixtures("debug_mode")
 
 
-@pytest.mark.parametrize('argv,action,lalias,debug', [
-    (['-a', 'new_alias', '--debug'], app._Actions.ADD, 'new_alias', True),
-    (['--show'], app._Actions.SHOW, None, False),
-    (['--remove', 'new_alias', '-d'], app._Actions.REMOVE, 'new_alias', True)
+@pytest.mark.parametrize('argv,action,debug,lalias', [
+    (['-a', '--debug', 'new_alias'], app._Actions.ADD, True, 'new_alias'),
+    (['--show'], app._Actions.SHOW, False, None),
+    (['--remove', '-d', 'new_alias'], app._Actions.REMOVE, True, 'new_alias')
 ])
 @mock.patch('localalias.app._Actions.cmd_map')
-def test_main(cmd_map,argv,action,lalias,debug):
+def test_main(cmd_map,argv,action,debug,lalias):
     """Tests that arguments are parsed correctly."""
     cmd_map.return_value = mock.Mock()
     app.main(argv)
-    cmd_map.assert_called_once_with(argparse.Namespace(lalias=lalias, color=False, action=action, debug=debug))
+    cmd_map.assert_called_once_with(argparse.Namespace(lalias=lalias, args=[], color=False, action=action, debug=debug))
 
 
-@pytest.mark.parametrize('argv', [['-a'], ['-x'], ['-r']])
+@pytest.mark.parametrize('argv', [['-a'], ['-x']])
 @mock.patch('localalias.utils.log.logger')
 def test_main_failure(logger,argv):
     """Tests that bad arguments raise a ValueError."""

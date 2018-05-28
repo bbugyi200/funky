@@ -26,6 +26,7 @@ def main(argv=None):
 
         log.init_logger(debug=args.debug)
         log.logger.debug('Starting localalias.')
+        log.logger.debug('Command-line Arguments: {}'.format(args))
 
         _validate_args(args)
 
@@ -74,6 +75,11 @@ def _get_argparser():
             const=_Actions.EXECUTE, help='Execute an existing local alias/function.')
     action.set_defaults(action=_Actions.SHOW)
 
+    parser.add_argument('args', nargs=argparse.REMAINDER,
+            help='Captures variable number of command-line arguments meant for local alias. These '
+                 'arguments are only applicable when used with the {} '
+                 'option.'.format(_Actions.opt_map(_Actions.EXECUTE)))
+
     return parser
 
 
@@ -120,7 +126,7 @@ def _validate_args(args):
         a ValueError exception is thrown.
     """
     try:
-        if args.action in [_Actions.ADD, _Actions.REMOVE, _Actions.EXECUTE]:
+        if args.action in [_Actions.ADD, _Actions.EXECUTE]:
             assert args.lalias is not None
         return args
     except AssertionError as e:

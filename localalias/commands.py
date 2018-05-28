@@ -8,6 +8,7 @@ import tempfile
 import time
 
 from localalias import errors
+from localalias import utils
 from localalias.utils import log
 
 
@@ -21,7 +22,7 @@ class Command(metaclass=ABCMeta):
         alias (str): local alias name.
         color (bool): if True, colorize output (if command produces output).
     """
-    LOCALALIAS_DB_FILENAME = '.localalias.json'
+    LOCALALIAS_DB_FILENAME = '.la.json'
 
     def __init__(self, alias, *, color=False):
         self.alias = alias
@@ -164,9 +165,25 @@ class Edit(Command):
 class Remove(Show):
     def __call__(self):
         Command.__call__(self)
-        if self.alias not in self.alias_dict:
+        if self.alias and self.alias not in self.alias_dict:
             raise errors.AliasNotDefinedError(self.alias)
-        self.alias_dict.pop(self.alias)
+
+        if not self.alias_dict:
+            raise errors.AliasNotDefinedError()
+
+        if self.alias is None:
+            log.logger.debug('Prompting to destroy local alias database.')
+            prompt = 'Remove all local aliases defined in this directory? (y/n): '
+            y_or_n = utils.getch(prompt)
+            if y_or_n == 'y':
+                self.alias_dict = {}
+                print()
+                log.logger.info('Done. The local alias database has been removed.')
+            else:
+                return
+        else:
+            self.alias_dict.pop(self.alias)
+
         self.commit()
 
         if self.alias_dict:

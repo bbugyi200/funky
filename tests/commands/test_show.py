@@ -12,6 +12,7 @@ pytestmark = pytest.mark.usefixtures("debug_mode")
 
 @pytest.fixture
 def show_expected(alias_dict):
+    """Expected results for show command tests."""
     show_expected = {
         'run': 'run() {{ {0}; }}\n'.format(alias_dict['run']),
         'T': 'T() {{ {0}; }}\n'.format(alias_dict['T']),
