@@ -87,7 +87,10 @@ class _Actions(enum.Enum):
 
     @classmethod
     def opt_map(cls, action):
-        """Map from actions to long options."""
+        """Map from actions to long options.
+
+        Long options are used in error messages. This function prevents unnecessary duplication.
+        """
         return {cls.ADD: '--add',
                 cls.REMOVE: '--remove',
                 cls.EDIT: '--edit',
@@ -96,7 +99,10 @@ class _Actions(enum.Enum):
 
     @classmethod
     def cmd_map(cls, args):
-        """Map from actions to commands."""
+        """Map from actions to commands.
+
+        This function is intended to serve as this module's interface to the commands API.
+        """
         cmd_builder = {cls.ADD: commands.Add,
                        cls.REMOVE: commands.Remove,
                        cls.EDIT: commands.Edit,
