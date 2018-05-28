@@ -18,8 +18,8 @@ def cleandir():
 @pytest.fixture
 def alias_dict():
     alias_dict = {'multiline': 'echo "Hello"\necho "world!"',
-                  'run': 'python main.py',
-                  'T': 'pytest test_main.py'}
+                  'run': 'echo "RUN PROGRAM!"',
+                  'T': 'echo "RUN TESTS!"'}
     return alias_dict
 
 
@@ -39,7 +39,8 @@ def fake_db(alias_dict):
 @pytest.fixture(params=[
     ('run', False),
     ('multiline', False),
-], ids=['run', 'multiline'])
+    ('T', False)
+], ids=['run', 'multiline', 'T'])
 def cmd_args(request):
     """Returns a named tuple of command arguments and expected results."""
     Args = collections.namedtuple('Args', ['alias', 'color'])

@@ -44,8 +44,23 @@ class Command(metaclass=ABCMeta):
 
 
 class Execute(Command):
+    def execute(self, alias=None):
+        """Evaluates and executes the command string corresponding with the given alias.
+
+        Args:
+            alias (optional): The alias to edit. If not given, this function uses the alias defined
+                at instance creation time.
+        """
+        if alias is None:
+            alias = self.alias
+
+        sp.call(['zsh', '-c', self.alias_dict[alias]])
+
     def __call__(self):
         super().__call__()
+        if self.alias not in self.alias_dict:
+            raise errors.AliasNotDefinedError(self.alias)
+        self.execute()
 
 
 class Show(Command):
