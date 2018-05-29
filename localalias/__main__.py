@@ -1,4 +1,4 @@
-"""Entry point for localalias. Simply execute localalias."""
+"""Entry point for localalias. Simply execute localalias (i.e. run `python localalias`)."""
 
 import sys
 

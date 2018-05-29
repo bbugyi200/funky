@@ -38,7 +38,7 @@ class Command(metaclass=ABCMeta):
         except FileNotFoundError as e:
             self.alias_dict = {}
 
-        log.logger.debug('Existing Aliases: {}'.format(self.alias_dict))
+        log.logger.vdebug('Existing Aliases: {}'.format(self.alias_dict))
 
     def commit(self):
         """Saves alias changes to local database."""

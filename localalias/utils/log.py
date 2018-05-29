@@ -10,6 +10,9 @@ import localalias.utils.xdg as xdg
 
 logger = logging.getLogger("localalias")
 
+# This assignment is temporary. Will be removed when I define a VDEBUG logging level.
+logger.vdebug = logger.debug
+
 
 def init_logger(*, debug=False):
     """Initializes the main logger."""

@@ -26,7 +26,7 @@ def main(argv=None):
 
         log.init_logger(debug=args.debug)
         log.logger.debug('Starting localalias.')
-        log.logger.debug('Command-line Arguments: {}'.format(args))
+        log.logger.vdebug('Command-line Arguments: {}'.format(args))
 
         _validate_args(args)
 
