@@ -13,7 +13,7 @@ from localalias import commands
 from localalias import errors
 from localalias.utils import log
 
-_LALIAS_METAVAR = 'LocalAliasName'
+_ALIAS_METAVAR = 'LocalAliasName'
 
 
 def main(argv=None):
@@ -51,7 +51,7 @@ def _get_argparser():
         argparse.ArgumentParser object.
     """
     parser = argparse.ArgumentParser(prog='localalias', description=localalias.__doc__)
-    parser.add_argument('lalias', nargs='?', default=None, metavar=_LALIAS_METAVAR,
+    parser.add_argument('alias', nargs='?', default=None, metavar=_ALIAS_METAVAR,
             help='Name of the local alias/function.')
     parser.add_argument('-d', '--debug', action='store_true', help="Enable debug mode.")
     parser.add_argument('-c', '--color', action='store_true', help="Colorize output.")
@@ -115,7 +115,7 @@ class _Actions(enum.Enum):
                        cls.EXECUTE: commands.Execute,
                        cls.SHOW: commands.Show}[args.action]
 
-        return cmd_builder(args.lalias, cmd_args=args.cmd_args, color=args.color)
+        return cmd_builder(args)
 
 
 def _validate_args(args):
@@ -127,8 +127,8 @@ def _validate_args(args):
     """
     try:
         if args.action in [_Actions.ADD, _Actions.EXECUTE]:
-            assert args.lalias is not None
+            assert args.alias is not None
         return args
     except AssertionError as e:
         msg_fmt = 'You must also provide a {} when using the {} option.'
-        raise errors.ArgumentError(msg_fmt.format(_LALIAS_METAVAR, _Actions.opt_map(args.action)))
+        raise errors.ArgumentError(msg_fmt.format(_ALIAS_METAVAR, _Actions.opt_map(args.action)))

@@ -22,7 +22,7 @@ def execute_expected(alias_dict):
 @pytest.fixture
 def execute_cmd(args, execute_expected):
     """Builds and returns execute command."""
-    cmd = commands.Execute(args.alias, cmd_args=args.cmd_args, color=args.color)
+    cmd = commands.Execute(args)
     expected = execute_expected[args.alias]
 
     if '$1' in expected:
