@@ -15,9 +15,6 @@ __all__ = ['getch']
 def getch(prompt=None):
     """Reads a single character from stdin.
 
-    It is not necessary to press <Return> to submit the character. The character is
-    retrieved automatically.
-
     Args:
         prompt (optional): prompt that is presented to user.
 

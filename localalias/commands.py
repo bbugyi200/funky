@@ -182,6 +182,8 @@ class Remove(Show):
                 print()
                 log.logger.info('Done. The local alias database has been removed.')
             else:
+                print()
+                log.logger.info('OK. Nothing has been done.')
                 return
         else:
             self.alias_dict.pop(self.alias)
