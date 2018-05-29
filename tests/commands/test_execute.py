@@ -25,12 +25,12 @@ def execute_cmd(args, execute_expected):
     cmd = commands.Execute(args.alias, cmd_args=args.cmd_args, color=args.color)
     expected = execute_expected[args.alias]
 
-    if '$1' in expected and len(args.cmd_args) < 1:
-        assert 0, "The args.cmd_args array should not be nonempty when $1 exists in "\
-                  "test command string!"
-
     if '$1' in expected:
-        expected = expected.replace('$1', args.cmd_args[0])
+        try:
+            expected = expected.replace('$1', args.cmd_args[0])
+        except IndexError as e:
+            raise ValueError("The args.cmd_args array should not be nonempty when $1 exists in "
+                             "test command string!")
 
     cmd.expected = expected
     return cmd

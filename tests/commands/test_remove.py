@@ -38,7 +38,8 @@ def test_remove_last(cleandir, alias_dict, fake_db):
 @mock.patch('localalias.utils.getch')
 def test_remove_all(getch, cleandir, fake_db):
     """Tests that the local alias database is removed when no alias is provided and the
-    user confirms."""
+    user confirms.
+    """
     getch.side_effect = lambda x: 'y'
 
     assert os.path.isfile(commands.Command.LOCALALIAS_DB_FILENAME)

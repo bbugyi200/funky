@@ -12,7 +12,11 @@ from localalias import utils
 @mock.patch('localalias.utils.core.sys.stdin.fileno')
 @mock.patch('localalias.utils.core.sys.stdin.read')
 def test_getch(read, fileno, termios, tty, capsys):
-    """Tests getch utility function."""
+    """Tests getch utility function.
+
+    TODO: This test is clearly terrible. I need to figure out how to test utils.getch without
+        patching every single module involved.
+    """
     read.return_value = 'y'
     fileno.return_value = 0
 
