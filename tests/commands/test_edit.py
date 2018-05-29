@@ -12,7 +12,7 @@ import shared
 @pytest.fixture
 def edit_cmd(args):
     """Builds and returns 'edit' command."""
-    cmd = commands.Edit(args.alias, color=args.color)
+    cmd = commands.Edit(args.alias, cmd_args=args.cmd_args, color=args.color)
     return cmd
 
 
