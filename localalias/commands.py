@@ -155,12 +155,15 @@ class Edit(Command):
         if self.alias and self.alias not in self.alias_dict:
             raise errors.AliasNotDefinedError(self.alias)
 
+        msg_fmt = 'Edited local alias "{}".'
         if self.alias is None:
             log.logger.debug('Running edit command for all defined aliases.')
             for alias in sorted(self.alias_dict):
                 self.alias_dict[alias] = self.edit_alias(alias)
+                log.logger.info(msg_fmt.format(alias))
         else:
             self.alias_dict[self.alias] = self.edit_alias()
+            log.logger.info(msg_fmt.format(self.alias))
         self.commit()
 
 
@@ -187,6 +190,7 @@ class Remove(Show):
                 return
         else:
             self.alias_dict.pop(self.alias)
+            log.logger.info('Removed local alias "{}".'.format(self.alias))
 
         self.commit()
 
@@ -201,9 +205,10 @@ class Add(Edit):
     def __call__(self):
         Command.__call__(self)
         if self.alias in self.alias_dict:
-            msg_fmt = '{} local alias is already defined. Running edit command.'
+            msg_fmt = 'Local alias "{}" is already defined. Running edit command.'
             log.logger.info(msg_fmt.format(self.alias))
             time.sleep(1)
 
         self.alias_dict[self.alias] = self.edit_alias()
+        log.logger.info('Added local alias "{}".'.format(self.alias))
         self.commit()
