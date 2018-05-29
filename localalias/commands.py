@@ -22,7 +22,7 @@ class Command(metaclass=ABCMeta):
         alias (str): local alias name.
         color (bool): if True, colorize output (if command produces output).
     """
-    LOCALALIAS_DB_FILENAME = '.la.json'
+    LOCALALIAS_DB_FILENAME = '.la'
 
     def __init__(self, alias, *, cmd_args=[], color=False):
         self.alias = alias
