@@ -75,7 +75,7 @@ def _get_argparser():
             const=_Actions.EXECUTE, help='Execute an existing local alias/function.')
     action.set_defaults(action=_Actions.SHOW)
 
-    parser.add_argument('args', nargs=argparse.REMAINDER,
+    parser.add_argument('cmd_args', nargs=argparse.REMAINDER,
             help='Captures variable number of command-line arguments meant for local alias. These '
                  'arguments are only applicable when used with the {} '
                  'option.'.format(_Actions.opt_map(_Actions.EXECUTE)))
@@ -115,7 +115,7 @@ class _Actions(enum.Enum):
                        cls.EXECUTE: commands.Execute,
                        cls.SHOW: commands.Show}[args.action]
 
-        return cmd_builder(args.lalias, color=args.color)
+        return cmd_builder(args.lalias, cmd_args=args.cmd_args, color=args.color)
 
 
 def _validate_args(args):

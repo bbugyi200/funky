@@ -8,13 +8,11 @@ import pytest
 from localalias import commands
 import shared
 
-pytestmark = pytest.mark.usefixtures("debug_mode")
-
 
 @pytest.fixture
-def add_cmd(cmd_args):
+def add_cmd(args):
     """Builds and returns 'add' command."""
-    cmd = commands.Add(cmd_args.alias, color=cmd_args.color)
+    cmd = commands.Add(args.alias, cmd_args=args.cmd_args, color=args.color)
     return cmd
 
 

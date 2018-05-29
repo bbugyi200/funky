@@ -7,8 +7,6 @@ import pytest
 
 from localalias import app
 
-pytestmark = pytest.mark.usefixtures("debug_mode")
-
 
 @pytest.mark.parametrize('argv,action,debug,lalias', [
     (['-a', '--debug', 'new_alias'], app._Actions.ADD, True, 'new_alias'),
@@ -20,7 +18,7 @@ def test_main(cmd_map,argv,action,debug,lalias):
     """Tests that arguments are parsed correctly."""
     cmd_map.return_value = mock.Mock()
     app.main(argv)
-    cmd_map.assert_called_once_with(argparse.Namespace(lalias=lalias, args=[], color=False, action=action, debug=debug))
+    cmd_map.assert_called_once_with(argparse.Namespace(lalias=lalias, cmd_args=[], color=False, action=action, debug=debug))
 
 
 @pytest.mark.parametrize('argv', [['-a'], ['-x']])

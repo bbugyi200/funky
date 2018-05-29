@@ -24,8 +24,9 @@ class Command(metaclass=ABCMeta):
     """
     LOCALALIAS_DB_FILENAME = '.la.json'
 
-    def __init__(self, alias, *, color=False):
+    def __init__(self, alias, *, cmd_args=[], color=False):
         self.alias = alias
+        self.cmd_args = cmd_args
         self.color = color
         try:
             with open(self.LOCALALIAS_DB_FILENAME, 'r') as f:
@@ -58,7 +59,8 @@ class Execute(Command):
             alias = self.alias
 
         log.logger.debug('Executing command string mapped to "{}" local alias.'.format(alias))
-        sp.call(['zsh', '-c', self.alias_dict[alias]])
+        cmd_args = ' '.join(self.cmd_args)
+        sp.call(['zsh', '-c', 'set -- {}\n{}'.format(cmd_args, self.alias_dict[alias])])
 
     def __call__(self):
         super().__call__()

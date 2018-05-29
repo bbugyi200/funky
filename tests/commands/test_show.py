@@ -7,8 +7,6 @@ import pytest
 from localalias import commands
 from localalias import errors
 
-pytestmark = pytest.mark.usefixtures("debug_mode")
-
 
 @pytest.fixture
 def show_expected(alias_dict):
@@ -23,10 +21,10 @@ def show_expected(alias_dict):
 
 
 @pytest.fixture
-def show_cmd(cmd_args, show_expected):
+def show_cmd(args, show_expected):
     """Builds and returns show command."""
-    cmd = commands.Show(cmd_args.alias, color=cmd_args.color)
-    cmd.expected = show_expected[cmd_args.alias]
+    cmd = commands.Show(args.alias, cmd_args=args.cmd_args, color=args.color)
+    cmd.expected = show_expected[args.alias]
     return cmd
 
 

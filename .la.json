@@ -1,0 +1,1 @@
+{"pig": "echo \"I $1 pigs. My pig's name is $2. And my name is ${@:3}.\""}

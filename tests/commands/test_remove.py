@@ -9,13 +9,11 @@ import pytest
 from localalias import commands
 import shared
 
-pytestmark = pytest.mark.usefixtures("debug_mode")
-
 
 @pytest.fixture
-def remove_cmd(cmd_args):
+def remove_cmd(args):
     """Builds and returns 'remove' command."""
-    cmd = commands.Remove(cmd_args.alias, color=cmd_args.color)
+    cmd = commands.Remove(args.alias, cmd_args=args.cmd_args, color=args.color)
     return cmd
 
 
