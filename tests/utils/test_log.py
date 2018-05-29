@@ -10,7 +10,7 @@ import pytest
 import localalias.utils.log as log
 
 
-@pytest.mark.parametrize('debug',[False, True])
+@pytest.mark.parametrize('debug', [False, True])
 def test_init_logger(debug):
     """Tests that loggers are initialized properly."""
     log.init_logger(debug=debug)

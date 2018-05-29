@@ -19,7 +19,7 @@ user = getpass.getuser()
     ('runtime', '/run/user/1000/localalias'),
     ('cache', '/home/{}/.cache/localalias'.format(user))
 ])
-def test_getdir(key,expected):
+def test_getdir(key, expected):
     """Tests that each user directory returned meets the XDG standard."""
     assert expected == xdg.getdir(key)
 
