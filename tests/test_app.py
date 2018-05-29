@@ -8,17 +8,17 @@ import pytest
 from localalias import app
 
 
-@pytest.mark.parametrize('argv,action,debug,alias', [
+@pytest.mark.parametrize('argv,action,debug,lalias', [
     (['-a', '--debug', 'new_alias'], app._Actions.ADD, True, 'new_alias'),
     (['--show'], app._Actions.SHOW, False, None),
     (['--remove', '-d', 'new_alias'], app._Actions.REMOVE, True, 'new_alias')
 ])
 @mock.patch('localalias.app._Actions.cmd_map')
-def test_main(cmd_map, argv, action, debug, alias):
+def test_main(cmd_map, argv, action, debug, lalias):
     """Tests that arguments are parsed correctly."""
     cmd_map.return_value = mock.Mock()
     app.main(argv)
-    cmd_map.assert_called_once_with(argparse.Namespace(alias=alias, cmd_args=[], color=False, action=action, debug=debug))
+    cmd_map.assert_called_once_with(argparse.Namespace(lalias=lalias, cmd_args=[], color=False, action=action, debug=debug))
 
 
 @pytest.mark.parametrize('argv', [['-a'], ['-x']])

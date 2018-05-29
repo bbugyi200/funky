@@ -12,7 +12,7 @@ import shared
 @pytest.fixture
 def edit_cmd(args):
     """Builds and returns 'edit' command."""
-    cmd = commands.Edit(args)
+    cmd = commands.Edit(args.alias, cmd_args=args.cmd_args, color=args.color)
     return cmd
 
 
@@ -23,7 +23,7 @@ def test_edit(edit_alias, cleandir, fake_db, edit_cmd):
     edit_alias.return_value = edited_cmd_string
     edit_cmd()
     loaded_aliases = shared.load_aliases()
-    assert loaded_aliases[edit_cmd.args.alias] == edited_cmd_string
+    assert loaded_aliases[edit_cmd.alias] == edited_cmd_string
 
 
 @mock.patch('localalias.commands.Edit.edit_alias')
@@ -33,7 +33,7 @@ def test_edit_all(edit_alias, cleandir, fake_db, alias_dict):
         return '{}: Edited Command String'.format(old)
 
     edit_alias.side_effect = new_cmd_string
-    edit_cmd = commands.Edit(shared.build_args(None))
+    edit_cmd = commands.Edit(None)
     edit_cmd()
 
     loaded_aliases = shared.load_aliases()

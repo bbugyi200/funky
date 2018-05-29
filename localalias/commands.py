@@ -23,12 +23,15 @@ class Command(metaclass=ABCMeta):
     A command instance is a callable object.
 
     Args:
-        args (argparse.Namespace): command-line arguments.
+        alias (str): local alias name.
+        color (bool): if True, colorize output (if command produces output).
     """
     LOCALALIAS_DB_FILENAME = '.localalias'
 
-    def __init__(self, args):
-        self.args = args
+    def __init__(self, alias, *, cmd_args=[], color=False):
+        self.alias = alias
+        self.cmd_args = cmd_args
+        self.color = color
         try:
             with open(self.LOCALALIAS_DB_FILENAME, 'r') as f:
                 self.alias_dict = json.load(f)
@@ -57,16 +60,16 @@ class Execute(Command):
                 at instance creation time.
         """
         if alias is None:
-            alias = self.args.alias
+            alias = self.alias
 
         log.logger.debug('Executing command string mapped to "{}" local alias.'.format(alias))
-        cmd_args = ' '.join(self.args.cmd_args)
+        cmd_args = ' '.join(self.cmd_args)
         sp.call(['zsh', '-c', 'set -- {}\n{}'.format(cmd_args, self.alias_dict[alias])])
 
     def __call__(self):
         super().__call__()
-        if self.args.alias not in self.alias_dict:
-            raise errors.AliasNotDefinedError(self.args.alias)
+        if self.alias not in self.alias_dict:
+            raise errors.AliasNotDefinedError(self.alias)
         self.execute()
 
 
@@ -79,7 +82,7 @@ class Show(Command):
         else:
             show_output = '{0}() {{ {1}; }}'.format(alias, alias_cmd_string)
 
-        if self.args.color:
+        if self.color:
             log.logger.debug('Showing colorized output.')
             final_output = highlight(show_output, BashLexer(), TerminalFormatter())
         else:
@@ -101,13 +104,13 @@ class Show(Command):
         if not self.alias_dict:
             raise errors.AliasNotDefinedError()
 
-        if self.args.alias and self.args.alias not in self.alias_dict:
-            raise errors.AliasNotDefinedError(self.args.alias)
+        if self.alias and self.alias not in self.alias_dict:
+            raise errors.AliasNotDefinedError(self.alias)
 
-        if self.args.alias is None:
+        if self.alias is None:
             self.show_all()
         else:
-            self.show(self.args.alias)
+            self.show(self.alias)
 
 
 class Edit(Command):
@@ -122,7 +125,7 @@ class Edit(Command):
             Contents of temp file after $EDITOR closes.
         """
         if alias is None:
-            alias = self.args.alias
+            alias = self.alias
 
         tf = tempfile.NamedTemporaryFile(prefix='{}.'.format(alias),
                                          suffix='.zsh',
@@ -154,31 +157,31 @@ class Edit(Command):
 
     def __call__(self):
         super().__call__()
-        if self.args.alias and self.args.alias not in self.alias_dict:
-            raise errors.AliasNotDefinedError(self.args.alias)
+        if self.alias and self.alias not in self.alias_dict:
+            raise errors.AliasNotDefinedError(self.alias)
 
         msg_fmt = 'Edited local alias "{}".'
-        if self.args.alias is None:
+        if self.alias is None:
             log.logger.debug('Running edit command for all defined aliases.')
             for alias in sorted(self.alias_dict):
                 self.alias_dict[alias] = self.edit_alias(alias)
                 log.logger.info(msg_fmt.format(alias))
         else:
-            self.alias_dict[self.args.alias] = self.edit_alias()
-            log.logger.info(msg_fmt.format(self.args.alias))
+            self.alias_dict[self.alias] = self.edit_alias()
+            log.logger.info(msg_fmt.format(self.alias))
         self.commit()
 
 
 class Remove(Show):
     def __call__(self):
         Command.__call__(self)
-        if self.args.alias and self.args.alias not in self.alias_dict:
-            raise errors.AliasNotDefinedError(self.args.alias)
+        if self.alias and self.alias not in self.alias_dict:
+            raise errors.AliasNotDefinedError(self.alias)
 
         if not self.alias_dict:
             raise errors.AliasNotDefinedError()
 
-        if self.args.alias is None:
+        if self.alias is None:
             log.logger.debug('Prompting to destroy local alias database.')
             prompt = 'Remove all local aliases defined in this directory? (y/n): '
             y_or_n = utils.getch(prompt)
@@ -191,8 +194,8 @@ class Remove(Show):
                 log.logger.info('OK. Nothing has been done.')
                 return
         else:
-            self.alias_dict.pop(self.args.alias)
-            log.logger.info('Removed local alias "{}".'.format(self.args.alias))
+            self.alias_dict.pop(self.alias)
+            log.logger.info('Removed local alias "{}".'.format(self.alias))
 
         self.commit()
 
@@ -207,11 +210,11 @@ class Remove(Show):
 class Add(Edit):
     def __call__(self):
         Command.__call__(self)
-        if self.args.alias in self.alias_dict:
+        if self.alias in self.alias_dict:
             msg_fmt = 'Local alias "{}" is already defined. Running edit command.'
-            log.logger.info(msg_fmt.format(self.args.alias))
+            log.logger.info(msg_fmt.format(self.alias))
             time.sleep(1)
 
-        self.alias_dict[self.args.alias] = self.edit_alias()
-        log.logger.info('Added local alias "{}".'.format(self.args.alias))
+        self.alias_dict[self.alias] = self.edit_alias()
+        log.logger.info('Added local alias "{}".'.format(self.alias))
         self.commit()

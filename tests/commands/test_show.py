@@ -6,7 +6,6 @@ import pytest
 
 from localalias import commands
 from localalias import errors
-import shared
 
 
 @pytest.fixture
@@ -24,7 +23,7 @@ def show_expected(alias_dict):
 @pytest.fixture
 def show_cmd(args, show_expected):
     """Builds and returns show command."""
-    cmd = commands.Show(args)
+    cmd = commands.Show(args.alias, cmd_args=args.cmd_args, color=args.color)
     cmd.expected = show_expected[args.alias]
     return cmd
 
@@ -38,7 +37,7 @@ def test_show(capsys, cleandir, fake_db, show_cmd):
 
 def test_show_all(capsys, cleandir, show_expected, fake_db):
     """Tests show command when no specific alias is provided."""
-    show_cmd = commands.Show(shared.build_args(None))
+    show_cmd = commands.Show(None, color=False)
     show_cmd()
     expected = '{0}\n{1}\n{2}'.format(show_expected['T'],
                                       show_expected['multiline'],
