@@ -6,8 +6,6 @@ import pytest
 
 from localalias import utils
 
-pytestmark = pytest.mark.usefixtures("debug_mode")
-
 
 @mock.patch('localalias.utils.core.tty')
 @mock.patch('localalias.utils.core.termios')
