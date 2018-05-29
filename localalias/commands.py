@@ -7,6 +7,10 @@ import subprocess as sp
 import tempfile
 import time
 
+from pygments import highlight
+from pygments.lexers import BashLexer
+from pygments.formatters import TerminalFormatter
+
 from localalias import errors
 from localalias import utils
 from localalias.utils import log
@@ -80,11 +84,12 @@ class Show(Command):
 
         if self.color:
             log.logger.debug('Showing colorized output.')
-            ps = sp.Popen(['pygmentize', '-l', 'zsh'], stdin=sp.PIPE)
-            ps.communicate(input=show_output.encode())
+            final_output = highlight(show_output, BashLexer(), TerminalFormatter())
         else:
             log.logger.debug('Showing normal output.')
-            print(show_output)
+            final_output = show_output
+
+        print(final_output)
 
     def show_all(self):
         """Prints all defined alias definitions to stdout."""
@@ -195,6 +200,7 @@ class Remove(Show):
         self.commit()
 
         if self.alias_dict:
+            print()
             self.show_all()
         else:
             log.logger.debug('Removing {}.'.format(self.LOCALALIAS_DB_FILENAME))
