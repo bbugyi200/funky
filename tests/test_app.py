@@ -24,6 +24,6 @@ def test_main(cmd_map, argv, action, debug, alias):
 @pytest.mark.parametrize('argv', [['-a'], ['-x']])
 @mock.patch('localalias.utils.log.logger')
 def test_main_failure(logger, argv):
-    """Tests that bad arguments raise a ValueError."""
+    """Tests that bad arguments result in a nonzero exit status."""
     assert app.main(argv) == 1
     logger.error.called_once()
