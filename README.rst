@@ -1,7 +1,7 @@
 Demonstration
 =============
 
-.. image:: https://github.com/bbugyi200/localalias/blob/develop/docs/img/demo.gif?raw=true
+.. image:: https://github.com/bbugyi200/localalias/blob/master/docs/img/demo.gif?raw=true
 
 |
 
