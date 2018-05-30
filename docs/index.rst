@@ -8,3 +8,4 @@ Navigation
    installation
    usage
    contributing
+   history
