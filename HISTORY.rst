@@ -6,3 +6,8 @@ History
 ------------------
 
 * First release on PyPI.
+
+2.0.1 (2018-05-30)
+------------------
+
+* Fix README
