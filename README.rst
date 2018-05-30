@@ -7,4 +7,4 @@ Demonstration
 
 The `documentation`_ for localalias is currently under construction.
 
-.. _documentation: https://localalias.readthedocs.io/en/develop/
+.. _documentation: https://localalias.readthedocs.io
