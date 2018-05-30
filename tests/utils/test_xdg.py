@@ -14,7 +14,6 @@ user = getpass.getuser()
 @pytest.mark.parametrize('key,expected', [
     ('config', '/home/{}/.config/localalias'.format(user)),
     ('data', '/home/{}/.local/share/localalias'.format(user)),
-    ('runtime', '/run/user/1000/localalias'),
     ('cache', '/home/{}/.cache/localalias'.format(user))
 ])
 def test_getdir(key, expected):

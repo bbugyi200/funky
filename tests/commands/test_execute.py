@@ -15,7 +15,8 @@ def test_execute(subprocess, cleandir, fake_db, execute_cmd):
     execute_cmd()
 
     cmd_list = subprocess.call.call_args[0][0]
-    out = sp.check_output(cmd_list)
+    cmd = cmd_list[-1]
+    out = sp.check_output(['bash', '-c', cmd])
     assert out.decode().strip() == execute_cmd.expected
 
 
