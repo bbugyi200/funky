@@ -5,12 +5,6 @@ Demonstration
 
 |
 
-localalias
-==========
-I use this script to setup aliases and/or functions that are local to a particular directory. Local aliases are stored in a hidden file named `.lshrc` in the current directory. One way to use this script is manually. For example, you could run `LocalAlias -a` to add an alias and then `LocalAlias -x` to execute that alias, like so:
-
-.. image:: https://github.com/bbugyi200/localalias/blob/develop/docs/img/trial.png?raw=true
-
-Refer to this project's `documentation`_ for more information.
+The `documentation`_ for localalias is currently under construction.
 
 .. _documentation: https://localalias.readthedocs.io/en/develop/

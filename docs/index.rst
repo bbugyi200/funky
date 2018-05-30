@@ -1,11 +1,10 @@
-Welcome to localalias's documentation!
-======================================
+.. include:: ../README.rst
 
+Navigation
+==========
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
-   readme
    installation
    usage
    contributing
