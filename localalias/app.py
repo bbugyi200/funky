@@ -88,11 +88,11 @@ def _get_argparser():
 
 class _Actions(enum.Enum):
     """Action Flags"""
-    ADD = enum.auto()
-    REMOVE = enum.auto()
-    EDIT = enum.auto()
-    EXECUTE = enum.auto()
-    SHOW = enum.auto()
+    ADD = 1
+    REMOVE = 2
+    EDIT = 3
+    EXECUTE = 4
+    SHOW = 5
 
     @classmethod
     def opt_map(cls, action):
