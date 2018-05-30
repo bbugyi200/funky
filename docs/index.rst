@@ -10,9 +10,3 @@ Welcome to localalias's documentation!
    usage
    contributing
    history
-
-Indices and tables
-==================
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
