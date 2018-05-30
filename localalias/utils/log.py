@@ -36,6 +36,14 @@ def init_logger(*, debug=False):
         root.debug('Debug mode enabled.')
 
 
+def silence_streams():
+    """Silence stream log handlers."""
+    root = logging.getLogger()
+    for handler in root.handlers:
+        if isinstance(handler, logging.StreamHandler):
+            handler.setLevel(logging.CRITICAL)
+
+
 def _getFormatter(*, verbose=False):
     """Get log formatter.
 

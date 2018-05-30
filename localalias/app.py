@@ -25,6 +25,9 @@ def main(argv=None):
         args = parser.parse_args(argv)
 
         log.init_logger(debug=args.debug)
+        if args.action == _Actions.EXECUTE and not args.debug:
+            log.silence_streams()
+
         log.logger.debug('Starting localalias.')
         log.logger.vdebug('Command-line Arguments: {}'.format(args))
 
