@@ -8,15 +8,15 @@ import pytest
 from localalias import commands
 
 
-@pytest.fixture
-def execute_expected(alias_dict):
-    """Expected results for execute command tests."""
-    execute_expected = {}
-    for alias in alias_dict:
-        expected = alias_dict[alias].replace('echo ', '').strip('"').replace('"\n"', '\n')
-        execute_expected[alias] = expected
+@mock.patch('localalias.commands.sp')
+def test_execute(subprocess, cleandir, fake_db, execute_cmd):
+    """Tests execute command."""
+    subprocess.call = mock.Mock()
+    execute_cmd()
 
-    return execute_expected
+    cmd_list = subprocess.call.call_args[0][0]
+    out = sp.check_output(cmd_list)
+    assert out.decode().strip() == execute_cmd.expected
 
 
 @pytest.fixture
@@ -36,12 +36,12 @@ def execute_cmd(args, execute_expected):
     return cmd
 
 
-@mock.patch('localalias.commands.sp')
-def test_execute(subprocess, cleandir, fake_db, execute_cmd):
-    """Tests execute command."""
-    subprocess.call = mock.Mock()
-    execute_cmd()
+@pytest.fixture
+def execute_expected(alias_dict):
+    """Expected results for execute command tests."""
+    execute_expected = {}
+    for alias in alias_dict:
+        expected = alias_dict[alias].replace('echo ', '').strip('"').replace('"\n"', '\n')
+        execute_expected[alias] = expected
 
-    cmd_list = subprocess.call.call_args[0][0]
-    out = sp.check_output(cmd_list)
-    assert out.decode().strip() == execute_cmd.expected
+    return execute_expected

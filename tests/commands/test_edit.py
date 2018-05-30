@@ -9,13 +9,6 @@ from localalias import commands
 import shared
 
 
-@pytest.fixture
-def edit_cmd(args):
-    """Builds and returns 'edit' command."""
-    cmd = commands.Edit(args.alias, cmd_args=args.cmd_args, color=args.color)
-    return cmd
-
-
 @mock.patch('localalias.commands.Edit.edit_alias')
 def test_edit(edit_alias, cleandir, fake_db, edit_cmd):
     """Tests edit command."""
@@ -24,6 +17,13 @@ def test_edit(edit_alias, cleandir, fake_db, edit_cmd):
     edit_cmd()
     loaded_aliases = shared.load_aliases()
     assert loaded_aliases[edit_cmd.alias] == edited_cmd_string
+
+
+@pytest.fixture
+def edit_cmd(args):
+    """Builds and returns 'edit' command."""
+    cmd = commands.Edit(args.alias, cmd_args=args.cmd_args, color=args.color)
+    return cmd
 
 
 @mock.patch('localalias.commands.Edit.edit_alias')

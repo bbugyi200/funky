@@ -10,18 +10,18 @@ from localalias import commands
 import shared
 
 
-@pytest.fixture
-def remove_cmd(args):
-    """Builds and returns 'remove' command."""
-    cmd = commands.Remove(args.alias, cmd_args=args.cmd_args, color=args.color)
-    return cmd
-
-
 def test_remove(cleandir, fake_db, remove_cmd):
     """Tests remove command."""
     remove_cmd()
     loaded_aliases = shared.load_aliases()
     assert remove_cmd.alias not in loaded_aliases
+
+
+@pytest.fixture
+def remove_cmd(args):
+    """Builds and returns 'remove' command."""
+    cmd = commands.Remove(args.alias, cmd_args=args.cmd_args, color=args.color)
+    return cmd
 
 
 def test_remove_last(cleandir, alias_dict, fake_db):

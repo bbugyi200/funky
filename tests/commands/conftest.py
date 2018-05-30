@@ -16,14 +16,6 @@ def cleandir():
 
 
 @pytest.fixture
-def alias_dict():
-    alias_dict = {'multiline': 'echo "Hello"\necho "world!"',
-                  'T': 'echo "RUN $1!"',
-                  'TT': 'echo "RUN TESTS!"'}
-    return alias_dict
-
-
-@pytest.fixture
 def fake_db(alias_dict):
     """Setup/teardown a local alias database."""
     filename = commands.Command.LOCALALIAS_DB_FILENAME
@@ -34,6 +26,14 @@ def fake_db(alias_dict):
         os.remove(filename)
     except FileNotFoundError as e:
         pass
+
+
+@pytest.fixture
+def alias_dict():
+    alias_dict = {'multiline': 'echo "Hello"\necho "world!"',
+                  'T': 'echo "RUN $1!"',
+                  'TT': 'echo "RUN TESTS!"'}
+    return alias_dict
 
 
 @pytest.fixture(params=[
