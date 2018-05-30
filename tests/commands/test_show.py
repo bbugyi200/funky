@@ -9,12 +9,24 @@ from localalias import errors
 
 
 @pytest.fixture
-def show_expected(alias_dict):
+def _show_expected(alias_dict):
     """Expected results for show command tests."""
     show_expected = {
-        'run': 'run() {{ {0}; }}\n'.format(alias_dict['run']),
         'T': 'T() {{ {0}; }}\n'.format(alias_dict['T']),
+        'TT': 'TT() {{ {0}; }}\n'.format(alias_dict['TT']),
         'multiline': 'multiline() {{\n\t{0}\n}}\n'.format(alias_dict['multiline'].replace('\n', '\n\t'))
+    }
+
+    return show_expected
+
+
+@pytest.fixture
+def show_expected(_show_expected):
+    """Expected results for show command tests."""
+    show_expected = {
+        'T': '{}\n{}'.format(_show_expected['T'], _show_expected['TT']),
+        'TT': _show_expected['TT'],
+        'multiline': _show_expected['multiline']
     }
 
     return show_expected
@@ -35,13 +47,13 @@ def test_show(capsys, cleandir, fake_db, show_cmd):
     assert captured.out == show_cmd.expected
 
 
-def test_show_all(capsys, cleandir, show_expected, fake_db):
+def test_show_all(capsys, cleandir, _show_expected, fake_db):
     """Tests show command when no specific alias is provided."""
     show_cmd = commands.Show(None, color=False)
     show_cmd()
-    expected = '{0}\n{1}\n{2}'.format(show_expected['T'],
-                                      show_expected['multiline'],
-                                      show_expected['run'])
+    expected = '{0}\n{1}\n{2}'.format(_show_expected['T'],
+                                      _show_expected['TT'],
+                                      _show_expected['multiline'])
     captured = capsys.readouterr()
     assert captured.out == expected
 

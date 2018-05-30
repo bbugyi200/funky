@@ -52,6 +52,7 @@ class Command(metaclass=ABCMeta):
 
 
 class Execute(Command):
+    """Execute command."""
     def execute(self, alias=None):
         """Evaluates and executes the command string corresponding with the given alias.
 
@@ -74,6 +75,7 @@ class Execute(Command):
 
 
 class Show(Command):
+    """Show command."""
     def show(self, alias):
         """Print alias and alias command definition to stdout."""
         alias_cmd_string = self.alias_dict[alias]
@@ -84,36 +86,34 @@ class Show(Command):
 
         if self.color:
             log.logger.debug('Showing colorized output.')
-            final_output = highlight(show_output, BashLexer(), TerminalFormatter())
+            final_output = highlight(show_output, BashLexer(), TerminalFormatter()).strip()
         else:
             log.logger.debug('Showing normal output.')
             final_output = show_output
 
         print(final_output)
 
-    def show_all(self):
-        """Prints all defined alias definitions to stdout."""
+    def show_starts_with(self, prefix=''):
+        """Prints all aliases that start with @prefix to stdout."""
         log.logger.debug('Running show command for all defined aliases.')
-        for i, alias in enumerate(sorted(self.alias_dict)):
-            self.show(alias)
-            if i < len(self.alias_dict) - 1:
+        for i, alias in enumerate(sorted(alias for alias in self.alias_dict if alias.startswith(prefix))):
+            if i > 0:
                 print()
+            self.show(alias)
 
     def __call__(self):
         super().__call__()
         if not self.alias_dict:
             raise errors.AliasNotDefinedError()
 
-        if self.alias and self.alias not in self.alias_dict:
-            raise errors.AliasNotDefinedError(self.alias)
-
         if self.alias is None:
-            self.show_all()
+            self.show_starts_with()
         else:
-            self.show(self.alias)
+            self.show_starts_with(self.alias)
 
 
 class Edit(Command):
+    """Edit command."""
     def edit_alias(self, alias=None):
         """Opens up alias definition using temp file in $EDITOR for editing.
 
@@ -173,6 +173,7 @@ class Edit(Command):
 
 
 class Remove(Show):
+    """Remove command."""
     def __call__(self):
         Command.__call__(self)
         if self.alias and self.alias not in self.alias_dict:
@@ -201,13 +202,14 @@ class Remove(Show):
 
         if self.alias_dict:
             print()
-            self.show_all()
+            self.show_starts_with()
         else:
             log.logger.debug('Removing {}.'.format(self.LOCALALIAS_DB_FILENAME))
             os.remove(self.LOCALALIAS_DB_FILENAME)
 
 
 class Add(Edit):
+    """Add command."""
     def __call__(self):
         Command.__call__(self)
         if self.alias in self.alias_dict:
