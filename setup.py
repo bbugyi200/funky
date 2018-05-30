@@ -4,6 +4,17 @@
 """The setup script."""
 
 from setuptools import setup, find_packages
+from setuptools.command.install import install
+
+from scripts import post_install
+
+
+class PostInstallCommand(install):
+    """Post-installation for install mode."""
+    def run(self):
+        post_install.run()
+        install.run(self)
+
 
 with open('README.rst') as readme_file:
     readme = readme_file.read()
@@ -25,6 +36,7 @@ setup(
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
     ],
+    cmdclass={'install': PostInstallCommand},
     description="A light-weight shell wrapper that allows you to create per-directoy command aliases.",
     entry_points={
         'console_scripts': [
