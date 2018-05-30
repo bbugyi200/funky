@@ -11,7 +11,7 @@ def run():
 
 
 def _install_zsh_plugin():
-    """Copys zsh plugin to oh-my-zsh plugin dir (if oh-my-zsh) is installed."""
+    """Copys zsh plugin to oh-my-zsh plugin dir (if oh-my-zsh is installed)."""
     zsh_custom_dirs = ['/home/{}/.oh-my-zsh/custom'.format(getpass.getuser()),
                        '/usr/share/oh-my-zsh/custom']
 
