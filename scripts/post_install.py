@@ -15,12 +15,15 @@ def _install_zsh_plugin():
     zsh_custom_dirs = ['/home/{}/.oh-my-zsh/custom'.format(getpass.getuser()),
                        '/usr/share/oh-my-zsh/custom']
 
+    ohmyzsh_dir = None
     for directory in zsh_custom_dirs:
         if os.path.isdir(directory):
             ohmyzsh_dir = directory
             break
 
-    print(ohmyzsh_dir)
+    if ohmyzsh_dir is None:
+        return
+
     try:
         os.makedirs(ohmyzsh_dir + '/plugins/localalias')
     except OSError as e:
