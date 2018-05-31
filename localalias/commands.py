@@ -120,16 +120,18 @@ class Show(Command):
         """Prints all aliases that start with @prefix to stdout."""
         log.logger.debug('Running show command for all defined aliases.')
         sorted_aliases = sorted([alias for alias in self.alias_dict if alias.startswith(prefix)])
-        long_aliases = [alias for alias in sorted_aliases if '\n' in self.alias_dict[alias]]
-        short_aliases = [alias for alias in sorted_aliases if '\n' not in self.alias_dict[alias]]
 
-        for alias in short_aliases:
-            self.show(alias)
+        short_aliases_exist = False
+        for alias in sorted_aliases:
+            if '\n' not in self.alias_dict[alias]:
+                self.show(alias)
+                short_aliases_exist = True
 
-        for i, alias in enumerate(long_aliases):
-            if i > 0 or short_aliases:
-                print()
-            self.show(alias)
+        for i, alias in enumerate(sorted_aliases):
+            if '\n' in self.alias_dict[alias]:
+                if i > 0 or short_aliases_exist:
+                    print()
+                self.show(alias)
 
     def __call__(self):
         super().__call__()
