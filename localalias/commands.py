@@ -25,8 +25,8 @@ class Command(metaclass=ABCMeta):
     A command instance is a callable object.
 
     Args:
-        alias (str): local alias name.
-        color (bool): if True, colorize output (if command produces output).
+        alias (str): Local alias name.
+        color (bool): If True, colorize output (if command produces output).
     """
     LOCALALIAS_DB_FILENAME = '.localalias'
 
@@ -41,6 +41,19 @@ class Command(metaclass=ABCMeta):
             self.alias_dict = {}
 
         log.logger.vdebug('Existing Aliases: {}'.format(self.alias_dict))
+
+    def search(self, prefix=''):
+        """Search for aliases
+
+        Args:
+            prefix (str): Substring that matching aliases should start with.
+
+        Yields:
+            Aliases that start with @prefix.
+        """
+        for alias in self.alias_dict:
+            if alias.startswith(prefix):
+                yield alias
 
     def commit(self):
         """Saves alias changes to local database."""
@@ -104,10 +117,10 @@ class Show(Command):
 
         print(final_output)
 
-    def show_starts_with(self, prefix=''):
+    def show_search(self, prefix=''):
         """Prints all aliases that start with @prefix to stdout."""
         log.logger.debug('Running show command for all defined aliases.')
-        sorted_aliases = sorted([alias for alias in self.alias_dict if alias.startswith(prefix)])
+        sorted_aliases = sorted(self.search(prefix))
 
         if not sorted_aliases:
             raise errors.AliasNotDefinedError(alias=self.alias)
@@ -130,9 +143,9 @@ class Show(Command):
             raise errors.AliasNotDefinedError()
 
         if self.alias is None:
-            self.show_starts_with()
+            self.show_search()
         else:
-            self.show_starts_with(self.alias)
+            self.show_search(self.alias)
 
 
 class Edit(Command):
@@ -212,8 +225,10 @@ class Edit(Command):
                 self.alias_dict[alias] = self.edit_alias(alias)
                 log.logger.info(msg_fmt.format(alias))
         else:
-            self.alias_dict[self.alias] = self.edit_alias()
-            log.logger.info(msg_fmt.format(self.alias))
+            for alias in self.search(self.alias):
+                self.alias_dict[alias] = self.edit_alias(alias)
+                log.logger.info(msg_fmt.format(alias))
+
         self.commit()
 
 
@@ -247,7 +262,7 @@ class Remove(Show):
 
         if self.alias_dict:
             print()
-            self.show_starts_with()
+            self.show_search()
         else:
             log.logger.debug('Removing {}.'.format(self.LOCALALIAS_DB_FILENAME))
             os.remove(self.LOCALALIAS_DB_FILENAME)
