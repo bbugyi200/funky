@@ -1,8 +1,8 @@
 """Core utilities.
 
-The contents of this module are intended to be imported directly into the package's
-global namespace. Any classes/functions defined in this module MUST be included in
-__all__ or they will NOT be accessible from the utils package.
+The contents of this module are intended to be imported directly into the utils
+package's global namespace. Any classes/functions defined in this module MUST
+be included in __all__ or they will NOT be accessible from the utils package.
 """
 
 import sys
@@ -21,11 +21,9 @@ def getch(prompt=None):
     Returns:
         The single character that was read.
     """
+    if prompt:
+        sys.stdout.write(prompt)
 
-    if prompt is None:
-        prompt = ''
-
-    sys.stdout.write(prompt)
     sys.stdout.flush()
 
     fd = sys.stdin.fileno()

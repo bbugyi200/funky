@@ -46,10 +46,10 @@ def _getter_factory(envvar, dirfmt):
         if envvar in os.environ:
             xdg_dir = '{}/localalias'.format(os.environ[envvar])
         else:
-            if dirfmt.count('{}') < 1:
-                xdg_dir = dirfmt
-            else:
+            if dirfmt.count('{}') > 0:
                 xdg_dir = dirfmt.format(_user)
+            else:
+                xdg_dir = dirfmt
 
         _create_dir(xdg_dir)
         return xdg_dir
