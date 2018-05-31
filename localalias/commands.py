@@ -66,7 +66,7 @@ class Execute(Command):
             alias = self.alias
 
         log.logger.debug('Executing command string mapped to "{}" local alias.'.format(alias))
-        cmd_args = ' '.join(self.cmd_args)
+        cmd_args = '"{}"'.format('" "'.join(self.cmd_args))
         cmd_string = self.alias_dict[alias]
 
         ps = sp.Popen(['zsh', '-c', 'set -- {}\n{}'.format(cmd_args, cmd_string)])
