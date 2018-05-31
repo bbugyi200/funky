@@ -1,8 +1,16 @@
+if [[ $(type -w la) == 'la: alias' ]]; then
+    unalias la
+fi
+
 # reroutes command not found errors to localalias
 command_not_found_handler() {
     CMD=$1; shift
-    if ! localalias -x $CMD -- "$@"; then
+    localalias -x $CMD -- "$@"
+    exit_status=$?
+
+    if [[ $exit_status -eq 127 ]]; then
         echo "zsh: command not found: $CMD"
-        return 127
     fi
+
+    return $exit_status
 }
