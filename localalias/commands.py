@@ -5,6 +5,7 @@ import json
 import os
 import re
 import subprocess as sp
+import sys
 import tempfile
 import time
 
@@ -67,7 +68,9 @@ class Execute(Command):
         log.logger.debug('Executing command string mapped to "{}" local alias.'.format(alias))
         cmd_args = ' '.join(self.cmd_args)
         cmd_string = self.alias_dict[alias]
-        sp.call(['zsh', '-c', 'set -- {}\n{}'.format(cmd_args, cmd_string)])
+
+        ps = sp.Popen(['zsh', '-c', 'set -- {}\n{}'.format(cmd_args, cmd_string)])
+        sys.exit(ps.wait())
 
     def __call__(self):
         super().__call__()

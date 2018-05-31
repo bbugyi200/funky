@@ -10,12 +10,13 @@ from localalias import commands
 
 
 @mock.patch('localalias.commands.sp')
-def test_execute(subprocess, cleandir, fake_db, execute_cmd):
+@mock.patch('localalias.commands.sys.exit')
+def test_execute(exit, subprocess, cleandir, fake_db, execute_cmd):
     """Tests execute command."""
     subprocess.call = mock.Mock()
     execute_cmd()
 
-    cmd_list = subprocess.call.call_args[0][0]
+    cmd_list = subprocess.Popen.call_args[0][0]
     cmd = cmd_list[-1]
     out = sp.check_output(['bash', '-c', cmd])
     assert out.decode().strip() == execute_cmd.expected
