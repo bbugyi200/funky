@@ -32,7 +32,7 @@ def fake_db(alias_dict):
 def alias_dict():
     alias_dict = {'multiline': 'echo Hello\necho world!',
                   'T': 'echo RUN $1',
-                  'TT': 'echo CHICKEN'}
+                  'TT': 'echo CHICKEN $@'}
     return alias_dict
 
 

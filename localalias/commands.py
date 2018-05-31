@@ -41,27 +41,6 @@ class Command(metaclass=ABCMeta):
 
         log.logger.vdebug('Existing Aliases: {}'.format(self.alias_dict))
 
-    def format_cmd_string(self, cmd_string):
-        """Formats command string for correct execution and display.
-
-        It is expected that a single line alias should act the same as a normal shell alias
-        would. Namely, once such an alias is defined, it is expected that the command
-        `<alias> [ARGS]` would send [ARGS] to the command string that was defined for <alias>.
-        Local aliases behave more like shell functions than aliases, however, so this behavior
-        is not automatic.
-
-        This method solves this problem by appending $@ to a single-line command string if and
-        only if the command string contains NO shell argument variables. If the user defines
-        <alias> using any argument variables (e.g. $0, $1, ..., $@, $*, etc.), however, the
-        command string is left unaltered.
-        """
-        if re.search(r'(\$[0-9@\*]|\n)', cmd_string):
-            new_cmd_string = cmd_string
-        else:
-            new_cmd_string = '{} $@'.format(cmd_string)
-
-        return new_cmd_string
-
     def commit(self):
         """Saves alias changes to local database."""
         log.logger.debug('Committing changes to local database: {}'.format(self.LOCALALIAS_DB_FILENAME))
@@ -87,7 +66,7 @@ class Execute(Command):
 
         log.logger.debug('Executing command string mapped to "{}" local alias.'.format(alias))
         cmd_args = ' '.join(self.cmd_args)
-        cmd_string = self.format_cmd_string(self.alias_dict[alias])
+        cmd_string = self.alias_dict[alias]
         sp.call(['zsh', '-c', 'set -- {}\n{}'.format(cmd_args, cmd_string)])
 
     def __call__(self):
@@ -101,7 +80,7 @@ class Show(Command):
     """Show command."""
     def show(self, alias):
         """Print alias and alias command definition to stdout."""
-        cmd_string = self.format_cmd_string(self.alias_dict[alias])
+        cmd_string = self.alias_dict[alias]
         if '\n' in cmd_string:
             show_output = '{0}() {{\n\t{1}\n}}'.format(alias, cmd_string.replace('\n', '\n\t'))
         else:
@@ -160,7 +139,7 @@ class Edit(Command):
             alias = self.alias
 
         tf = tempfile.NamedTemporaryFile(prefix='{}.'.format(alias),
-                                         suffix='.zsh',
+                                         suffix='.sh',
                                          mode='w',
                                          delete=False)
         if alias in self.alias_dict:
@@ -185,7 +164,29 @@ class Edit(Command):
         tf.close()
         os.unlink(tf.name)
 
-        return edited_cmd_string.strip()
+        formatted_cmd_string = self._format_cmd_string(edited_cmd_string.strip())
+        return formatted_cmd_string
+
+    def _format_cmd_string(self, cmd_string):
+        """Formats command string for correct execution and display.
+
+        It is expected that a single line alias should act the same as a normal shell alias
+        would. Namely, once such an alias is defined, it is expected that the command
+        `<alias> [ARGS]` would send [ARGS] to the command string that was defined for <alias>.
+        Local aliases behave more like shell functions than aliases, however, so this behavior
+        is not automatic.
+
+        This method solves this problem by appending $@ to a single-line command string if and
+        only if the command string contains NO shell argument variables. If the user defines
+        <alias> using any argument variables (e.g. $0, $1, ..., $@, $*, etc.), however, the
+        command string is left unaltered.
+        """
+        if re.search(r'(\$[0-9@\*]|\n)', cmd_string):
+            new_cmd_string = cmd_string
+        else:
+            new_cmd_string = '{} $@'.format(cmd_string)
+
+        return new_cmd_string
 
     def __call__(self):
         super().__call__()

@@ -39,3 +39,26 @@ def test_edit_all(edit_alias, cleandir, fake_db, alias_dict):
     loaded_aliases = shared.load_aliases()
     for alias in alias_dict:
         assert loaded_aliases[alias] == new_cmd_string(alias)
+
+
+@mock.patch('localalias.commands.tempfile')
+@mock.patch('localalias.commands.sp')
+def test_edit_format(sp, tempfile, cleandir, fake_db, alias_dict):
+    """Tests that the edit command reformats command strings when needed."""
+    edited_cmd_string = 'EDITED CMD STRING'
+
+    tmpfilename = '/tmp/test_edit_format.txt'
+    with open(tmpfilename, 'w') as f:
+        f.write(edited_cmd_string)
+
+    fileMock = mock.Mock(name='fileMock')
+    fileMock.name = tmpfilename
+    tempfile.NamedTemporaryFile = mock.Mock()
+    tempfile.NamedTemporaryFile.return_value = fileMock
+
+    some_alias = list(alias_dict.keys())[0]
+    edit_cmd = commands.Edit(some_alias)
+    edit_cmd()
+
+    loaded_aliases = shared.load_aliases()
+    assert loaded_aliases[some_alias] == '{} $@'.format(edited_cmd_string)
