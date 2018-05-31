@@ -69,7 +69,7 @@ class Execute(Command):
         cmd_args = '"{}"'.format('" "'.join(self.cmd_args))
         cmd_string = self.alias_dict[alias]
 
-        ps = sp.Popen(['zsh', '-c', 'set -- {}\n{}'.format(cmd_args, cmd_string)])
+        ps = sp.Popen(['bash', '-c', 'set -- {}\n{}'.format(cmd_args, cmd_string)])
         returncode = ps.wait()
 
         # 127 is interpretted by zsh plugin as a "command not found" error
