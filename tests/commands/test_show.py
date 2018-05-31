@@ -19,9 +19,9 @@ def test_show_all(capsys, cleandir, _show_expected, fake_db):
     """Tests show command when no specific alias is provided."""
     show_cmd = commands.Show(None, color=False)
     show_cmd()
-    expected = '{0}\n{1}\n{2}'.format(_show_expected['T'],
-                                      _show_expected['TT'],
-                                      _show_expected['multiline'])
+    expected = '{0}{1}\n{2}'.format(_show_expected['T'],
+                                    _show_expected['TT'],
+                                    _show_expected['multiline'])
     captured = capsys.readouterr()
     assert captured.out == expected
 
@@ -44,7 +44,7 @@ def show_cmd(args, show_expected):
 def show_expected(_show_expected):
     """Expected results for show command tests."""
     show_expected = {
-        'T': '{}\n{}'.format(_show_expected['T'], _show_expected['TT']),  # example of prefix matching
+        'T': '{}{}'.format(_show_expected['T'], _show_expected['TT']),  # example of prefix matching
         'TT': _show_expected['TT'],
         'multiline': _show_expected['multiline']
     }
