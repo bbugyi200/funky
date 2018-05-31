@@ -70,12 +70,18 @@ class Execute(Command):
         cmd_string = self.alias_dict[alias]
 
         ps = sp.Popen(['zsh', '-c', 'set -- {}\n{}'.format(cmd_args, cmd_string)])
-        sys.exit(ps.wait())
+        returncode = ps.wait()
+
+        # 127 is interpretted by zsh plugin as a "command not found" error
+        if returncode == 127:
+            returncode = 27
+
+        sys.exit(returncode)
 
     def __call__(self):
         super().__call__()
         if self.alias not in self.alias_dict:
-            raise errors.AliasNotDefinedError(self.alias)
+            raise errors.AliasNotDefinedError(alias=self.alias, returncode=127)
         self.execute()
 
 
@@ -102,6 +108,9 @@ class Show(Command):
         """Prints all aliases that start with @prefix to stdout."""
         log.logger.debug('Running show command for all defined aliases.')
         sorted_aliases = sorted([alias for alias in self.alias_dict if alias.startswith(prefix)])
+
+        if not sorted_aliases:
+            raise errors.AliasNotDefinedError(alias=self.alias)
 
         short_aliases_exist = False
         for alias in sorted_aliases:
@@ -194,7 +203,7 @@ class Edit(Command):
     def __call__(self):
         super().__call__()
         if self.alias and self.alias not in self.alias_dict:
-            raise errors.AliasNotDefinedError(self.alias)
+            raise errors.AliasNotDefinedError(alias=self.alias)
 
         msg_fmt = 'Edited local alias "{}".'
         if self.alias is None:
@@ -213,7 +222,7 @@ class Remove(Show):
     def __call__(self):
         Command.__call__(self)
         if self.alias and self.alias not in self.alias_dict:
-            raise errors.AliasNotDefinedError(self.alias)
+            raise errors.AliasNotDefinedError(alias=self.alias)
 
         if not self.alias_dict:
             raise errors.AliasNotDefinedError()

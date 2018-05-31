@@ -39,12 +39,10 @@ def main(argv=None):
         log.logger.error('%s\n', str(e))
         parser.print_usage()
         return 1
-    except errors.AliasNotDefinedError as e:
-        log.logger.error(str(e))
-        return 127
     except errors.LocalAliasError as e:
+        log.logger.debug('LocalAliasError thrown with exit status: {}'.format(e.returncode))
         log.logger.error(str(e))
-        return 1
+        return e.returncode
     except Exception as e:
         log.logger.exception('{}: {}'.format(type(e).__name__, str(e)))
         raise
