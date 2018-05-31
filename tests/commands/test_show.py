@@ -57,7 +57,7 @@ def _show_expected(alias_dict):
     """Expected results for show command tests BEFORE prefix matching feature was added."""
     show_expected = {
         'T': 'T() {{ {0}; }}\n'.format(alias_dict['T']),
-        'TT': 'TT() {{ {0}; }}\n'.format(alias_dict['TT']),
+        'TT': 'TT() {{ {0} $@; }}\n'.format(alias_dict['TT']),
         'multiline': 'multiline() {{\n\t{0}\n}}\n'.format(alias_dict['multiline'].replace('\n', '\n\t'))
     }
 

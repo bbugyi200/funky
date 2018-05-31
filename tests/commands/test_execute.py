@@ -1,5 +1,6 @@
 """Tests for execute command."""
 
+import re
 import subprocess as sp
 import unittest.mock as mock
 
@@ -26,12 +27,17 @@ def execute_cmd(args, execute_expected):
     cmd = commands.Execute(args.alias, cmd_args=args.cmd_args, color=args.color)
     expected = execute_expected[args.alias]
 
-    if '$1' in expected:
-        try:
-            expected = expected.replace('$1', args.cmd_args[0])
-        except IndexError as e:
-            raise ValueError("The args.cmd_args array should not be nonempty when $1 exists in "
-                             "test command string!")
+    if '\n' not in expected:
+        if '$1' in expected:
+            try:
+                expected = expected.replace('$1', args.cmd_args[0])
+            except IndexError as e:
+                raise RuntimeError('Not enough simulated command-line arguments.')
+        elif any(x in expected for x in ['$@', '$*']):
+            expected = expected.replace('$@', ' '.join(args.cmd_args))
+            expected = expected.replace('$*', ' '.join(args.cmd_args))
+        else:
+            expected = '{} {}'.format(expected, ' '.join(args.cmd_args))
 
     cmd.expected = expected
     return cmd
@@ -42,7 +48,7 @@ def execute_expected(alias_dict):
     """Expected results for execute command tests."""
     execute_expected = {}
     for alias in alias_dict:
-        expected = alias_dict[alias].replace('echo ', '').strip('"').replace('"\n"', '\n')
+        expected = alias_dict[alias].replace('echo ', '')
         execute_expected[alias] = expected
 
     return execute_expected

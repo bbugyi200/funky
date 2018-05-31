@@ -30,15 +30,15 @@ def fake_db(alias_dict):
 
 @pytest.fixture
 def alias_dict():
-    alias_dict = {'multiline': 'echo "Hello"\necho "world!"',
-                  'T': 'echo "RUN $1!"',
-                  'TT': 'echo "RUN TESTS!"'}
+    alias_dict = {'multiline': 'echo Hello\necho world!',
+                  'T': 'echo RUN $1',
+                  'TT': 'echo CHICKEN'}
     return alias_dict
 
 
 @pytest.fixture(params=[
     ('T', ['PROGRAM'], False),
-    ('TT', [], False),
+    ('TT', ['WING'], False),
     ('multiline', [], False)
 ], ids=['T', 'TT', 'multiline'])
 def args(request):
