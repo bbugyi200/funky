@@ -51,6 +51,6 @@ setup(
     test_suite='tests',
     tests_require=['pytest'],
     url='https://github.com/bbugyi200/localalias',
-    version='2.0.1',
+    version='2.0.2',
     zip_safe=False,
 )
