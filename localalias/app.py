@@ -69,14 +69,14 @@ def _get_argparser():
             help='Remove an existing local alias/function.')
     action.add_argument('-e', _Actions.opt_map(_Actions.EDIT), dest='action', action='store_const',
             const=_Actions.EDIT,
-            help='Edit an existing local alias/function. If this command is given without '
-                 'an argument, the local .lshrc file will be opened using your default editor.')
+            help='Edit an existing local alias/function.')
     action.add_argument('-s', _Actions.opt_map(_Actions.SHOW), dest='action', action='store_const',
             const=_Actions.SHOW,
             help='Show an existing local alias/function. If this command is given without an '
                  'argument, all local aliases/functions in scope are displayed. (default action)')
     action.add_argument('-x', _Actions.opt_map(_Actions.EXECUTE), dest='action', action='store_const',
-            const=_Actions.EXECUTE, help='Execute an existing local alias/function.')
+            const=_Actions.EXECUTE,
+            help='Execute an existing local alias/function. This is typically not done manually.')
     action.set_defaults(action=_Actions.SHOW)
 
     parser.add_argument('cmd_args', nargs=argparse.REMAINDER,
@@ -130,7 +130,7 @@ def _validate_args(args):
         a ValueError exception is thrown.
     """
     try:
-        if args.action in [_Actions.ADD, _Actions.EXECUTE]:
+        if args.action in [_Actions.ADD, _Actions.EXECUTE, _Actions.EDIT]:
             assert args.alias is not None
         return args
     except AssertionError as e:

@@ -207,14 +207,8 @@ class Edit(Command):
             raise errors.AliasNotDefinedError(alias=self.alias)
 
         msg_fmt = 'Edited local alias "{}".'
-        if self.alias is None:
-            log.logger.debug('Running edit command for all defined aliases.')
-            for alias in sorted(self.alias_dict):
-                self.alias_dict[alias] = self.edit_alias(alias)
-                log.logger.info(msg_fmt.format(alias))
-        else:
-            self.alias_dict[self.alias] = self.edit_alias()
-            log.logger.info(msg_fmt.format(self.alias))
+        self.alias_dict[self.alias] = self.edit_alias()
+        log.logger.info(msg_fmt.format(self.alias))
         self.commit()
 
 

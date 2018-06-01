@@ -21,7 +21,7 @@ def test_main(cmd_map, argv, action, debug, alias):
     cmd_map.assert_called_once_with(argparse.Namespace(alias=alias, cmd_args=[], color=False, action=action, debug=debug))
 
 
-@pytest.mark.parametrize('argv', [['-a'], ['-x']])
+@pytest.mark.parametrize('argv', [['-a'], ['-x'], ['-e']])
 @mock.patch('localalias.utils.log.logger')
 def test_main_failure(logger, argv):
     """Tests that bad arguments result in a nonzero exit status."""

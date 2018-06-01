@@ -26,21 +26,6 @@ def edit_cmd(args):
     return cmd
 
 
-@mock.patch('localalias.commands.Edit.edit_alias')
-def test_edit_all(edit_alias, cleandir, fake_db, alias_dict):
-    """Tests edit command when no specific alias is given."""
-    def new_cmd_string(old):
-        return '{}: Edited Command String'.format(old)
-
-    edit_alias.side_effect = new_cmd_string
-    edit_cmd = commands.Edit(None)
-    edit_cmd()
-
-    loaded_aliases = shared.load_aliases()
-    for alias in alias_dict:
-        assert loaded_aliases[alias] == new_cmd_string(alias)
-
-
 @mock.patch('localalias.commands.tempfile')
 @mock.patch('localalias.commands.sp')
 def test_edit_format(sp, tempfile, cleandir, fake_db, alias_dict):
