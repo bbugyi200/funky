@@ -8,6 +8,6 @@
    }
 
    .wy-table-responsive {
-      overflow: scroll !important;
+      overflow: visible !important;
    }
 }

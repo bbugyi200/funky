@@ -1,5 +1,7 @@
 .. highlight:: shell
 
+.. _install:
+
 ============
 Installation
 ============
@@ -50,6 +52,7 @@ Once you have a copy of the source, you can install it with:
 .. _Github repo: https://github.com/bbugyi200/localalias
 .. _tarball: https://github.com/bbugyi200/localalias/tarball/master
 
+.. _install-additional:
 
 Additional Steps Required
 -------------------------
@@ -82,15 +85,6 @@ to
 See oh-my-zsh's `documentation <https://github.com/robbyrussell/oh-my-zsh/wiki/Customization/>`_
 for more information.
 
-If you do NOT have oh-my-zsh installed, you can simply copy ``localalias.zsh`` to a location of
-your choosing and source it into your ``.zshrc`` file. For example, assuming you chose to copy
-the file to ``~/.zsh``, you would add the following line to ``.zshrc``:
-
-.. code-block:: shell
-
-   source ~/.zsh/localalias.zsh
-
-|
 
 .. important::
    If you have `oh-my-zsh`_ installed, the ``localalias.zsh`` file should have been automatically
@@ -102,6 +96,15 @@ the file to ``~/.zsh``, you would add the following line to ``.zshrc``:
 
    during the installation process.  If for some reason this failed to occur, however, you **must**
    perform this step manually or the plugin will NOT work.
+
+
+If you do NOT have `oh-my-zsh`_ installed, you can simply copy ``localalias.zsh`` to a location of
+your choosing and source it into your ``.zshrc`` file. For example, assuming you chose to copy
+the file to ``~/.zsh``, you would add the following line to your ``.zshrc``:
+
+.. code-block:: shell
+
+   source ~/.zsh/localalias.zsh
 
 .. _oh-my-zsh: https://github.com/robbyrussell/oh-my-zsh
 

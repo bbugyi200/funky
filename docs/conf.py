@@ -78,6 +78,9 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 html_sidebars = {'**': ['about.html', 'navigation.html', 'relations.html', 'searchbox.html']}
 
+# If true, links to the reST sources are added to the pages.
+html_show_sourcelink = False
+
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
 
