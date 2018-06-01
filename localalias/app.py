@@ -13,8 +13,6 @@ from localalias import commands
 from localalias import errors
 from localalias.utils import log
 
-_ALIAS_METAVAR = 'LocalAliasName'
-
 
 def main(argv=None):
     try:
@@ -55,8 +53,7 @@ def _get_argparser():
         argparse.ArgumentParser object.
     """
     parser = argparse.ArgumentParser(prog='localalias', description=localalias.__doc__)
-    parser.add_argument('alias', nargs='?', default=None, metavar=_ALIAS_METAVAR,
-            help='Name of the local alias/function.')
+    parser.add_argument('alias', nargs='?', default=None, help='Name of the local alias/function.')
     parser.add_argument('-d', '--debug', action='store_true', help="Enable debug mode.")
     parser.add_argument('-c', '--color', action='store_true', help="Colorize output.")
 
@@ -79,7 +76,7 @@ def _get_argparser():
             help='Execute an existing local alias/function. This is typically not done manually.')
     action.set_defaults(action=_Actions.SHOW)
 
-    parser.add_argument('cmd_args', nargs=argparse.REMAINDER,
+    parser.add_argument('cmd_args', nargs=argparse.REMAINDER, metavar='args',
             help='Captures variable number of command-line arguments meant for local alias. These '
                  'arguments are only applicable when used with the {} '
                  'option.'.format(_Actions.opt_map(_Actions.EXECUTE)))
@@ -134,5 +131,5 @@ def _validate_args(args):
             assert args.alias is not None
         return args
     except AssertionError as e:
-        msg_fmt = 'You must also provide a {} when using the {} option.'
-        raise errors.ArgumentError(msg_fmt.format(_ALIAS_METAVAR, _Actions.opt_map(args.action)))
+        msg_fmt = 'You must also provide an alias to target when using the {} option.'
+        raise errors.ArgumentError(msg_fmt.format(_Actions.opt_map(args.action)))

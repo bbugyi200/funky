@@ -16,7 +16,7 @@ Description
 
 With bash/zsh, once an alias is set, it cannot be reused. If you want to define a new command using
 an alias, you have to choose a new alias name. This forces you to define many aliases, some of them
-with very obscure names that you will never remember.  ``localalias`` solves this problem by
+with very obscure names that you will never remember. localalias solves this problem by
 providing an additional level of abstraction to your shell's default alias design scheme.
 
 Local aliases allow you to abstract away from whatever project you are working on, by giving you
