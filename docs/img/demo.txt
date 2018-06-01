@@ -1,5 +1,5 @@
 ################################################################################################################################
-###### The commands run to produce demo.gif. Used with https://github.com/bbugyi200/scripts/blob/master/bin/main/autotype ######
+###### The commands run to produce demo.gif. Used with https://github.com/bbugyi200/scripts/blob/master/bin/main/autodemo ######
 ################################################################################################################################
 <<2>>((50))You are watching a demo for localalia((1000))s...[CLEAR]((75))A light-weight shell wrapper that allows you to create per-directoy command aliase((1000))s...[CLEAR]Ready for the demo?<<1>>[CLEAR]Here we go! :)<<1>>[CLEAR]((150))la -a go
 iprintf "Lets go to the %s"<<0.5>>@:wq
