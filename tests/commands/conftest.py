@@ -1,6 +1,7 @@
 import collections
 import json
 import os
+import shutil
 import tempfile
 
 import pytest
@@ -13,6 +14,8 @@ def cleandir():
     """Run tests in an empty directory."""
     newpath = tempfile.mkdtemp()
     os.chdir(newpath)
+    yield
+    shutil.rmtree(newpath)
 
 
 @pytest.fixture
