@@ -1,0 +1,25 @@
+################################################################################################################################
+###### The commands run to produce demo.gif. Used with https://github.com/bbugyi200/scripts/blob/master/bin/main/autotype ######
+################################################################################################################################
+<<2>>((50))You are watching a demo for localalia((1000))s...[CLEAR]((75))A light-weight shell wrapper that allows you to create per-directoy command aliase((1000))s...[CLEAR]Ready for the demo?<<1>>[CLEAR]Here we go! :)<<1>>[CLEAR]((150))la -a go
+iprintf "Lets go to the %s"<<0.5>>@:wq
+<<0.5>>la -a run
+ifor[TAB]<<0.5>>5[TAB]<<0.5>>printf "COUNT: %s\n" $((i+1))
+<<0.5>>sleep 0.5@<<0.5>>joecho "BOOM!"<<0.5>>@:wq
+go MALL
+go PARK
+go MOVIES
+run
+<<3>>((50))clear
+la
+<<2>>((50))clear
+la -e go
+f";i and the %s<<1>>@:wq
+go MALL MOVIES
+<<2>>((50))clear
+la -r go
+la -r run
+<<2>>((50))clear
+((25))Couldn't follow all that?<<1>>[CLEAR]Don't sweat it. <<1>>It's all in the docs! :)<<1>>[CLEAR]((150))la -h
+<<3>>((25))clear
+

@@ -104,7 +104,7 @@ class Show(Command):
 
         print(final_output)
 
-    def show_starts_with(self, prefix=''):
+    def show_search(self, prefix=''):
         """Prints all aliases that start with @prefix to stdout."""
         log.logger.debug('Running show command for all defined aliases.')
         sorted_aliases = sorted([alias for alias in self.alias_dict if alias.startswith(prefix)])
@@ -130,9 +130,9 @@ class Show(Command):
             raise errors.AliasNotDefinedError()
 
         if self.alias is None:
-            self.show_starts_with()
+            self.show_search()
         else:
-            self.show_starts_with(self.alias)
+            self.show_search(self.alias)
 
 
 class Edit(Command):
@@ -248,7 +248,7 @@ class Remove(Show):
 
         if self.alias_dict:
             print()
-            self.show_starts_with()
+            self.show_search()
         else:
             log.logger.debug('Removing {}.'.format(self.LOCALALIAS_DB_FILENAME))
             os.remove(self.LOCALALIAS_DB_FILENAME)
