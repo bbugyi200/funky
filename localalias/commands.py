@@ -165,6 +165,7 @@ class Edit(Command):
 
         tf = tempfile.NamedTemporaryFile(prefix='{}.'.format(alias),
                                          suffix='.sh',
+                                         dir=os.getcwd(),
                                          mode='w',
                                          delete=False)
         if alias in self.alias_dict:
