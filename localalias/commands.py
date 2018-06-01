@@ -30,11 +30,10 @@ class Command(metaclass=ABCMeta):
     """
     LOCALALIAS_DB_FILENAME = '.localalias'
 
-    def __init__(self, alias, *, cmd_args=[], color=False, only=False):
+    def __init__(self, alias, *, cmd_args=[], color=False):
         self.alias = alias
         self.cmd_args = cmd_args
         self.color = color
-        self.only = only
         try:
             with open(self.LOCALALIAS_DB_FILENAME, 'r') as f:
                 self.alias_dict = json.load(f)
@@ -146,10 +145,7 @@ class Show(Command):
         if self.alias is None:
             self.show_search()
         else:
-            if self.only:
-                self.show(self.alias)
-            else:
-                self.show_search(self.alias)
+            self.show_search(self.alias)
 
 
 class Edit(Command):
@@ -230,12 +226,9 @@ class Edit(Command):
                 self.alias_dict[alias] = self.edit_alias(alias)
                 log.logger.info(msg_fmt.format(alias))
         else:
-            if self.only:
-                self.alias_dict[self.alias] = self.edit_alias()
-            else:
-                for alias in self.search(self.alias):
-                    self.alias_dict[alias] = self.edit_alias(alias)
-                    log.logger.info(msg_fmt.format(alias))
+            for alias in self.search(self.alias):
+                self.alias_dict[alias] = self.edit_alias(alias)
+                log.logger.info(msg_fmt.format(alias))
 
         self.commit()
 

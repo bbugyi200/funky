@@ -18,7 +18,7 @@ def test_main(cmd_map, argv, action, debug, alias):
     """Tests that arguments are parsed correctly."""
     cmd_map.return_value = mock.Mock()
     app.main(argv)
-    cmd_map.assert_called_once_with(argparse.Namespace(alias=alias, cmd_args=[], color=False, action=action, debug=debug, only=False))
+    cmd_map.assert_called_once_with(argparse.Namespace(alias=alias, cmd_args=[], color=False, action=action, debug=debug))
 
 
 @pytest.mark.parametrize('argv', [['-a'], ['-x']])

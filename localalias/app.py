@@ -59,9 +59,6 @@ def _get_argparser():
             help='Name of the local alias/function.')
     parser.add_argument('-d', '--debug', action='store_true', help="Enable debug mode.")
     parser.add_argument('-c', '--color', action='store_true', help="Colorize output.")
-    parser.add_argument('-o', '--only', action='store_true',
-            help='Disable alias prefix matching, which is enabled by default for the '
-            '{} and {} options.'.format(_Actions.opt_map(_Actions.EDIT), _Actions.opt_map(_Actions.SHOW)))
 
     action = parser.add_mutually_exclusive_group()
     action.add_argument('-a', _Actions.opt_map(_Actions.ADD), dest='action', action='store_const',
@@ -122,7 +119,7 @@ class _Actions(enum.Enum):
                        cls.EXECUTE: commands.Execute,
                        cls.SHOW: commands.Show}[args.action]
 
-        return cmd_builder(args.alias, cmd_args=args.cmd_args, color=args.color, only=args.only)
+        return cmd_builder(args.alias, cmd_args=args.cmd_args, color=args.color)
 
 
 def _validate_args(args):
