@@ -2,7 +2,7 @@ Usage
 =====
  
 .. argparse::
-    :filename: ../localalias/app.py
+    :module: localalias.app
     :func: _get_argparser
     :prog: localalias
     :nodefaultconst:
@@ -13,8 +13,8 @@ Usage
     created. Once created, a local alias can be used just like any other command or normal alias,
     as long as you have activated the provided shell extension (see :ref:`install-additional`).
 
-Additional Information
-----------------------
+Additional Notes
+----------------
 
 Note that while this documentation (and the project's name) refers to the command definitions
 created by ``la`` as "aliases", they actually behave more like shell functions. This makes them
