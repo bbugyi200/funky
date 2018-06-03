@@ -26,6 +26,8 @@ class Command(metaclass=ABCMeta):
 
     Args:
         alias (str): local alias name.
+        cmd_ars (list): list of command-line arguments to be passed to the alias' command
+            definition.
         color (bool): if True, colorize output (if command produces output).
     """
     LOCALALIAS_DB_FILENAME = '.localalias'

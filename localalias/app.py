@@ -124,7 +124,7 @@ def _validate_args(args):
 
     Returns:
         @args unchanged (argparse.Namespace object), if all validation checks pass. Otherwise,
-        a ValueError exception is thrown.
+        an exception is thrown.
     """
     try:
         if args.action in [_Actions.ADD, _Actions.EXECUTE, _Actions.EDIT]:

@@ -2,7 +2,7 @@
 localalias
 ##########
 
-**A light-weight shell wrapper that allows you to create per-directoy command aliases**
+**A light-weight shell wrapper that allows you to create per-directoy command aliases.**
 
 Demonstration
 =============

@@ -1,7 +1,8 @@
 ################################################################################################################################
 ###### The commands run to produce demo.gif. Used with https://github.com/bbugyi200/scripts/blob/master/bin/main/autodemo ######
 ################################################################################################################################
-<<2>>((50))This is a demo for localalias.<<1>>[CLEAR]((75))A light-weight shell wrapper that allows you to create per-directoy command aliases.<<3>>[CLEAR]((150))cd foo
+<<2>>((50))This is a demo for localalias.<<1>>[CLEAR]((75))A light-weight shell wrapper that allows you to create per-directoy command aliases.<<3>>[CLEAR]((150))mkdir foo bar
+cd foo
 la -a run
 ifor[TAB]<<0.5>>5[TAB]<<0.5>>printf "COUNT: %s\n" $((i+1))
 <<0.5>>sleep 0.5@<<0.5>>joecho "FOOOOOOO!"<<0.5>>@:wq
@@ -27,5 +28,5 @@ cd ../bar
 la -r run
 <<1.5>>((50))clear && cd
 ((25))Having trouble keeping up?<<1>>[CLEAR]Don't sweat it. It's all in the docs! :)<<1>>[CLEAR]((150))la -h
-<<3>>((25))clear
+<<3>>((25))clear && rmdir foo bar
 
