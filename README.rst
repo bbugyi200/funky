@@ -2,17 +2,23 @@
 localalias
 ##########
 
-**A light-weight shell wrapper that allows you to create per-directoy command aliases.**
+*Stop killing your fingers typing out the same long commands! Local aliases can help you achieve a whole new level
+of lazy!*
 
 Demonstration
 =============
 
 .. image:: https://github.com/bbugyi200/localalias/blob/master/docs/img/demo.gif?raw=true
 
-|
+NOTE: In the above demonstration, I have aliased ``la`` to ``localalias --color``. I strongly
+recommend using this alias or one similar to it (since a primary goal of this project is to
+reduce keystrokes).
 
 Description
 ===========
+
+localalias is **a light-weight shell wrapper that allows you to create per-directoy command
+aliases.**
 
 With bash/zsh, once an alias is set, it cannot be reused. If you want to define a new command using
 an alias, you have to choose a new alias name. This forces you to define many aliases, some of them
@@ -27,9 +33,6 @@ the top-level directory of the localalias project directory, running ``r`` is eq
 ``r`` will run a different command---one corresponding to the new project.  I use multiple patterns
 like this to simplify my own workflow: ``t`` runs the tests, ``b`` builds the project, ``v`` opens
 up files in ``vim``. [#]_
-
-TLDR: don't kill your fingers typing long commands. Local aliases can help you achieve a whole
-new level of lazy!
 
 .. [#] I normally use multiple variations of this last one: ``v`` opens up the most active files (the ones I am most likely to want to edit), ``vt`` opens up test files, ``vd`` opens up doc files, etc..
 
