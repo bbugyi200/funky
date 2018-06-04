@@ -53,27 +53,27 @@ def _get_argparser():
         argparse.ArgumentParser object.
     """
     parser = argparse.ArgumentParser(prog='localalias', description=localalias.__doc__)
-    parser.add_argument('alias', nargs='?', default=None, help='Name of the local alias/function.')
+    parser.add_argument('alias', nargs='?', default=None, help='Name of the local alias.')
     parser.add_argument('-d', '--debug', action='store_true', help="Enable debug mode.")
     parser.add_argument('-c', '--color', action='store_true', help="Colorize output.")
 
     action = parser.add_mutually_exclusive_group()
     action.add_argument('-a', _Actions.opt_map(_Actions.ADD), dest='action', action='store_const',
             const=_Actions.ADD,
-            help='Add a new local alias/function.')
+            help='Add a new local alias.')
     action.add_argument('-r', _Actions.opt_map(_Actions.REMOVE), dest='action', action='store_const',
             const=_Actions.REMOVE,
-            help='Remove an existing local alias/function.')
+            help='Remove an existing local alias.')
     action.add_argument('-e', _Actions.opt_map(_Actions.EDIT), dest='action', action='store_const',
             const=_Actions.EDIT,
-            help='Edit an existing local alias/function.')
+            help='Edit an existing local alias.')
     action.add_argument('-s', _Actions.opt_map(_Actions.SHOW), dest='action', action='store_const',
             const=_Actions.SHOW,
-            help='Show an existing local alias/function. If this command is given without an '
+            help='Show an existing local alias. If this command is given without an '
                  'argument, all local aliases/functions in scope are displayed. (default action)')
     action.add_argument('-x', _Actions.opt_map(_Actions.EXECUTE), dest='action', action='store_const',
             const=_Actions.EXECUTE,
-            help='Execute an existing local alias/function. This is typically not done manually.')
+            help='Execute an existing local alias. This is typically not done manually.')
     action.set_defaults(action=_Actions.SHOW)
 
     parser.add_argument('cmd_args', nargs=argparse.REMAINDER, metavar='args',
