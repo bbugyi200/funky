@@ -2,8 +2,8 @@
 localalias
 ##########
 
-*Stop killing your fingers typing out the same long commands! Local aliases can help you achieve a whole new level
-of lazy!*
+*Don't kill your fingers by typing out long commands! Local aliases can help you achieve a whole
+new level of lazy!*
 
 Demonstration
 =============
@@ -41,7 +41,7 @@ up files in ``vim``. [#]_
 Documentation
 =============
 
-For more details about localalias, please refer to the project's official `documentation`_.
+For more information, please refer to this project's official `documentation`_.
 
 There you will also find instructions for `installation`_ and tips for general `usage`_.
 
