@@ -1,8 +1,3 @@
-# unalias 'la' which is bound as an entry point for localalias
-if [[ $(type -w la) == 'la: alias' ]]; then
-    unalias la
-fi
-
 # reroutes command not found errors to localalias
 command_not_found_handler() {
     CMD=$1; shift

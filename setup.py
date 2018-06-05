@@ -39,7 +39,6 @@ setup(
     entry_points={
         'console_scripts': [
             'localalias = localalias.app:main',
-            'la = localalias.app:main'
         ]
     },
     license="MIT license",
