@@ -3,13 +3,24 @@
 import errno
 import getpass
 import os
+import shutil
 
-_package_dir = os.path.dirname(os.path.realpath(__file__))
+from localalias.utils import xdg
+
+_config_dir = xdg.getdir('config')
+_this_dir = os.path.dirname(os.path.realpath(__file__))
 _user = getpass.getuser()
 
 
 def run():
+    _copy_shell_ext()
     _install_omz_plugin()
+
+
+def _copy_shell_ext():
+    src = '{}/shell/localalias.sh'.format(_this_dir)
+    dest = '{}/localalias.sh'.format(_config_dir)
+    shutil.copyfile(src, dest)
 
 
 def _install_omz_plugin():
@@ -32,7 +43,7 @@ def _install_omz_plugin():
 
     _create_dir(ohmyzsh_dir + '/plugins/localalias')
 
-    src = '{}/localalias/shell/localalias.sh'.format(os.path.dirname(_package_dir))
+    src = '{}/localalias.sh'.format(_config_dir)
     dest = '{}/plugins/localalias/{}'.format(ohmyzsh_dir, 'localalias.plugin.zsh')
 
     try:

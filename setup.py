@@ -44,7 +44,6 @@ setup(
     license="MIT license",
     long_description=readme,
     include_package_data=True,
-    package_data={'localalias': ['shell/*']},
     keywords='localalias',
     name='localalias',
     packages=find_packages(include=['localalias', 'localalias.utils']),
