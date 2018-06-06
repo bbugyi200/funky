@@ -7,10 +7,11 @@ import shutil
 
 
 def run():
-    _install_zsh_plugin()
+    package_dir = os.path.dirname(os.path.realpath(__file__))
+    _install_zsh_plugin(package_dir)
 
 
-def _install_zsh_plugin():
+def _install_zsh_plugin(package_dir):
     """Copys zsh plugin to oh-my-zsh plugin dir (if oh-my-zsh is installed)."""
     zsh_custom_dirs = ['/home/{}/.oh-my-zsh/custom'.format(getpass.getuser()),
                        '/usr/share/oh-my-zsh/custom']
@@ -24,15 +25,19 @@ def _install_zsh_plugin():
     if ohmyzsh_dir is None:
         return
 
+    _create_dir(ohmyzsh_dir + '/plugins/localalias')
+
+    src = '{}/localalias/shell/localalias.sh'.format(os.path.dirname(package_dir))
+    dest = '{}/plugins/localalias/{}'.format(ohmyzsh_dir, 'localalias.plugin.zsh')
+    shutil.copyfile(src, dest)
+
+
+def _create_dir(directory):
     try:
-        os.makedirs(ohmyzsh_dir + '/plugins/localalias')
+        os.makedirs(directory)
     except OSError as e:
         if e.errno != errno.EEXIST:
             return
-
-    src = '{}/zsh/localalias.zsh'.format(os.path.dirname(os.path.realpath(__file__)))
-    dest = '{}/plugins/localalias/{}'.format(ohmyzsh_dir, 'localalias.plugin.zsh')
-    shutil.copyfile(src, dest)
 
 
 if __name__ == "__main__":
