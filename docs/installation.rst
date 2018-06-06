@@ -1,5 +1,8 @@
 .. highlight:: shell
 
+.. role:: shell(code)
+   :language: bash
+
 .. _install:
 
 ============
@@ -58,19 +61,19 @@ Additional Installation Steps
 -----------------------------
 
 For the best experience, localalias needs to be integrated into your preferred shell environment
-using a shell script/plugin. There are multiple ways to achieve this.
+using a shell script/plugin. The ideal way to achieve this is through the use of `oh-my-zsh`_'s
+plugin functionality. But, if you do not use `oh-my-zsh`_, you may also source the provided shell
+extension directly into your shell's configuration file. Both methods are described in more detail
+below.
 
-zsh
-^^^
+Oh My Zsh
+^^^^^^^^^
 
-A shell script by the name of ``localalias.zsh`` should have been included with the installation
-(it can also be found `here`__).  If you use `oh-my-zsh`_, the easiest way to enable this
-script is by adding it as a plugin. You should be able to accomplish this simply by adding
-localalias to your list of plugins, which can be found in your ``.zshrc`` file. If you were only
-using the ``foo`` and ``bar`` plugins before installing localalias, for example, you would change
-the plugins line from
-
-__  https://github.com/bbugyi200/localalias/blob/master/scripts/zsh/localalias.zsh
+If you use `oh-my-zsh`_, the easiest way to integrate localalias into your shell is by enabling the
+``localalias`` plugin. You should be able to accomplish this simply by adding ``localalias`` to
+your list of plugins, which can usually be found in your ``.zshrc`` file. If you were only using
+the ``foo`` and ``bar`` plugins before installing localalias, for example, you would change the
+plugins line from
 
 .. code-block:: shell
 
@@ -86,9 +89,10 @@ See oh-my-zsh's `documentation <https://github.com/robbyrussell/oh-my-zsh/wiki/C
 for more information.
 
 
-.. important::
-   If you have `oh-my-zsh`_ installed, the ``localalias.zsh`` file should have been automatically
-   copied to 
+.. important:: 
+    
+   If you have `oh-my-zsh`_ installed, the ``localalias.sh`` script, described in the
+   :ref:`install-bash-zsh` section, should have been automatically copied to 
 
    .. code-block:: shell
 
@@ -97,19 +101,27 @@ for more information.
    during the installation process.  If for some reason this failed to occur, however, you **must**
    perform this step manually or the plugin will NOT work.
 
+.. _install-bash-zsh:
 
-If you do NOT have `oh-my-zsh`_ installed, you can simply copy ``localalias.zsh`` to a location of
-your choosing and source it into your ``.zshrc`` file. For example, assuming you chose to copy
-the file to ``~/.zsh``, you would add the following line to your ``.zshrc``:
+bash / zsh
+^^^^^^^^^^
+
+A shell script by the name of ``localalias.sh`` should have been copied to
 
 .. code-block:: shell
 
-   source ~/.zsh/localalias.zsh
+   $XDG_CONFIG_HOME/localalias/localalias.sh
 
+during the installation process (it can also be found `here`__). If you do NOT have `oh-my-zsh`_
+installed, you can integrate localalias with your shell by sourcing the ``localalias.sh`` script
+into your shell's configuration file. If the script was copied to
+``~/.config/localalias/localalias.sh`` (its default location), for example, you would add the
+following line to your ``.zshrc`` and/or ``.bashrc`` file:
+
+.. code-block:: shell
+
+   source ~/.config/localalias/localalias.sh
+
+
+__  https://github.com/bbugyi200/localalias/blob/master/scripts/shell/localalias.sh
 .. _oh-my-zsh: https://github.com/robbyrussell/oh-my-zsh
-
-bash
-^^^^
-
-Bash is not yet officially supported. A bash equivalent to ``localalias.zsh`` should be very simple
-to implement on your own, however, as long as you are atleast vaguely familiar with bash scripting.
