@@ -116,7 +116,7 @@ during the installation process (it can also be found `here`__). If you do NOT h
 installed, you can integrate localalias with your shell by sourcing the ``localalias.sh`` script
 into your shell's configuration file. If the script was copied to
 ``~/.config/localalias/localalias.sh`` (its default location), for example, you would add the
-following line to your ``.zshrc`` and/or ``.bashrc`` file:
+following line to your ``.zshrc`` or ``.bashrc`` file:
 
 .. code-block:: shell
 

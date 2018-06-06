@@ -21,9 +21,10 @@ _command_not_found_template() {
             return $?
         else
             printf "$error_fmt" "$alias"
-            return $exit_status
         fi
     fi
+
+    return $exit_status
 }
 
 case "${SHELL}" in

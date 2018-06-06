@@ -1,1 +1,1 @@
-"""Utility scripts for localalias."""
+"""Various scripts used by localalias."""
