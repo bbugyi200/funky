@@ -20,7 +20,6 @@ _command_not_found_template() {
             orig_command_not_found_handler "$alias"
             return $?
         else
-            echo "$error_fmt"
             printf "$error_fmt" "$alias"
             return $exit_status
         fi
