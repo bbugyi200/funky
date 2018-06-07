@@ -62,12 +62,11 @@ Additional Installation Steps
 
 For the best experience, localalias needs to be integrated into your preferred shell environment
 using a shell script/plugin. The ideal way to achieve this is through the use of `oh-my-zsh`_'s
-plugin functionality. But, if you do not use `oh-my-zsh`_, you may also source the provided shell
-extension directly into your shell's configuration file. Both methods are described in more detail
-below.
+plugin functionality; however, you may also source the provided shell extension directly into your
+shell's configuration file. Both of these methods are described in more detail below.
 
-Oh My Zsh
-^^^^^^^^^
+Oh-My-Zsh Plugin
+^^^^^^^^^^^^^^^^
 
 If you use `oh-my-zsh`_, the easiest way to integrate localalias into your shell is by enabling the
 ``localalias`` plugin. You should be able to accomplish this simply by adding ``localalias`` to
@@ -91,20 +90,26 @@ for more information.
 
 .. important:: 
     
-   If you have `oh-my-zsh`_ installed, the ``localalias.sh`` script, described in the
-   :ref:`install-bash-zsh` section, should have been automatically copied to 
+   If you have `oh-my-zsh`_ installed, a symbolic link should have been created from  the
+   ``localalias.sh`` script---described in the :ref:`install-bash-zsh` section---to 
 
    .. code-block:: shell
 
         $ZSH_CUSTOM/plugins/localalias/localalias.plugin.zsh
 
    during the installation process.  If for some reason this failed to occur, however, you **must**
-   perform this step manually or the plugin will NOT work.
+   perform this step manually or the plugin will NOT work. On most systems, this can be achieved by
+   running the following commands in sequence:
+
+   .. code-block:: shell
+
+        mkdir ~/.oh-my-zsh/custom/plugins/localalias        
+        ln -s ~/.config/localalias/localalias.sh ~/.oh-my-zsh/custom/plugins/localalias/localalias.plugin.zsh         
 
 .. _install-bash-zsh:
 
-bash / zsh
-^^^^^^^^^^
+Manual Integration
+^^^^^^^^^^^^^^^^^^
 
 A shell script by the name of ``localalias.sh`` should have been copied to
 
@@ -113,8 +118,8 @@ A shell script by the name of ``localalias.sh`` should have been copied to
    $XDG_CONFIG_HOME/localalias/localalias.sh
 
 during the installation process (it can also be found `here`__). If you do NOT have `oh-my-zsh`_
-installed, you can integrate localalias with your shell by sourcing the ``localalias.sh`` script
-into your shell's configuration file. If the script was copied to
+installed, you can integrate localalias into your shell by sourcing the ``localalias.sh`` script
+into your shell's configuration file. Assuming the script was copied to
 ``~/.config/localalias/localalias.sh`` (its default location), for example, you would add the
 following line to your ``.zshrc`` or ``.bashrc`` file:
 
