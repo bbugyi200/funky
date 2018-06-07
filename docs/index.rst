@@ -9,3 +9,4 @@
    installation
    usage
    contributing
+   changelog

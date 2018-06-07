@@ -1,0 +1,60 @@
+==========
+Change Log
+==========
+
+v2.0.5 (2018-06-06)
+-------------------
+
+Fixed:
+
+* Executed command's exit status not preserved (reintroduced this bug with v2.0.3).
+
+v2.0.4 (2018-06-06)
+-------------------
+
+Fixed:
+
+* Double printout of "command not found" message (caused by debug message left active in v2.0.3).
+
+v2.0.3 (2018-06-06)
+-------------------
+
+Added:
+
+* Bash support.
+
+Changed:
+
+* ``la`` is no longer an entry point. It is now only a recommended alias.
+* localalias.sh is now copied to ``$XDG_CONFIG_HOME/localalias/localalias.sh`` for easy access.
+* localalias.sh is now symlinked to oh-my-zsh custom plugin directory instead of being copied.
+
+v2.0.2 (2018-06-01)
+-------------------
+
+Changed:
+
+* Condensed show command output by grouping together single-line alias definitions.
+
+Fixed:
+
+* Alias arguments are handled intuitively again (without needing to explicitly append $@ to the definition).
+* Automatic la alias on some systems blocks entry point. It is now unaliased at install time.
+* Alias execution no longer masks exit status.
+
+v2.0.1 (2018-05-31)
+-------------------
+
+Fixed:
+
+* Repaired demonstration gif for PyPI project page.
+
+v2.0.0 (2018-05-31)
+-------------------
+
+Migration from bash script prototype to python project and uploaded to PyPI.
+
+v1.0.0 (2018-03-18)
+-------------------
+
+Prototype version. LocalAlias bash script.
