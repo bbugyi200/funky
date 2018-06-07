@@ -76,10 +76,18 @@ language = None
 # This patterns also effect to html_static_path and html_extra_path
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
-html_sidebars = {'**': ['about.html', 'navigation.html', 'relations.html', 'searchbox.html']}
+html_sidebars = {
+    '**': [
+        'about.html',
+        'github_button.html',
+        'navigation.html',
+        'relations.html',
+        'searchbox.html',
+    ]
+}
 
 # If true, links to the reST sources are added to the pages.
-html_show_sourcelink = False
+html_show_sourcelink = True
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
@@ -99,18 +107,14 @@ html_theme = 'alabaster'
 # theme further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {}
+html_theme_options = {
+    'description': localalias.__doc__,
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
-
-html_context = {
-    'css_files': [
-        '_static/custom.css'
-    ]
-}
 
 
 # -- Options for HTMLHelp output ---------------------------------------
@@ -170,6 +174,6 @@ texinfo_documents = [
      u'localalias Documentation',
      author,
      'localalias',
-     'A light-weight shell wrapper that allows you to create per-directoy command aliases.',
+     localalias.__doc__,
      'Miscellaneous'),
 ]

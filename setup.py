@@ -6,6 +6,7 @@
 from setuptools import setup, find_packages
 from setuptools.command.install import install
 
+import localalias
 from scripts import post_install
 
 
@@ -35,7 +36,7 @@ setup(
         'Programming Language :: Python :: 3.6',
     ],
     cmdclass={'install': PostInstallCommand},
-    description="A light-weight shell wrapper that allows you to create per-directoy command aliases.",
+    description=localalias.__doc__,
     entry_points={
         'console_scripts': [
             'localalias = localalias.app:main',

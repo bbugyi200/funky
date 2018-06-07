@@ -26,7 +26,7 @@ def _copy_shell_ext():
 def _install_omz_plugin():
     """Install oh-my-zsh Plugin
 
-    Creates symlink from localalias shell extension zsh plugin in oh-my-zsh plugin dir
+    Creates symlink from localalias shell extension to zsh plugin in oh-my-zsh plugin dir
     (if oh-my-zsh is installed).
     """
     zsh_custom_dirs = ['/home/{}/.oh-my-zsh/custom'.format(_user),
