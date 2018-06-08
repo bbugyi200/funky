@@ -3,8 +3,11 @@ python:
 - 3.6
 - 3.5
 - 3.4
-install: pip install -U tox-travis
+install: 
+    - pip install -U tox-travis
+    - pip install codecov
 script: tox
+after_success: codecov
 deploy:
   provider: pypi
   distributions: sdist

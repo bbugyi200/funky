@@ -1,0 +1,10 @@
+[run]
+source = localalias
+branch = true
+omit =
+    localalias/__main__.py
+    */__init__.py
+
+[report]
+exclude_lines =
+    if __name__ == ["']__main__["']:

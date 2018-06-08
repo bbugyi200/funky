@@ -16,6 +16,14 @@ Added:
     
 * Global aliases.
 
+v2.0.6 (2018-06-07)
+-------------------
+
+Fixed:
+
+* Automatic command-line arguments are no longer word-splitting for single-line alias definitions
+  without param arguments.
+
 v2.0.5 (2018-06-06)
 -------------------
 
