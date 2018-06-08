@@ -68,7 +68,7 @@ class Execute(Command):
             alias = self.alias
 
         log.logger.debug('Executing command string mapped to "{}" local alias.'.format(alias))
-        cmd_args = '"{}"'.format('" "'.join(self.cmd_args))
+        cmd_args = '"{}"'.format('" "'.join(self.cmd_args)) if self.cmd_args else ''
         cmd_string = self.alias_dict[alias]
 
         ps = sp.Popen(['bash', '-c', 'set -- {}\n{}'.format(cmd_args, cmd_string)])
@@ -199,7 +199,7 @@ class Edit(Command):
         if re.search(r'(\$[0-9@\*]|\n)', cmd_string):
             new_cmd_string = cmd_string
         else:
-            new_cmd_string = '{} $@'.format(cmd_string)
+            new_cmd_string = '{} "$@"'.format(cmd_string)
 
         return new_cmd_string
 

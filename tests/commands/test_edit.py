@@ -46,4 +46,4 @@ def test_edit_format(sp, tempfile, cleandir, fake_db, alias_dict):
     edit_cmd()
 
     loaded_aliases = shared.load_aliases()
-    assert loaded_aliases[some_alias] == '{} $@'.format(edited_cmd_string)
+    assert loaded_aliases[some_alias] == '{} "$@"'.format(edited_cmd_string)
