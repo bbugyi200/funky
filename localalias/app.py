@@ -55,6 +55,8 @@ def _get_argparser():
     parser = argparse.ArgumentParser(prog='localalias', description=localalias.__doc__)
     parser.add_argument('alias', nargs='?', default=None, help='Name of the local alias.')
     parser.add_argument('-d', '--debug', action='store_true', help="Enable debug mode.")
+    parser.add_argument('--version', action='version',
+            version='%(prog)s {}'.format(localalias.__version__))
     parser.add_argument('-c', '--color', action='store_true', help="Colorize output.")
 
     action = parser.add_mutually_exclusive_group()
