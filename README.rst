@@ -5,6 +5,12 @@ localalias
 *Don't kill your fingers by typing out long commands! Local aliases can help you achieve a whole
 new level of lazy!*
 
+.. image:: https://travis-ci.org/bbugyi200/localalias.svg?branch=master
+    :target: https://travis-ci.org/bbugyi200/localalias
+
+.. image:: https://codecov.io/gh/bbugyi200/localalias/branch/master/graph/badge.svg
+  :target: https://codecov.io/gh/bbugyi200/localalias
+
 Demonstration
 =============
 
