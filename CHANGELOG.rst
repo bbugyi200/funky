@@ -2,6 +2,20 @@
 Change Log
 ==========
 
+v2.2.0 (Unreleased)
+------------------
+
+Added:
+
+* Configuration file.
+
+v2.1.0 (Unreleased)
+------------------
+
+Added:
+    
+* Global aliases.
+
 v2.0.5 (2018-06-06)
 -------------------
 

@@ -42,7 +42,7 @@ arguments that you pass to it are automatically passed to the command definition
 aliases are just substituted with their definitions). For the purpose of emulating this behavior
 when it would typically be desired, an alias defined using a **single-line** command definition
 that **does NOT already contain argument variables** (e.g. does not contain ``$0``, ``$1``, ...,
-``$9``, ``$*``, or ``$@``) will automatically have the ``$@`` special parameter appended to its
+``$9``, ``$*``, or ``$@``) will automatically have the ``"$@"`` special parameter appended to its
 definition. [#]_ This allows for the same automatic argument handling that you would expect from an
 actual alias.
 
