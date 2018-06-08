@@ -11,6 +11,9 @@ new level of lazy!*
 .. image:: https://codecov.io/gh/bbugyi200/localalias/branch/master/graph/badge.svg
   :target: https://codecov.io/gh/bbugyi200/localalias
 
+.. image:: https://readthedocs.org/projects/localalias/badge/?version=latest&style=flat
+   :target: https://localalias.readthedocs.io/en/latest/?badge=latest
+
 Demonstration
 =============
 
