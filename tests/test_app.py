@@ -6,6 +6,7 @@ import unittest.mock as mock
 import pytest
 
 from localalias import app
+from localalias import errors
 
 
 @pytest.mark.parametrize('argv,action,debug,alias', [
@@ -19,6 +20,26 @@ def test_main(cmd_map, argv, action, debug, alias):
     cmd_map.return_value = mock.Mock()
     app.main(argv)
     cmd_map.assert_called_once_with(argparse.Namespace(alias=alias, cmd_args=[], color=False, action=action, debug=debug))
+
+
+@mock.patch('localalias.app._get_argparser')
+def test_main_exceptions(_get_argparser):
+    class TestError(Exception):
+        pass
+
+    def raise_error(opt):
+        if opt == 1:
+            raise errors.LocalAliasError(returncode=5)
+        elif opt == 2:
+            raise TestError('Test Exception')
+
+    _get_argparser.side_effect = lambda: raise_error(1)
+
+    assert app.main() == 5
+
+    _get_argparser.side_effect = lambda: raise_error(2)
+    with pytest.raises(TestError):
+        app.main()
 
 
 @pytest.mark.parametrize('argv', [['-a'], ['-x'], ['-e']])
