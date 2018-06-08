@@ -38,8 +38,7 @@ def main(argv=None):
         parser.print_usage()
         return 1
     except errors.LocalAliasError as e:
-        log.logger.debug('LocalAliasError thrown with exit status: {}'.format(e.returncode))
-        log.logger.error(str(e))
+        log.logger.error('%s (exit status: %s)', str(e), e.returncode)
         return e.returncode
     except Exception as e:
         log.logger.exception('{}: {}'.format(type(e).__name__, str(e)))

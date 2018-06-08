@@ -1,6 +1,6 @@
-##########
+==========
 localalias
-##########
+==========
 
 *Don't kill your fingers by typing out long commands! Local aliases can help you achieve a whole
 new level of lazy!*
@@ -15,7 +15,7 @@ new level of lazy!*
    :target: https://localalias.readthedocs.io/en/latest/?badge=latest
 
 Demonstration
-=============
+-------------
 
 .. image:: https://github.com/bbugyi200/localalias/blob/master/docs/img/demo.gif?raw=true
 
@@ -24,7 +24,7 @@ recommend using this alias or one similar to it (since a primary goal of this pr
 reduce keystrokes).
 
 Description
-===========
+-----------
 
 localalias is **a light-weight shell wrapper that allows you to create per-directoy command
 aliases.**
@@ -48,7 +48,7 @@ up files in ``vim``. [#]_
 .. inclusion-marker-do-not-remove
 
 Documentation
-=============
+-------------
 
 For more information, please refer to this project's official `documentation`_.
 

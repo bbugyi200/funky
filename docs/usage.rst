@@ -18,7 +18,7 @@ Additional Notes
 ----------------
 
 Use ``la`` over ``localalias``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 I strongly recommend against using the ``localalias`` command in its full form. It is preferrable
 to set an alias such as 
@@ -31,7 +31,7 @@ and use that in place of the official command. One of the primary goals of this 
 reduce keystrokes, so advocating the frequent use of a 10-letter command wouldn't make much sense.
 
 Aliases vs Functions
-^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~
 
 Note that while this documentation (and the project's name) refers to the command definitions
 created by ``la`` as "aliases", they actually behave more like shell functions. This makes them

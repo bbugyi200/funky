@@ -24,6 +24,7 @@ def test_main(cmd_map, argv, action, debug, alias):
 
 @mock.patch('localalias.app._get_argparser')
 def test_main_exceptions(_get_argparser):
+    """Tests that main handles exceptions appropriately."""
     class TestError(Exception):
         pass
 
@@ -34,7 +35,6 @@ def test_main_exceptions(_get_argparser):
             raise TestError('Test Exception')
 
     _get_argparser.side_effect = lambda: raise_error(1)
-
     assert app.main() == 5
 
     _get_argparser.side_effect = lambda: raise_error(2)

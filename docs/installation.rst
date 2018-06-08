@@ -66,7 +66,7 @@ plugin functionality; however, you may also source the provided shell extension 
 shell's configuration file. Both of these methods are described in more detail below.
 
 Oh-My-Zsh Plugin
-^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~
 
 If you use `oh-my-zsh`_, the easiest way to integrate localalias into your shell is by enabling the
 ``localalias`` plugin. You should be able to accomplish this simply by adding ``localalias`` to
@@ -109,7 +109,7 @@ for more information.
 .. _install-bash-zsh:
 
 Manual Integration
-^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~
 
 A shell script by the name of ``localalias.sh`` should have been copied to
 
