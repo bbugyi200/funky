@@ -11,8 +11,8 @@ v2.1.0 (2018-06-09)
 
 Added:
 
-* "rename" action command (``-R`` option).
-* ``--version`` option.
+* New "rename" action command (``-R`` option).
+* New ``--version`` option.
 
 Changed:
 
