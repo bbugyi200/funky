@@ -75,7 +75,7 @@ def _get_argparser():
         help='Edit an existing local alias.'
     )
     command_group.add_argument(
-        '-x', nargs='+', dest='command_args', action=_CmdAction, metavar='ARG',
+        '-x', nargs=argparse.REMAINDER, dest='command_args', action=_CmdAction, metavar='ARG',
         help='Execute an existing local alias. The first argument must be the alias to execute. '
              'The remaining arguments are optional. If given, they are passed on to the command '
              'that is to be executed. This is typically not done manually.'

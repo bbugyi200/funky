@@ -9,19 +9,20 @@ from localalias import app
 from localalias import errors
 
 
-@pytest.mark.parametrize('argv,alias,cmd_cls_string', [
-    (['-a', 'new_alias'], 'new_alias', 'Add'),
-    (['-e', 'new_alias'], 'new_alias', 'Edit'),
-    (['-r', 'new_alias'], 'new_alias', 'Remove')
+@pytest.mark.parametrize('argv,cmd_cls_string', [
+    (['-a', 'new_alias'], 'Add'),
+    (['-e', 'new_alias'], 'Edit'),
+    (['-r', 'new_alias'], 'Remove'),
+    (['-x', 't', '-x'], 'Execute'),
 ])
 @mock.patch('localalias.app.commands')
-def test_main(commands, argv, alias, cmd_cls_string):
+def test_main(commands, argv, cmd_cls_string):
     """Tests that arguments are parsed correctly."""
     setattr(commands, cmd_cls_string, mock.Mock())
     cmd_class = getattr(commands, cmd_cls_string)
     app.main(argv)
 
-    cmd_class.assert_called_once_with([alias], color=False)
+    cmd_class.assert_called_once_with(argv[1:], color=False)
     app._CmdAction.flag = None
 
 
