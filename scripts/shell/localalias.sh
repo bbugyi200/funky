@@ -30,7 +30,7 @@ _command_not_found_template() {
     error_fmt="$1"; shift
     alias="$1"; shift
 
-    localalias -x "$alias" -- "$@"
+    localalias -x "$alias" "$@"
     exit_status=$?
 
     if [[ $exit_status -eq 127 ]]; then

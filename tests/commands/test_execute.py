@@ -25,20 +25,20 @@ def test_execute(exit, subprocess, cleandir, fake_db, execute_cmd):
 @pytest.fixture
 def execute_cmd(args, execute_expected):
     """Builds and returns execute command."""
-    cmd = commands.Execute(args.alias, cmd_args=args.cmd_args, color=args.color)
-    expected = execute_expected[args.alias]
+    cmd = commands.Execute(args.args, color=args.color)
+    expected = execute_expected[args.args[0]]
 
     if '\n' not in expected:
         if '$1' in expected:
             try:
-                expected = expected.replace('$1', args.cmd_args[0])
+                expected = expected.replace('$1', args.args[1])
             except IndexError as e:
                 raise RuntimeError('Not enough simulated command-line arguments.')
         elif any(x in expected for x in ['$@', '$*']):
-            expected = expected.replace('$@', ' '.join(args.cmd_args))
-            expected = expected.replace('$*', ' '.join(args.cmd_args))
+            expected = expected.replace('$@', ' '.join(args.args[1:]))
+            expected = expected.replace('$*', ' '.join(args.args[1:]))
         else:
-            expected = '{} {}'.format(expected, ' '.join(args.cmd_args))
+            expected = '{} {}'.format(expected, ' '.join(args.args[1:]))
 
     cmd.expected = expected
     return cmd

@@ -9,17 +9,20 @@ from localalias import app
 from localalias import errors
 
 
-@pytest.mark.parametrize('argv,action,debug,alias', [
-    (['-a', '--debug', 'new_alias'], app._Actions.ADD, True, 'new_alias'),
-    (['--show'], app._Actions.SHOW, False, None),
-    (['--remove', '-d', 'new_alias'], app._Actions.REMOVE, True, 'new_alias')
+@pytest.mark.parametrize('argv,alias,cmd_cls_string', [
+    (['-a', 'new_alias'], 'new_alias', 'Add'),
+    (['-e', 'new_alias'], 'new_alias', 'Edit'),
+    (['-r', 'new_alias'], 'new_alias', 'Remove')
 ])
-@mock.patch('localalias.app._Actions.cmd_map')
-def test_main(cmd_map, argv, action, debug, alias):
+@mock.patch('localalias.app.commands')
+def test_main(commands, argv, alias, cmd_cls_string):
     """Tests that arguments are parsed correctly."""
-    cmd_map.return_value = mock.Mock()
+    setattr(commands, cmd_cls_string, mock.Mock())
+    cmd_class = getattr(commands, cmd_cls_string)
     app.main(argv)
-    cmd_map.assert_called_once_with(argparse.Namespace(alias=alias, cmd_args=[], color=False, action=action, debug=debug))
+
+    cmd_class.assert_called_once_with([alias], color=False)
+    app._CmdAction.flag = None
 
 
 @mock.patch('localalias.app._get_argparser')
@@ -40,11 +43,3 @@ def test_main_exceptions(_get_argparser):
     _get_argparser.side_effect = lambda: raise_error(2)
     with pytest.raises(TestError):
         app.main()
-
-
-@pytest.mark.parametrize('argv', [['-a'], ['-x'], ['-e']])
-@mock.patch('localalias.utils.log.logger')
-def test_main_failure(logger, argv):
-    """Tests that bad arguments result in a nonzero exit status."""
-    assert app.main(argv) == 1
-    logger.error.called_once()

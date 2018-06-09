@@ -40,11 +40,11 @@ def alias_dict():
 
 
 @pytest.fixture(params=[
-    ('T', ['PROGRAM'], False),
-    ('TT', ['WING'], False),
-    ('multiline', [], False)
+    (['T', 'PROGRAM'], False),
+    (['TT', 'WING'], False),
+    (['multiline'], False)
 ], ids=['T', 'TT', 'multiline'])
 def args(request):
     """Returns a named tuple of command arguments and expected results."""
-    Args = collections.namedtuple('Args', ['alias', 'cmd_args', 'color'])
-    return Args(request.param[0], request.param[1], request.param[2])
+    Args = collections.namedtuple('Args', ['args', 'color'])
+    return Args(request.param[0], request.param[1])

@@ -24,5 +24,5 @@ def test_add(edit_alias, cleandir, add_cmd, alias_dict):
 @pytest.fixture
 def add_cmd(args):
     """Builds and returns 'add' command."""
-    cmd = commands.Add(args.alias, cmd_args=args.cmd_args, color=args.color)
+    cmd = commands.Add(args.args, color=args.color)
     return cmd

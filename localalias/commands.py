@@ -32,9 +32,16 @@ class Command(metaclass=ABCMeta):
     """
     LOCALALIAS_DB_FILENAME = '.localalias'
 
-    def __init__(self, alias, *, cmd_args=[], color=False):
-        self.alias = alias
-        self.cmd_args = cmd_args
+    def __init__(self, args, *, color=False):
+        try:
+            iter(args)
+            if isinstance(args, str):
+                raise ValueError
+        except (TypeError, ValueError) as e:
+            args = [args]
+
+        self.alias = args[0]
+        self.args = args[1:]
         self.color = color
         try:
             with open(self.LOCALALIAS_DB_FILENAME, 'r') as f:
@@ -68,10 +75,10 @@ class Execute(Command):
             alias = self.alias
 
         log.logger.debug('Executing command string mapped to "{}" local alias.'.format(alias))
-        cmd_args = '"{}"'.format('" "'.join(self.cmd_args)) if self.cmd_args else ''
+        args = '"{}"'.format('" "'.join(self.args)) if self.args else ''
         cmd_string = self.alias_dict[alias]
 
-        ps = sp.Popen(['bash', '-c', 'set -- {}\n{}'.format(cmd_args, cmd_string)])
+        ps = sp.Popen(['bash', '-c', 'set -- {}\n{}'.format(args, cmd_string)])
         returncode = ps.wait()
 
         # 127 is interpretted by zsh plugin as a "command not found" error

@@ -35,8 +35,8 @@ def test_show_failure(cleandir, show_cmd):
 @pytest.fixture
 def show_cmd(args, show_expected):
     """Builds and returns show command."""
-    cmd = commands.Show(args.alias, cmd_args=args.cmd_args, color=args.color)
-    cmd.expected = show_expected[args.alias]
+    cmd = commands.Show(args.args, color=args.color)
+    cmd.expected = show_expected[args.args[0]]
     return cmd
 
 

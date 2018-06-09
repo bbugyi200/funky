@@ -20,7 +20,7 @@ def test_remove(cleandir, fake_db, remove_cmd):
 @pytest.fixture
 def remove_cmd(args):
     """Builds and returns 'remove' command."""
-    cmd = commands.Remove(args.alias, cmd_args=args.cmd_args, color=args.color)
+    cmd = commands.Remove(args.args, color=args.color)
     return cmd
 
 

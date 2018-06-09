@@ -22,7 +22,7 @@ def test_edit(edit_alias, cleandir, fake_db, edit_cmd):
 @pytest.fixture
 def edit_cmd(args):
     """Builds and returns 'edit' command."""
-    cmd = commands.Edit(args.alias, cmd_args=args.cmd_args, color=args.color)
+    cmd = commands.Edit(args.args, color=args.color)
     return cmd
 
 
@@ -42,7 +42,7 @@ def test_edit_format(sp, tempfile, cleandir, fake_db, alias_dict):
     tempfile.NamedTemporaryFile.return_value = fileMock
 
     some_alias = list(alias_dict.keys())[0]
-    edit_cmd = commands.Edit(some_alias)
+    edit_cmd = commands.Edit([some_alias])
     edit_cmd()
 
     loaded_aliases = shared.load_aliases()

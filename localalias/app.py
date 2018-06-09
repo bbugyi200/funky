@@ -23,16 +23,13 @@ def main(argv=None):
         args = parser.parse_args(argv)
 
         log.init_logger(debug=args.debug)
-        if args.action == _Actions.EXECUTE and not args.debug:
+        if _CmdAction.flag == _CmdFlag.EXECUTE and not args.debug:
             log.silence_streams()
 
         log.logger.debug('Starting localalias.')
         log.logger.vdebug('Command-line Arguments: {}'.format(args))
 
-        _validate_args(args)
-
-        action_command = _Actions.cmd_map(args)
-        action_command()
+        _CmdAction.command(args)
     except errors.ArgumentError as e:
         log.logger.error('%s\n', str(e))
         parser.print_usage()
@@ -52,85 +49,91 @@ def _get_argparser():
         argparse.ArgumentParser object.
     """
     parser = argparse.ArgumentParser(prog='localalias', description=localalias.__doc__)
-    parser.add_argument('alias', nargs='?', default=None, help='Name of the local alias.')
     parser.add_argument('-d', '--debug', action='store_true', help="Enable debug mode.")
     parser.add_argument('--version', action='version',
             version='%(prog)s {}'.format(localalias.__version__))
     parser.add_argument('-c', '--color', action='store_true', help="Colorize output.")
 
-    action = parser.add_mutually_exclusive_group()
-    action.add_argument('-a', _Actions.opt_map(_Actions.ADD), dest='action', action='store_const',
-            const=_Actions.ADD,
-            help='Add a new local alias.')
-    action.add_argument('-r', _Actions.opt_map(_Actions.REMOVE), dest='action', action='store_const',
-            const=_Actions.REMOVE,
-            help='Remove an existing local alias.')
-    action.add_argument('-e', _Actions.opt_map(_Actions.EDIT), dest='action', action='store_const',
-            const=_Actions.EDIT,
-            help='Edit an existing local alias.')
-    action.add_argument('-s', _Actions.opt_map(_Actions.SHOW), dest='action', action='store_const',
-            const=_Actions.SHOW,
-            help='Show an existing local alias. If this command is given without an '
-                 'argument, all local aliases/functions in scope are displayed. (default action)')
-    action.add_argument('-x', _Actions.opt_map(_Actions.EXECUTE), dest='action', action='store_const',
-            const=_Actions.EXECUTE,
-            help='Execute an existing local alias. This is typically not done manually.')
-    action.set_defaults(action=_Actions.SHOW)
-
-    parser.add_argument('cmd_args', nargs=argparse.REMAINDER, metavar='args',
-            help='Captures variable number of command-line arguments meant for local alias. These '
-                 'arguments are only applicable when used with the {} '
-                 'option.'.format(_Actions.opt_map(_Actions.EXECUTE)))
+    command_group = parser.add_argument_group(
+        title='Action Commands',
+        description='All of these options act on the current set of local aliases in some way. If '
+                    'no action command is provided, the default action is to show all of the '
+                    'local aliases currently in scope. These commands are mutually exclusive.'
+    )
+    command_group.add_argument(
+        '-a', nargs=1, dest='command_args', action=_CmdAction, metavar='ALIAS',
+        help='Add a new local alias.'
+    )
+    command_group.add_argument(
+        '-r', nargs='?', dest='command_args', action=_CmdAction, metavar='ALIAS',
+        help='Remove an existing local alias. If no alias is given, prompt to remove all local '
+             'aliases (in scope).'
+    )
+    command_group.add_argument(
+        '-e', nargs=1, dest='command_args', action=_CmdAction,
+        metavar='ALIAS',
+        help='Edit an existing local alias.'
+    )
+    command_group.add_argument(
+        '-x', nargs='+', dest='command_args', action=_CmdAction, metavar='ARG',
+        help="Execute an existing local alias. The first argument must be the alias to execute. "
+             "The remaining arguments are optional. If given, they are passed on to the command "
+             "that is to be executed. This is typically not done manually."
+    )
+    command_group.add_argument(
+        'command_args', nargs='?', action=_CmdAction, metavar='PREFIX',
+        help="When no action commands are specified, the default action is to show existing "
+             "aliases. An alias PREFIX can optionally be given and will be used to filter the "
+             "output by showing only those aliases that start with PREFIX."
+    )
 
     return parser
 
 
-class _Actions(enum.Enum):
-    """Action Flags"""
+class _CmdAction(argparse.Action):
+    """Custom ArgumentParser Action for Action Commands"""
+    flag = None
+
+    def __call__(self, parser, namespace, values, option_string):
+        if self.__class__.flag is None:
+            self.__class__.flag = self._flag_map(option_string)
+        else:
+            return
+
+        try:
+            iter(values)
+            if isinstance(values, str):
+                raise ValueError
+        except (TypeError, ValueError) as e:
+            values = [values]
+
+        setattr(namespace, self.dest, values)
+
+    @classmethod
+    def command(cls, args):
+        """Map from actions to commands."""
+        cmd_builder = {_CmdFlag.ADD: commands.Add,
+                       _CmdFlag.REMOVE: commands.Remove,
+                       _CmdFlag.EDIT: commands.Edit,
+                       _CmdFlag.EXECUTE: commands.Execute,
+                       _CmdFlag.SHOW: commands.Show}[cls.flag]
+
+        cmd = cmd_builder(args.command_args, color=args.color)
+        return cmd()
+
+    def _flag_map(self, option_string):
+        """Maps option strings to Command Flags"""
+        return {'-a': _CmdFlag.ADD,
+                '-r': _CmdFlag.REMOVE,
+                '-e': _CmdFlag.EDIT,
+                '-x': _CmdFlag.EXECUTE,
+                None: _CmdFlag.SHOW}[option_string]
+
+
+class _CmdFlag(enum.Enum):
+    """Command Flags"""
     ADD = 1
     REMOVE = 2
     EDIT = 3
     EXECUTE = 4
     SHOW = 5
-
-    @classmethod
-    def opt_map(cls, action):
-        """Map from actions to long options.
-
-        Long options are used in error messages. This function prevents unnecessary duplication.
-        """
-        return {cls.ADD: '--add',
-                cls.REMOVE: '--remove',
-                cls.EDIT: '--edit',
-                cls.EXECUTE: '--execute',
-                cls.SHOW: '--show'}[action]
-
-    @classmethod
-    def cmd_map(cls, args):
-        """Map from actions to commands.
-
-        This function is intended to serve as this module's interface to the commands API.
-        """
-        cmd_builder = {cls.ADD: commands.Add,
-                       cls.REMOVE: commands.Remove,
-                       cls.EDIT: commands.Edit,
-                       cls.EXECUTE: commands.Execute,
-                       cls.SHOW: commands.Show}[args.action]
-
-        return cmd_builder(args.alias, cmd_args=args.cmd_args, color=args.color)
-
-
-def _validate_args(args):
-    """Validates command-line arguments.
-
-    Returns:
-        @args unchanged (argparse.Namespace object), if all validation checks pass. Otherwise,
-        an exception is thrown.
-    """
-    try:
-        if args.action in [_Actions.ADD, _Actions.EXECUTE, _Actions.EDIT]:
-            assert args.alias is not None
-        return args
-    except AssertionError as e:
-        msg_fmt = 'You must also provide an alias to target when using the {} option.'
-        raise errors.ArgumentError(msg_fmt.format(_Actions.opt_map(args.action)))
