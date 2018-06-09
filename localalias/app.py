@@ -76,15 +76,19 @@ def _get_argparser():
     )
     command_group.add_argument(
         '-x', nargs='+', dest='command_args', action=_CmdAction, metavar='ARG',
-        help="Execute an existing local alias. The first argument must be the alias to execute. "
-             "The remaining arguments are optional. If given, they are passed on to the command "
-             "that is to be executed. This is typically not done manually."
+        help='Execute an existing local alias. The first argument must be the alias to execute. '
+             'The remaining arguments are optional. If given, they are passed on to the command '
+             'that is to be executed. This is typically not done manually.'
+    )
+    command_group.add_argument(
+        '-R', nargs=2, dest='command_args', action=_CmdAction, metavar=('OLD', 'NEW'),
+        help='Rename an existing local alias. OLD is renamed to NEW.'
     )
     command_group.add_argument(
         'command_args', nargs='?', action=_CmdAction, metavar='PREFIX',
-        help="When no action commands are specified, the default action is to show existing "
-             "aliases. An alias PREFIX can optionally be given and will be used to filter the "
-             "output by showing only those aliases that start with PREFIX."
+        help='When no action commands are specified, the default action is to show existing '
+             'aliases. An alias PREFIX can optionally be given and will be used to filter the '
+             'output by showing only those aliases that start with PREFIX.'
     )
 
     return parser
@@ -123,6 +127,7 @@ class _CmdAction(argparse.Action):
                        _CmdFlag.REMOVE: commands.Remove,
                        _CmdFlag.EDIT: commands.Edit,
                        _CmdFlag.EXECUTE: commands.Execute,
+                       _CmdFlag.RENAME: commands.Rename,
                        _CmdFlag.SHOW: commands.Show}[cls.flag]
 
         cmd = cmd_builder(args.command_args, color=args.color)
@@ -134,6 +139,7 @@ class _CmdAction(argparse.Action):
                 '-r': _CmdFlag.REMOVE,
                 '-e': _CmdFlag.EDIT,
                 '-x': _CmdFlag.EXECUTE,
+                '-R': _CmdFlag.RENAME,
                 None: _CmdFlag.SHOW}[option_string]
 
 
@@ -144,3 +150,4 @@ class _CmdFlag(enum.Enum):
     EDIT = 3
     EXECUTE = 4
     SHOW = 5
+    RENAME = 6

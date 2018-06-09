@@ -6,12 +6,12 @@ All notable changes to this project will be documented in this file. This projec
 `Semantic Versioning <http://semver.org/>`_, though minor breaking changes (such as renamed
 commands) can happen in minor releases.
 
-v2.1.0 (Unreleased)
+v2.1.0 (2018-06-09)
 -------------------
 
 Added:
 
-* "rename" action command (``-R``).
+* "rename" action command (``-R`` option).
 * ``--version`` option.
 
 Changed:
@@ -19,9 +19,9 @@ Changed:
 * Remodeled argument parsing strategy. This remodel is mostly internal. A few actual changes in the
   API have taken place:
 
-    - Options take arguments now, so the alias name must follow the action command.
-    - The Show command no longer has an explicit option.
-    - Long options have been removed.
+  - Options take arguments now, so the alias name must follow the action command.
+  - The Show command no longer has an explicit option.
+  - Long options have been removed.
     
 
 v2.0.6 (2018-06-07)

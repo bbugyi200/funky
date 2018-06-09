@@ -25,10 +25,9 @@ class Command(metaclass=ABCMeta):
     A command instance is a callable object.
 
     Args:
-        alias (str): local alias name.
-        cmd_ars (list): list of command-line arguments to be passed to the alias' command
-            definition.
-        color (bool): if True, colorize output (if command produces output).
+        args (iter): The first element is necessarily an alias name. The others elements
+            (if any exist) vary depending on what command is being used.
+        color (bool): If True, colorize output (if command produces output).
     """
     LOCALALIAS_DB_FILENAME = '.localalias'
 
@@ -218,6 +217,22 @@ class Edit(Command):
         msg_fmt = 'Edited local alias "{}".'
         self.alias_dict[self.alias] = self.edit_alias()
         log.logger.info(msg_fmt.format(self.alias))
+        self.commit()
+
+
+class Rename(Command):
+    """Rename Command"""
+    def __call__(self):
+        super().__call__()
+        if self.alias not in self.alias_dict:
+            raise errors.AliasNotDefinedError(alias=self.alias)
+
+        new_alias = self.args[0]
+        self.alias_dict[new_alias] = self.alias_dict[self.alias]
+        self.alias_dict.pop(self.alias)
+
+        msg_fmt = 'Alias "{}" has successfully been renamed to "{}".'
+        log.logger.info(msg_fmt.format(self.alias, new_alias))
         self.commit()
 
 
