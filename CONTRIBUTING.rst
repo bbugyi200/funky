@@ -23,25 +23,6 @@ If you are reporting a bug, please include:
 * Any details about your local setup that might be helpful in troubleshooting.
 * Detailed steps to reproduce the bug.
 
-Fix Bugs
-~~~~~~~~
-
-Look through the GitHub issues for bugs. Anything tagged with "bug" and "help
-wanted" is open to whoever wants to implement it.
-
-Implement Features
-~~~~~~~~~~~~~~~~~~
-
-Look through the GitHub issues for features. Anything tagged with "enhancement"
-and "help wanted" is open to whoever wants to implement it.
-
-Write Documentation
-~~~~~~~~~~~~~~~~~~~
-
-localalias could always use more documentation, whether as part of the
-official localalias docs, in docstrings, or even on the web in blog posts,
-articles, and such.
-
 Submit Feedback
 ~~~~~~~~~~~~~~~
 
@@ -53,6 +34,8 @@ If you are proposing a feature:
 * Keep the scope as narrow as possible, to make it easier to implement.
 * Remember that this is a volunteer-driven project, and that contributions
   are welcome :)
+
+You may also reach me directly (the project's creator) via email at bryanbugyi34@gmail.com.
 
 Get Started!
 ------------
@@ -76,42 +59,43 @@ Ready to contribute? Here's how to set up `localalias` for local development.
 
    Now you can make your changes locally.
 
-5. When you're done making changes, check that your changes pass flake8 and the
-   tests, including testing other Python versions with tox::
+5. When you're done making changes, check that all the tests are still passing::
 
-    $ flake8 localalias tests
     $ python setup.py test or py.test
-    $ tox
 
-   To get flake8 and tox, just pip install them into your virtualenv.
+6. Additionally, any code added / changed is expected to meet flake8 style guidelines.
+   Make sure by running::
 
-6. Commit your changes and push your branch to GitHub::
+   $ flake8 localalias tests
+
+7. Commit your changes and push your branch to GitHub::
 
     $ git add .
     $ git commit -m "Your detailed description of your changes."
     $ git push origin name-of-your-bugfix-or-feature
 
-7. Submit a pull request through the GitHub website.
+8. Submit a pull request through the GitHub website.
 
 Pull Request Guidelines
 -----------------------
 
-Before you submit a pull request, check that it meets these guidelines:
+The pull request should work for Python 2.7, 3.4, 3.5 and 3.6, and for PyPy. Check
+https://travis-ci.org/bbugyi200/localalias/pull_requests and make sure that the tests pass for all
+supported Python versions.
 
-1. The pull request should include tests.
-2. If the pull request adds functionality, the docs should be updated. Put
-   your new functionality into a function with a docstring, and add the
-   feature to the list in README.rst.
-3. The pull request should work for Python 2.7, 3.4, 3.5 and 3.6, and for PyPy. Check
-   https://travis-ci.org/bbugyi200/localalias/pull_requests
-   and make sure that the tests pass for all supported Python versions.
+In addition, for all code contributions excluding bugfixes, it is expected that:
+
+1. The documentation has been updated and/or additional documentation has been added.
+
+2. Additional tests have been added. Pull requests that reduce test coverage too much will not be
+   accepted.
 
 Tips
 ----
 
 To run a subset of tests::
 
-$ py.test tests.test_localalias
+$ py.test tests.test_feature
 
 
 Deploying
