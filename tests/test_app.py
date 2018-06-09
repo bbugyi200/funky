@@ -25,6 +25,13 @@ def test_main(commands, argv, alias, cmd_cls_string):
     app._CmdAction.flag = None
 
 
+@mock.patch('localalias.utils.log.logger')
+def test_main_failure(logger):
+    """Tests that bad arguments result in a nonzero exit status."""
+    assert app.main(['-a', 'new_alias', '-e', 'existing_alias']) == 1
+    logger.error.called_once()
+
+
 @mock.patch('localalias.app._get_argparser')
 def test_main_exceptions(_get_argparser):
     """Tests that main handles exceptions appropriately."""

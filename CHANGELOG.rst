@@ -11,7 +11,17 @@ v2.1.0 (Unreleased)
 
 Added:
 
-* ``--version`` option
+* "rename" action command (``-R``).
+* ``--version`` option.
+
+Changed:
+
+* Remodeled argument parsing strategy. This remodel is mostly internal. A few actual changes in the
+  API have taken place:
+
+    - Options take arguments now, so the alias name must follow the action command.
+    - The Show command no longer has an explicit option.
+    - Long options have been removed.
     
 
 v2.0.6 (2018-06-07)

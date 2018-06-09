@@ -93,10 +93,17 @@ def _get_argparser():
 class _CmdAction(argparse.Action):
     """Custom ArgumentParser Action for Action Commands"""
     flag = None
+    option_string = None
 
     def __call__(self, parser, namespace, values, option_string):
         if self.__class__.flag is None:
             self.__class__.flag = self._flag_map(option_string)
+            self.__class__.option_string = option_string
+        elif option_string is not None:
+            raise errors.ArgumentError(
+                'Option {} can not be used with option {}. All action commands are mutually '
+                'exclusive.'.format(option_string, self.__class__.option_string)
+            )
         else:
             return
 
