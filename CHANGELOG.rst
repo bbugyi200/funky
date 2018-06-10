@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file. This projec
 `Semantic Versioning <http://semver.org/>`_, though minor breaking changes can happen in minor
 releases.
 
-v2.2.0 (Unreleased)
+v2.2.0 (2018-06-10)
 -------------------
 
 Added:
