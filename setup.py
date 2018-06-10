@@ -5,6 +5,7 @@
 
 from setuptools import setup, find_packages
 from setuptools.command.install import install
+from setuptools.command.develop import develop
 
 import localalias
 from scripts import post_install
@@ -15,6 +16,13 @@ class PostInstallCommand(install):
     def run(self):
         post_install.run()
         install.run(self)
+
+
+class PostDevelopCommand(develop):
+    """Post-installation for develop mode."""
+    def run(self):
+        post_install.run()
+        develop.run(self)
 
 
 with open('README.rst') as readme_file:
@@ -35,7 +43,10 @@ setup(
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
     ],
-    cmdclass={'install': PostInstallCommand},
+    cmdclass={
+        'install': PostInstallCommand,
+        'develop': PostDevelopCommand,
+    },
     description=localalias.__doc__,
     entry_points={
         'console_scripts': [
