@@ -54,8 +54,8 @@ class Command(metaclass=ABCMeta):
         log.logger.vdebug('Existing Aliases: {}'.format(self.alias_dict))
 
     def commit(self):
-        """Saves alias changes to local database."""
-        log.logger.debug('Committing changes to local database: {}'.format(self.ACTIVE_DB_FILENAME))
+        """Saves alias changes to database."""
+        log.logger.debug('Committing changes to database: {}'.format(self.ACTIVE_DB_FILENAME))
         with open(self.ACTIVE_DB_FILENAME, 'w') as f:
             json.dump(self.alias_dict, f)
 
@@ -87,7 +87,7 @@ class Execute(Command):
         if alias is None:
             alias = self.alias
 
-        log.logger.debug('Executing command string mapped to "{}" local alias.'.format(alias))
+        log.logger.debug('Executing command string mapped to "{}" alias.'.format(alias))
         args = '"{}"'.format('" "'.join(self.args)) if self.args else ''
 
         try:
@@ -235,7 +235,7 @@ class Edit(Command):
         if self.alias and self.alias not in self.alias_dict:
             raise errors.AliasNotDefinedError(alias=self.alias)
 
-        msg_fmt = 'Edited local alias "{}".'
+        msg_fmt = 'Edited alias "{}".'
         self.alias_dict[self.alias] = self.edit_alias()
         log.logger.info(msg_fmt.format(self.alias))
         self.commit()
@@ -281,7 +281,7 @@ class Remove(Show):
                 return
         else:
             self.alias_dict.pop(self.alias)
-            log.logger.info('Removed local alias "{}".'.format(self.alias))
+            log.logger.info('Removed alias "{}".'.format(self.alias))
 
         self.commit()
 
@@ -298,10 +298,10 @@ class Add(Edit):
     def __call__(self):
         Command.__call__(self)
         if self.alias in self.alias_dict:
-            msg_fmt = 'Local alias "{}" is already defined. Running edit command.'
+            msg_fmt = 'Alias "{}" is already defined. Running edit command.'
             log.logger.info(msg_fmt.format(self.alias))
             time.sleep(1)
 
         self.alias_dict[self.alias] = self.edit_alias()
-        log.logger.info('Added local alias "{}".'.format(self.alias))
+        log.logger.info('Added alias "{}".'.format(self.alias))
         self.commit()
