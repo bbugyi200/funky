@@ -1,6 +1,21 @@
+.. highlight:: shell
+
 Usage
 =====
- 
+
+.. note::
+        
+    Throughout the rest of this document, the term *alias* will be thrown around a lot (shocker,
+    right?). It is important to first understand, however, that when we use the term *alias* we
+    refer to a command defined with the use of the ``localalias`` command. These are less aliases
+    than they are shell functions (see :ref:`usage-funcs`) and are defined separately from those
+    specified in your ``.zshrc`` or ``.bashrc`` configurations.
+
+Aliases are manipulated using the ``localalias`` command. The ``localalias`` command can (perhaps
+surpisingly) define not only local aliases but global ones as well. The distinction between the two
+is treated in the :ref:`usage-l-v-g` section below. But first, here are a list of the available 
+command-line options (also viewable via the ``localalias -h`` command):
+
 .. argparse::
     :module: localalias.app
     :func: _get_argparser
@@ -8,33 +23,52 @@ Usage
     :nodefaultconst:
     :nodescription:
 
-    Local aliases can be created (-a) and edited (-e) using the ``localalias`` command.  All
-    aliases are stored using a hidden database file that is located in the same directory where the
-    alias was created. Once created, a local alias can be used just like any other command or
-    normal alias, as long as you have activated the provided shell extension (see
-    :ref:`install-additional`).
-
 Additional Notes
 ----------------
 
-Use ``la`` over ``localalias``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _usage-l-v-g:
+
+Local vs Global
+~~~~~~~~~~~~~~~
+
+**Local** aliases are stored using a hidden database file that is located in the same directory
+where the alias was created. These can be manipulated using the Action Command options described
+above. Once created, a local alias can be used just like any other command or normal alias---as
+long as you have activated the provided shell extension (see :ref:`install-additional`) and are
+inside of the directory where the local alias was originally defined.
+
+**Global** aliases, on the other hand, are stored in your home directory (``/home/<user>``) and can
+be used from any directory. These can be manipulated by using the ``-g`` option along with any one of the
+Action Command options described above.
+
+Local aliases override global alias definitions.
+
+.. important::
+
+    Aliases defined the traditional way---inside of your ``.zshrc`` or ``.bashrc`` files---are NOT overridden by any of the aliases defined using the ``localalias`` command.
+
+Use ``la`` and ``al`` over ``localalias``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 I strongly recommend against using the ``localalias`` command in its full form. It is preferrable
-to set an alias such as 
-
-.. code-block:: shell
+to set an alias or two. I have become accustomed to using the following aliases in place of the
+official command::
 
    alias la='localalias --color'
+   alias al='localalias --color -g'
 
-and use that in place of the official command. One of the primary goals of this project is to
-reduce keystrokes, so advocating the frequent use of a 10-letter command wouldn't make much sense.
+I think that the symmetry of ``la`` and ``al`` makes them very intuitive and easy to remember. Use
+whatever aliases you want, but definitely don't use the full command. One of the primary goals of
+this project is to reduce keystrokes, so advocating the frequent use of a 10-letter command
+wouldn't make much sense.
+
+.. _usage-funcs:
 
 Aliases vs Functions
 ~~~~~~~~~~~~~~~~~~~~
 
 Note that while this documentation (and the project's name) refers to the command definitions
-created by ``la`` as "aliases", they actually behave more like shell functions. This makes them
+created by ``localalias`` as "aliases", they actually behave more like shell functions. This makes them
 much more powerful. Namely, this means you can use them with arguments.
 
 With that said, actual aliases do have one appeal over shell functions. When you use an alias, any

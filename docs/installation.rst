@@ -1,8 +1,5 @@
 .. highlight:: shell
 
-.. role:: shell(code)
-   :language: bash
-
 .. _install:
 
 ============
