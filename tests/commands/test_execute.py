@@ -7,12 +7,17 @@ import unittest.mock as mock
 import pytest
 
 from localalias import commands
+from localalias import errors
 
 
 @mock.patch('localalias.commands.sp')
 @mock.patch('localalias.commands.sys.exit')
-def test_execute(exit, subprocess, cleandir, fake_db, execute_cmd):
-    """Tests execute command."""
+def test_execute(exit, subprocess, cleandir, fake_global_db, fake_db, execute_cmd):
+    """Tests execute command.
+
+    NOTE: fake_global_db is not used but including it among the listed fixtures ensures that local
+          aliases take precedence over global ones.
+    """
     subprocess.call = mock.Mock()
     execute_cmd()
 
@@ -20,6 +25,23 @@ def test_execute(exit, subprocess, cleandir, fake_db, execute_cmd):
     cmd = cmd_list[-1]
     out = sp.check_output(['bash', '-c', cmd])
     assert out.decode().strip() == execute_cmd.expected
+
+
+@mock.patch('localalias.commands.sys.exit')
+def test_execute_global(exit, cleandir, global_filename, fake_global_db, global_alias_dict):
+    """Tests global aliases
+
+    NOTE: Unlike test_execute, this test merely tests whether the alias is found, NOT if it is
+          executed properly.
+    """
+    commands.Command.GLOBALALIAS_DB_FILENAME = global_filename
+    for alias in global_alias_dict:
+        cmd = commands.Execute([alias])
+        cmd()
+
+    with pytest.raises(errors.AliasNotDefinedError):
+        cmd = commands.Execute(['bad_alias'])
+        cmd()
 
 
 @pytest.fixture

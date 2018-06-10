@@ -24,7 +24,7 @@ def main(argv=None):
 
         log.init_logger(debug=args.debug)
 
-        _check_args(args, _CmdAction.flag)
+        _process_args(args, _CmdAction.flag)
 
         log.logger.debug('Starting localalias.')
         log.logger.vdebug('Command-line Arguments: {}'.format(args))
@@ -97,7 +97,7 @@ def _get_argparser():
     return parser
 
 
-def _check_args(args, flag):
+def _process_args(args, flag):
     """Run extra validation checks on command-line arguments.
 
     This function also makes necessary changes to the environment when necessary given certain

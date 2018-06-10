@@ -19,24 +19,55 @@ def cleandir():
 
 
 @pytest.fixture
-def fake_db(alias_dict):
-    """Setup/teardown a local alias database."""
-    filename = commands.Command.LOCALALIAS_DB_FILENAME
-    with open(filename, 'w') as f:
-        json.dump(alias_dict, f)
-    yield alias_dict
-    try:
-        os.remove(filename)
-    except FileNotFoundError as e:
-        pass
+def fake_global_db(global_filename):
+    """Setup/teardown a global alias database"""
+    _fake_db = _fake_db_factory(global_filename, global_alias_dict)
+    yield from _fake_db()
+
+
+@pytest.fixture
+def global_filename():
+    """Returns a fake global database path so the production global db is not overwritten."""
+    return "/tmp/.globalalias"
+
+
+@pytest.fixture
+def fake_db():
+    """Setup/teardown a local alias database"""
+    _fake_db = _fake_db_factory(commands.Command.LOCALALIAS_DB_FILENAME, alias_dict)
+    yield from _fake_db()
+
+
+def _fake_db_factory(DB_FILENAME, alias_dict_builder):
+    """Builds a generator fixture for creating a fake database."""
+    def _fake_db():
+        my_alias_dict = alias_dict_builder()
+        with open(DB_FILENAME, 'w') as f:
+            json.dump(my_alias_dict, f)
+        yield my_alias_dict
+        try:
+            os.remove(DB_FILENAME)
+        except FileNotFoundError as e:
+            pass
+    return _fake_db
 
 
 @pytest.fixture
 def alias_dict():
-    alias_dict = {'multiline': 'echo Hello\necho world!',
-                  'T': 'echo RUN $1',
-                  'TT': 'echo CHICKEN $@'}
+    alias_dict = {
+        'multiline': 'echo Hello\necho world!',
+        'T': 'echo RUN $1',
+        'TT': 'echo CHICKEN $@',
+    }
     return alias_dict
+
+
+@pytest.fixture
+def global_alias_dict():
+    g_alias_dict = {
+        'T': 'echo "GLOBAL ALIAS"',
+    }
+    return g_alias_dict
 
 
 @pytest.fixture(params=[

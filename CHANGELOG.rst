@@ -11,11 +11,11 @@ v2.2.0 (Unreleased)
 
 Added:
 
-* Global aliases (invoked with the ``-g`` option):
+* Global aliases (invoked with the ``--global`` option):
 
   - Global aliases allow you to create default definitions for aliases that can be overridden on
     a local basis.
-  - All action commands still work properly when ``-g`` is used but they operate on the global
+  - All action commands still work properly when ``--global`` is used but they operate on the global
     database instead of the local one.
 
 v2.1.1 (2018-06-09)
