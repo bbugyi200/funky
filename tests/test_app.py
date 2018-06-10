@@ -22,7 +22,7 @@ def test_main(commands, argv, cmd_cls_string):
     cmd_class = getattr(commands, cmd_cls_string)
     app.main(argv)
 
-    cmd_class.assert_called_once_with(argv[1:], color=False)
+    cmd_class.assert_called_once_with(argv[1:], color=False, global_=False)
     app._CmdAction.flag = None
 
 

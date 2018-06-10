@@ -1,6 +1,7 @@
 """Command definitions."""
 
 from abc import ABCMeta, abstractmethod
+import getpass
 import json
 import os
 import re
@@ -30,8 +31,9 @@ class Command(metaclass=ABCMeta):
         color (bool): If True, colorize output (if command produces output).
     """
     LOCALALIAS_DB_FILENAME = '.localalias'
+    GLOBALALIAS_DB_FILENAME = '/home/{}/.globalalias'.format(getpass.getuser())
 
-    def __init__(self, args, *, color=False):
+    def __init__(self, args, *, color=False, global_=False):
         try:
             iter(args)
             if isinstance(args, str):
@@ -39,22 +41,30 @@ class Command(metaclass=ABCMeta):
         except (TypeError, ValueError) as e:
             args = [args]
 
+        if global_:
+            self.ACTIVE_DB_FILENAME = self.GLOBALALIAS_DB_FILENAME
+        else:
+            self.ACTIVE_DB_FILENAME = self.LOCALALIAS_DB_FILENAME
+
         self.alias = args[0]
         self.args = args[1:]
         self.color = color
-        try:
-            with open(self.LOCALALIAS_DB_FILENAME, 'r') as f:
-                self.alias_dict = json.load(f)
-        except FileNotFoundError as e:
-            self.alias_dict = {}
+        self.alias_dict = self.load(self.ACTIVE_DB_FILENAME)
 
         log.logger.vdebug('Existing Aliases: {}'.format(self.alias_dict))
 
     def commit(self):
         """Saves alias changes to local database."""
-        log.logger.debug('Committing changes to local database: {}'.format(self.LOCALALIAS_DB_FILENAME))
-        with open(self.LOCALALIAS_DB_FILENAME, 'w') as f:
+        log.logger.debug('Committing changes to local database: {}'.format(self.ACTIVE_DB_FILENAME))
+        with open(self.ACTIVE_DB_FILENAME, 'w') as f:
             json.dump(self.alias_dict, f)
+
+    def load(self, DB_FILENAME):
+        try:
+            with open(DB_FILENAME, 'r') as f:
+                return json.load(f)
+        except FileNotFoundError as e:
+            return {}
 
     @abstractmethod
     def __call__(self):
@@ -63,6 +73,10 @@ class Command(metaclass=ABCMeta):
 
 class Execute(Command):
     """Execute command."""
+    def __init__(self, *args, **kwargs):
+        self.global_alias_dict = self.load(self.GLOBALALIAS_DB_FILENAME)
+        super().__init__(*args, **kwargs)
+
     def execute(self, alias=None):
         """Evaluates and executes the command string corresponding with the given alias.
 
@@ -75,7 +89,13 @@ class Execute(Command):
 
         log.logger.debug('Executing command string mapped to "{}" local alias.'.format(alias))
         args = '"{}"'.format('" "'.join(self.args)) if self.args else ''
-        cmd_string = self.alias_dict[alias]
+
+        try:
+            cmd_string = self.alias_dict[alias]
+            log.logger.debug('Alias found in local database.')
+        except KeyError as e:
+            cmd_string = self.global_alias_dict[alias]
+            log.logger.debug('Alias found in global database.')
 
         ps = sp.Popen(['bash', '-c', 'set -- {}\n{}'.format(args, cmd_string)])
         returncode = ps.wait()
@@ -88,9 +108,10 @@ class Execute(Command):
 
     def __call__(self):
         super().__call__()
-        if self.alias not in self.alias_dict:
+        if self.alias in self.alias_dict or self.alias in self.global_alias_dict:
+            self.execute()
+        else:
             raise errors.AliasNotDefinedError(alias=self.alias, returncode=127)
-        self.execute()
 
 
 class Show(Command):
@@ -268,8 +289,8 @@ class Remove(Show):
             print()
             self.show_search()
         else:
-            log.logger.debug('Removing {}.'.format(self.LOCALALIAS_DB_FILENAME))
-            os.remove(self.LOCALALIAS_DB_FILENAME)
+            log.logger.debug('Removing {}.'.format(self.ACTIVE_DB_FILENAME))
+            os.remove(self.ACTIVE_DB_FILENAME)
 
 
 class Add(Edit):

@@ -23,8 +23,8 @@ def main(argv=None):
         args = parser.parse_args(argv)
 
         log.init_logger(debug=args.debug)
-        if _CmdAction.flag == _CmdFlag.EXECUTE and not args.debug:
-            log.silence_streams()
+
+        _check_args(args, _CmdAction.flag)
 
         log.logger.debug('Starting localalias.')
         log.logger.vdebug('Command-line Arguments: {}'.format(args))
@@ -53,6 +53,8 @@ def _get_argparser():
     parser.add_argument('--version', action='version',
             version='%(prog)s {}'.format(localalias.__version__))
     parser.add_argument('-c', '--color', action='store_true', help="Colorize output.")
+    parser.add_argument('-g', '--global', dest='global_', action='store_true',
+                        help='Run action command with global scope.')
 
     command_group = parser.add_argument_group(
         title='Action Commands',
@@ -62,27 +64,28 @@ def _get_argparser():
     )
     command_group.add_argument(
         '-a', nargs=1, dest='command_args', action=_CmdAction, metavar='ALIAS',
-        help='Add a new local alias.'
+        help='Add a new alias.'
     )
     command_group.add_argument(
         '-r', nargs='?', dest='command_args', action=_CmdAction, metavar='ALIAS',
-        help='Remove an existing local alias. If no alias is given, prompt to remove all local '
-             'aliases (in scope).'
+        help='Remove an existing alias. If no alias is given, prompt to remove all aliases (in '
+             'scope).'
     )
     command_group.add_argument(
         '-e', nargs=1, dest='command_args', action=_CmdAction,
         metavar='ALIAS',
-        help='Edit an existing local alias.'
+        help='Edit an existing alias.'
     )
     command_group.add_argument(
         '-x', nargs=argparse.REMAINDER, dest='command_args', action=_CmdAction, metavar='ARG',
-        help='Execute an existing local alias. The first argument must be the alias to execute. '
-             'The remaining arguments are optional. If given, they are passed on to the command '
-             'that is to be executed. This is typically not done manually.'
+        help='Execute an existing alias. The first argument must be the alias to execute. The '
+             'remaining arguments are optional. If given, they are passed on to the command that '
+             'is to be executed. This action command is used by the shell integration script but '
+             'is not generally meant to be run manually.'
     )
     command_group.add_argument(
         '-R', nargs=2, dest='command_args', action=_CmdAction, metavar=('OLD', 'NEW'),
-        help='Rename an existing local alias. OLD alias is renamed to NEW.'
+        help='Rename an existing alias. OLD alias is renamed to NEW.'
     )
     command_group.add_argument(
         'command_args', nargs='?', action=_CmdAction, metavar='PREFIX',
@@ -92,6 +95,21 @@ def _get_argparser():
     )
 
     return parser
+
+
+def _check_args(args, flag):
+    """Run extra validation checks on command-line arguments.
+
+    This function also makes necessary changes to the environment when necessary given certain
+    argument combinations (e.g. silence logs when -x is present but -d is not).
+    """
+    if flag == _CmdFlag.EXECUTE and args.global_:
+        raise errors.ArgumentError(
+            'The --global option is redundant when used with -x. Both local and global aliases '
+            'are always checked (in that order) when the -x option is given.'
+        )
+    if flag == _CmdFlag.EXECUTE and not args.debug:
+        log.silence_streams()
 
 
 class _CmdAction(argparse.Action):
@@ -130,7 +148,7 @@ class _CmdAction(argparse.Action):
                        _CmdFlag.RENAME: commands.Rename,
                        _CmdFlag.SHOW: commands.Show}[cls.flag]
 
-        cmd = cmd_builder(args.command_args, color=args.color)
+        cmd = cmd_builder(args.command_args, color=args.color, global_=args.global_)
         return cmd()
 
 
