@@ -26,10 +26,15 @@ def test_main(commands, argv, cmd_cls_string):
     app._CmdAction.flag = None
 
 
+@pytest.mark.parametrize('argv', [
+    ['-g', '-x', 'my_alias'],
+    ['-a', 'new_alias', '-e', 'existing_alias'],
+    ['-x'],
+])
 @mock.patch('localalias.utils.log.logger')
-def test_main_failure(logger):
-    """Tests that bad arguments result in a nonzero exit status."""
-    assert app.main(['-a', 'new_alias', '-e', 'existing_alias']) == 1
+def test_main_validate_args(logger, argv):
+    """Tests that arguments are validated properly."""
+    app.main(argv) == 1
     logger.error.called_once()
 
 

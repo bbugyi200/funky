@@ -24,7 +24,7 @@ def main(argv=None):
 
         log.init_logger(debug=args.debug)
 
-        _process_args(args, _CmdAction.flag)
+        _validate_args(args, _CmdAction.flag)
 
         log.logger.debug('Starting localalias.')
         log.logger.vdebug('Command-line Arguments: {}'.format(args))
@@ -80,7 +80,7 @@ def _get_argparser():
     return parser
 
 
-def _process_args(args, flag):
+def _validate_args(args, flag):
     """Run extra validation checks on command-line arguments.
 
     This function also makes necessary changes to the environment when necessary given certain
@@ -91,6 +91,13 @@ def _process_args(args, flag):
             'The --global option is redundant when used with -x. Both local and global aliases '
             'are always checked (in that order) when the -x option is given.'
         )
+
+    # if flag == _CmdFlag.EXECUTE and len(args.command_args) < 1:
+    #     raise errors.ArgumentError(
+    #         'The -x option requires atleast one argument. Namely, the alias that you would like '
+    #         'to execute.'
+    #     )
+
     if flag == _CmdFlag.EXECUTE and not args.debug:
         log.silence_streams()
 
