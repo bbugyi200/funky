@@ -69,6 +69,10 @@ class Command(metaclass=ABCMeta):
         except FileNotFoundError as e:
             return {}
 
+    def remove_alias(self):
+        self.alias_dict.pop(self.alias)
+        log.logger.info('Removed alias "{}".'.format(self.alias))
+
     @abstractmethod
     def __call__(self):
         log.logger.debug('Running {} command.'.format(self.__class__.__name__))
@@ -170,8 +174,12 @@ class Edit(Command):
         tf.close()
         os.unlink(tf.name)
 
+        if edited_cmd_string.strip() == '':
+            raise errors.LocalAliasError('Alias definition was left blank.')
+
+        log.logger.debug('New Command String: "%s"', edited_cmd_string)
         formatted_cmd_string = self._format_cmd_string(edited_cmd_string.strip())
-        return formatted_cmd_string
+        self.alias_dict[alias] = formatted_cmd_string
 
     def _format_cmd_string(self, cmd_string):
         """Formats command string for correct execution and display.
@@ -199,9 +207,12 @@ class Edit(Command):
         if self.alias and self.alias not in self.alias_dict:
             raise errors.AliasNotDefinedError(alias=self.alias)
 
-        msg_fmt = 'Edited alias "{}".'
-        self.alias_dict[self.alias] = self.edit_alias()
-        log.logger.info(msg_fmt.format(self.alias))
+        try:
+            self.edit_alias()
+            log.logger.info('Edited alias: "%s".', self.alias)
+        except errors.LocalAliasError as e:
+            self.remove_alias()
+
         self.commit()
 
 
@@ -244,8 +255,7 @@ class Remove(Show):
                 log.logger.info('OK. Nothing has been done.')
                 return
         else:
-            self.alias_dict.pop(self.alias)
-            log.logger.info('Removed alias "{}".'.format(self.alias))
+            self.remove_alias()
 
         self.commit()
 
@@ -266,6 +276,10 @@ class Add(Edit):
             log.logger.info(msg_fmt.format(self.alias))
             time.sleep(1)
 
-        self.alias_dict[self.alias] = self.edit_alias()
-        log.logger.info('Added alias "{}".'.format(self.alias))
+        try:
+            self.edit_alias()
+            log.logger.info('Added alias "{}".'.format(self.alias))
+        except errors.LocalAliasError as e:
+            raise errors.LocalAliasError('Alias definition cannot be empty.')
+
         self.commit()
