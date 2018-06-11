@@ -32,20 +32,21 @@ Local vs Global
 ~~~~~~~~~~~~~~~
 
 **Local** aliases are stored using a hidden database file that is located in the same directory
-where the alias was created. These can be manipulated using the Action Command options described
+where the alias was created. These can be manipulated using the action command options described
 above. Once created, a local alias can be used just like any other command or normal alias---as
 long as you have activated the provided shell extension (see :ref:`install-additional`) and are
 inside of the directory where the local alias was originally defined.
 
 **Global** aliases, on the other hand, are stored in your home directory (``/home/<user>``) and can
 be used from any directory. These can be manipulated by using the ``-g`` option along with any one of the
-Action Command options described above.
+action command options described above.
 
-Local aliases override global alias definitions.
+Local aliases can be used to override global alias definitions.
 
 .. important::
 
-    Aliases defined the traditional way---inside of your ``.zshrc`` or ``.bashrc`` files---are NOT overridden by any of the aliases defined using the ``localalias`` command.
+    Aliases defined the traditional way---inside of your ``.zshrc`` or ``.bashrc`` files---are NOT
+    overridden by any of the aliases defined using the ``localalias`` command.
 
 Use ``la`` and ``al`` over ``localalias``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
