@@ -62,31 +62,20 @@ def _get_argparser():
                     'no action command is provided, the default action is to show all of the '
                     'local aliases currently in scope. These commands are mutually exclusive.'
     )
-    command_group.add_argument(
-        '-a', nargs=1, dest='command_args', action=_CmdAction, metavar='ALIAS',
-        help=commands.Add.__doc__
-    )
-    command_group.add_argument(
-        '-r', nargs='?', dest='command_args', action=_CmdAction, metavar='ALIAS',
-        help=commands.Remove.__doc__
-    )
-    command_group.add_argument(
-        '-e', nargs=1, dest='command_args', action=_CmdAction,
-        metavar='ALIAS',
-        help=commands.Edit.__doc__
-    )
-    command_group.add_argument(
-        '-x', nargs=argparse.REMAINDER, dest='command_args', action=_CmdAction, metavar='ARG',
-        help=argparse.SUPPRESS
-    )
-    command_group.add_argument(
-        '-R', nargs=2, dest='command_args', action=_CmdAction, metavar=('OLD', 'NEW'),
-        help=commands.Rename.__doc__
-    )
-    command_group.add_argument(
-        'command_args', nargs='?', action=_CmdAction, metavar='PREFIX',
-        help=commands.Show.__doc__
-    )
+    command_group.add_argument(_CmdFlag.ADD.value, nargs=1, dest='command_args', action=_CmdAction,
+                               metavar='ALIAS', help=commands.Add.__doc__)
+    command_group.add_argument(_CmdFlag.REMOVE.value, nargs='?', dest='command_args',
+                               action=_CmdAction, metavar='ALIAS', help=commands.Remove.__doc__)
+    command_group.add_argument(_CmdFlag.EDIT.value, nargs=1, dest='command_args',
+                               action=_CmdAction, metavar='ALIAS', help=commands.Edit.__doc__)
+    command_group.add_argument(_CmdFlag.EXECUTE.value, nargs=argparse.REMAINDER,
+                               dest='command_args', action=_CmdAction, metavar='ARG',
+                               help=argparse.SUPPRESS)
+    command_group.add_argument(_CmdFlag.RENAME.value, nargs=2, dest='command_args',
+                               action=_CmdAction, metavar=('OLD', 'NEW'),
+                               help=commands.Rename.__doc__)
+    command_group.add_argument('command_args', nargs='?', action=_CmdAction, metavar='PREFIX',
+                               help=commands.Show.__doc__)
 
     return parser
 
@@ -147,7 +136,11 @@ class _CmdAction(argparse.Action):
 
 
 class _CmdFlag(enum.Enum):
-    """Command Flags"""
+    """Command Flags
+
+    The value of each command flag will be used by argparse to generate the option string
+    corresponding to that command.
+    """
     ADD = '-a'
     REMOVE = '-r'
     EDIT = '-e'
