@@ -72,7 +72,13 @@ class Command(metaclass=ABCMeta):
 
 
 class Execute(Command):
-    """Execute command."""
+    """Execute command
+
+    Execute an existing alias. The first argument must be the alias to execute. The remaining
+    arguments are optional. If given, they are passed on to the command that is to be executed.
+    This action command is used by the shell integration script but is not generally meant to be
+    run manually.
+    """
     def __init__(self, *args, **kwargs):
         self.global_alias_dict = self.load(self.GLOBALALIAS_DB_FILENAME)
         super().__init__(*args, **kwargs)

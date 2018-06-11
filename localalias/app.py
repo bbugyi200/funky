@@ -78,10 +78,7 @@ def _get_argparser():
     )
     command_group.add_argument(
         '-x', nargs=argparse.REMAINDER, dest='command_args', action=_CmdAction, metavar='ARG',
-        help='Execute an existing alias. The first argument must be the alias to execute. The '
-             'remaining arguments are optional. If given, they are passed on to the command that '
-             'is to be executed. This action command is used by the shell integration script but '
-             'is not generally meant to be run manually.'
+        help=argparse.SUPPRESS
     )
     command_group.add_argument(
         '-R', nargs=2, dest='command_args', action=_CmdAction, metavar=('OLD', 'NEW'),
