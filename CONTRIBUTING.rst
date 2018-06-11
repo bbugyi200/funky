@@ -4,18 +4,10 @@
 Contributing
 ============
 
-Contributions are welcome, and they are greatly appreciated! Every little bit
-helps, and credit will always be given.
+How to submit feedback?
+-----------------------
 
-You can contribute in many ways:
-
-Types of Contributions
-----------------------
-
-Report Bugs
-~~~~~~~~~~~
-
-Report bugs at https://github.com/bbugyi200/localalias/issues.
+The best way to send feedback is to file an issue at https://github.com/bbugyi200/localalias/issues.
 
 If you are reporting a bug, please include:
 
@@ -23,19 +15,12 @@ If you are reporting a bug, please include:
 * Any details about your local setup that might be helpful in troubleshooting.
 * Detailed steps to reproduce the bug.
 
-Submit Feedback
-~~~~~~~~~~~~~~~
-
-The best way to send feedback is to file an issue at https://github.com/bbugyi200/localalias/issues.
-
 If you are proposing a feature:
 
 * Explain in detail how it would work.
 * Keep the scope as narrow as possible, to make it easier to implement.
 * Remember that this is a volunteer-driven project, and that contributions
   are welcome :)
-
-You may also reach me directly (the project's creator) via email at bryanbugyi34@gmail.com.
 
 Get Started!
 ------------
@@ -79,7 +64,7 @@ Ready to contribute? Here's how to set up `localalias` for local development.
 Pull Request Guidelines
 -----------------------
 
-The pull request should work for Python 2.7, 3.4, 3.5 and 3.6, and for PyPy. Check
+The pull request should work for Python 3.4, 3.5 and 3.6, and for PyPy. Check
 https://travis-ci.org/bbugyi200/localalias/pull_requests and make sure that the tests pass for all
 supported Python versions.
 
@@ -87,8 +72,11 @@ In addition, for all code contributions excluding bugfixes, it is expected that:
 
 1. The documentation has been updated and/or additional documentation has been added.
 
-2. Additional tests have been added. Pull requests that reduce test coverage too much will not be
-   accepted.
+2. Additional tests have been added.
+   
+   .. warning::
+
+      Pull requests that drastically reduce test coverage will not be accepted!
 
 Tips
 ----

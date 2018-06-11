@@ -19,7 +19,7 @@ v2.2.1 (2018-06-11)
 
 Fixed:
 
-* using -x without arguments should fail explicitly
+* Using ``-x`` without arguments should fail explicitly
 
 
 v2.2.0 (2018-06-10)
@@ -39,7 +39,7 @@ v2.1.1 (2018-06-09)
 
 Fixed:
 
-* Dashed command-line arguments are now properly passed to command definition when an alias is
+* Dashed command-line arguments are not properly passed to command definition when an alias is
   executed.
 
 v2.1.0 (2018-06-09)
@@ -65,8 +65,8 @@ v2.0.6 (2018-06-07)
 
 Fixed:
 
-* Automatic command-line arguments are no longer word-splitting for single-line alias definitions
-  without param arguments.
+* Automatic command-line arguments are word-splitting for single-line alias definitions without
+  param arguments.
 
 v2.0.5 (2018-06-06)
 -------------------
@@ -106,14 +106,14 @@ Fixed:
 
 * Alias arguments are handled intuitively again (without needing to explicitly append $@ to the definition).
 * Automatic la alias on some systems blocks entry point. It is now unaliased at install time.
-* Alias execution no longer masks exit status.
+* Alias execution masks exit status.
 
 v2.0.1 (2018-05-31)
 -------------------
 
 Fixed:
 
-* Repaired demonstration gif for PyPI project page.
+* Demonstration gif not working on PyPI project page.
 
 v2.0.0 (2018-05-31)
 -------------------
