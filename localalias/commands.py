@@ -29,6 +29,10 @@ class Command(metaclass=ABCMeta):
         args (iter): The first element is necessarily an alias name. The others elements
             (if any exist) vary depending on what command is being used.
         color (bool): If True, colorize output (if command produces output).
+        global_ (bool): If True, the global database will be used instead of the local database.
+
+    IMPORTANT: The class docstring of a Command subclass is used by argparse to generate output
+               for the help command.
     """
     LOCALALIAS_DB_FILENAME = '.localalias'
     GLOBALALIAS_DB_FILENAME = '/home/{}/.globalalias'.format(getpass.getuser())
@@ -72,8 +76,7 @@ class Command(metaclass=ABCMeta):
 
 
 class Execute(Command):
-    """Execute command
-
+    """
     Execute an existing alias. The first argument must be the alias to execute. The remaining
     arguments are optional. If given, they are passed on to the command that is to be executed.
     This action command is used by the shell integration script but is not generally meant to be
@@ -121,7 +124,11 @@ class Execute(Command):
 
 
 class Show(Command):
-    """Show command."""
+    """
+    When no action commands are specified, the default action is to show existing aliases. An
+    alias PREFIX can optionally be given and will be used to filter the output by showing only
+    those aliases that start with PREFIX.
+    """
     def show(self, alias):
         """Print alias and alias command definition to stdout."""
         cmd_string = self.alias_dict[alias]
@@ -171,7 +178,7 @@ class Show(Command):
 
 
 class Edit(Command):
-    """Edit command."""
+    """Edit an existing alias."""
     def edit_alias(self, alias=None):
         """Opens up alias definition using temp file in $EDITOR for editing.
 
@@ -248,7 +255,7 @@ class Edit(Command):
 
 
 class Rename(Command):
-    """Rename Command"""
+    """Rename an existing alias. OLD alias is renamed to NEW."""
     def __call__(self):
         super().__call__()
         if self.alias not in self.alias_dict:
@@ -264,7 +271,7 @@ class Rename(Command):
 
 
 class Remove(Show):
-    """Remove command."""
+    """Remove an existing alias. If no alias is given, prompt to remove all aliases (in scope)."""
     def __call__(self):
         Command.__call__(self)
         if self.alias and self.alias not in self.alias_dict:
@@ -300,7 +307,7 @@ class Remove(Show):
 
 
 class Add(Edit):
-    """Add command."""
+    """Add a new alias."""
     def __call__(self):
         Command.__call__(self)
         if self.alias in self.alias_dict:

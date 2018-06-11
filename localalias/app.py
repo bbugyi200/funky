@@ -64,17 +64,16 @@ def _get_argparser():
     )
     command_group.add_argument(
         '-a', nargs=1, dest='command_args', action=_CmdAction, metavar='ALIAS',
-        help='Add a new alias.'
+        help=commands.Add.__doc__
     )
     command_group.add_argument(
         '-r', nargs='?', dest='command_args', action=_CmdAction, metavar='ALIAS',
-        help='Remove an existing alias. If no alias is given, prompt to remove all aliases (in '
-             'scope).'
+        help=commands.Remove.__doc__
     )
     command_group.add_argument(
         '-e', nargs=1, dest='command_args', action=_CmdAction,
         metavar='ALIAS',
-        help='Edit an existing alias.'
+        help=commands.Edit.__doc__
     )
     command_group.add_argument(
         '-x', nargs=argparse.REMAINDER, dest='command_args', action=_CmdAction, metavar='ARG',
@@ -82,13 +81,11 @@ def _get_argparser():
     )
     command_group.add_argument(
         '-R', nargs=2, dest='command_args', action=_CmdAction, metavar=('OLD', 'NEW'),
-        help='Rename an existing alias. OLD alias is renamed to NEW.'
+        help=commands.Rename.__doc__
     )
     command_group.add_argument(
         'command_args', nargs='?', action=_CmdAction, metavar='PREFIX',
-        help='When no action commands are specified, the default action is to show existing '
-             'aliases. An alias PREFIX can optionally be given and will be used to filter the '
-             'output by showing only those aliases that start with PREFIX.'
+        help=commands.Show.__doc__
     )
 
     return parser
