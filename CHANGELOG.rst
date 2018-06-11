@@ -14,6 +14,14 @@ Added:
 * Configuration file.
 
 
+v2.2.1 (2018-06-11)
+-------------------
+
+Fixed:
+
+* using -x without arguments should fail explicitly
+
+
 v2.2.0 (2018-06-10)
 -------------------
 
