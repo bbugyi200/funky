@@ -8,7 +8,6 @@ import re
 import subprocess as sp
 import sys
 import tempfile
-import time
 
 from pygments import highlight
 from pygments.lexers import BashLexer
@@ -72,11 +71,13 @@ class Command(metaclass=ABCMeta):
 
 
 class Execute(Command):
-    """Execute command."""
-    def __init__(self, *args, **kwargs):
-        self.global_alias_dict = self.load(self.GLOBALALIAS_DB_FILENAME)
-        super().__init__(*args, **kwargs)
+    """Execute command
 
+    Execute an existing alias. The first argument must be the alias to execute. The remaining
+    arguments are optional. If given, they are passed on to the command that is to be executed.
+    This action command is used by the shell integration script but is not generally meant to be
+    run manually.
+    """
     def execute(self, alias=None):
         """Evaluates and executes the command string corresponding with the given alias.
 
@@ -90,14 +91,8 @@ class Execute(Command):
         log.logger.debug('Executing command string mapped to "{}" alias.'.format(alias))
         args = '"{}"'.format('" "'.join(self.args)) if self.args else ''
 
-        try:
-            cmd_string = self.alias_dict[alias]
-            log.logger.debug('Alias found in local database.')
-        except KeyError as e:
-            cmd_string = self.global_alias_dict[alias]
-            log.logger.debug('Alias found in global database.')
-
-        ps = sp.Popen(['bash', '-c', 'set -- {}\n{}'.format(args, cmd_string)])
+        cmd_string = 'set -- {}\n{}'.format(args, self.alias_dict[alias])
+        ps = sp.Popen(['bash', '-c', cmd_string])
         returncode = ps.wait()
 
         # 127 is interpretted by zsh plugin as a "command not found" error
@@ -108,10 +103,10 @@ class Execute(Command):
 
     def __call__(self):
         super().__call__()
-        if self.alias in self.alias_dict or self.alias in self.global_alias_dict:
-            self.execute()
-        else:
+        if self.alias not in self.alias_dict:
             raise errors.AliasNotDefinedError(alias=self.alias, returncode=127)
+
+        self.execute()
 
 
 class Show(Command):
@@ -300,7 +295,6 @@ class Add(Edit):
         if self.alias in self.alias_dict:
             msg_fmt = 'Alias "{}" is already defined. Running edit command.'
             log.logger.info(msg_fmt.format(self.alias))
-            time.sleep(1)
 
         self.alias_dict[self.alias] = self.edit_alias()
         log.logger.info('Added alias "{}".'.format(self.alias))

@@ -78,10 +78,7 @@ def _get_argparser():
     )
     command_group.add_argument(
         '-x', nargs=argparse.REMAINDER, dest='command_args', action=_CmdAction, metavar='ARG',
-        help='Execute an existing alias. The first argument must be the alias to execute. The '
-             'remaining arguments are optional. If given, they are passed on to the command that '
-             'is to be executed. This action command is used by the shell integration script but '
-             'is not generally meant to be run manually.'
+        help=argparse.SUPPRESS
     )
     command_group.add_argument(
         '-R', nargs=2, dest='command_args', action=_CmdAction, metavar=('OLD', 'NEW'),
@@ -104,10 +101,7 @@ def _process_args(args, flag):
     argument combinations (e.g. silence logs when -x is present but -d is not).
     """
     if flag == _CmdFlag.EXECUTE and args.global_:
-        raise errors.ArgumentError(
-            'The --global option is redundant when used with -x. Both local and global aliases '
-            'are always checked (in that order) when the -x option is given.'
-        )
+        raise errors.ArgumentError('The --global option cannot be used with -x.')
     if flag == _CmdFlag.EXECUTE and not args.debug:
         log.silence_streams()
 

@@ -27,23 +27,6 @@ def test_execute(exit, subprocess, cleandir, fake_global_db, fake_db, execute_cm
     assert out.decode().strip() == execute_cmd.expected
 
 
-@mock.patch('localalias.commands.sys.exit')
-def test_execute_global(exit, cleandir, global_filename, fake_global_db, global_alias_dict):
-    """Tests global aliases
-
-    NOTE: Unlike test_execute, this test merely tests whether the alias is found, NOT if it is
-          executed properly.
-    """
-    commands.Command.GLOBALALIAS_DB_FILENAME = global_filename
-    for alias in global_alias_dict:
-        cmd = commands.Execute([alias])
-        cmd()
-
-    with pytest.raises(errors.AliasNotDefinedError):
-        cmd = commands.Execute(['bad_alias'])
-        cmd()
-
-
 @pytest.fixture
 def execute_cmd(args, execute_expected):
     """Builds and returns execute command."""
