@@ -18,8 +18,8 @@ def run():
 
 
 def _copy_shell_ext():
-    src = '{}/shell/localalias.sh'.format(_this_dir)
-    dest = '{}/localalias.sh'.format(_config_dir)
+    src = '{}/zsh/localalias.zsh'.format(_this_dir)
+    dest = '{}/localalias.zsh'.format(_config_dir)
     shutil.copyfile(src, dest)
 
 
@@ -43,7 +43,7 @@ def _install_omz_plugin():
 
     _create_dir(ohmyzsh_dir + '/plugins/localalias')
 
-    src = '{}/localalias.sh'.format(_config_dir)
+    src = '{}/localalias.zsh'.format(_config_dir)
     dest = '{}/plugins/localalias/{}'.format(ohmyzsh_dir, 'localalias.plugin.zsh')
 
     try:
