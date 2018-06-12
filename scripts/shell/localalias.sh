@@ -17,6 +17,10 @@ for i in {a..z}; do
     unalias "$i" &> /dev/null
 done
 
+for i in {0..9}; do
+    unalias "$i" &> /dev/null
+done
+
 arr=("la" "ls" "ll")
 for i in "${arr[@]}"; do
     unalias "$i" &> /dev/null
