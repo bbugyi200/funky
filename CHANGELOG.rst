@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file. This projec
 `Semantic Versioning <http://semver.org/>`_, though minor breaking changes can happen in minor
 releases.
 
+v2.3.1 (2018-06-12)
+-------------------
+
+Fixed:
+
+* Add (``-a``) and Edit (``-e``) commands now act more approriately when command definition is left
+  blank.
+
 v2.3.0 (2018-06-12)
 -------------------
 
