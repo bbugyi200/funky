@@ -9,11 +9,12 @@ from localalias import commands
 import shared
 
 
-@mock.patch('localalias.commands.Edit.edit_alias')
-def test_add(edit_alias, cleandir, add_cmd, alias_dict):
+@mock.patch('localalias.commands.tempfile')
+@mock.patch('localalias.commands.sp')
+def test_add(sp, tempfile, setup_edit_patches, cleandir, add_cmd, alias_dict):
     """Tests add command."""
     alias_cmd_string = alias_dict[add_cmd.alias]
-    edit_alias.return_value = alias_cmd_string
+    setup_edit_patches(sp, tempfile, alias_cmd_string)
     add_cmd()
 
     loaded_aliases = shared.load_aliases()

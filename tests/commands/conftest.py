@@ -3,6 +3,7 @@ import json
 import os
 import shutil
 import tempfile
+import unittest.mock as mock
 
 import pytest
 
@@ -16,6 +17,21 @@ def cleandir():
     os.chdir(newpath)
     yield
     shutil.rmtree(newpath)
+
+
+@pytest.fixture
+def setup_edit_patches():
+    """Setup sp and tempfile patches for testing edit and add commands."""
+    def _patch_edit(sp, tempfile, cmd_string):
+        tmpfilename = '/tmp/test_edit.txt'
+        with open(tmpfilename, 'w') as f:
+            f.write(cmd_string)
+
+        fileMock = mock.Mock(name='fileMock')
+        fileMock.name = tmpfilename
+        tempfile.NamedTemporaryFile = mock.Mock()
+        tempfile.NamedTemporaryFile.return_value = fileMock
+    return _patch_edit
 
 
 @pytest.fixture
