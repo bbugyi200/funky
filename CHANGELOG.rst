@@ -9,9 +9,18 @@ releases.
 v2.3.0 (Unreleased)
 -------------------
 
-Added:
+Changed:
 
-* Configuration file.
+* Local aliases are now sourced into ``.zshrc``.
+
+Removed:
+
+* Execute command (``-x``). No longer needed now that aliased are sourced directly into ``.zshrc``.
+* Bash support
+
+  - I wanted to focus on providing one service well. ZSH has some more advanced features than bash.
+    Since I don't use bash, I'm not enthusiastic about supporting it. I'll reimplement it on
+    request, but am not going to waste my time otherwise.
 
 v2.2.2 (2018-06-11)
 -------------------
