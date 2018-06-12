@@ -19,9 +19,10 @@ Demonstration
 
 .. image:: https://github.com/bbugyi200/localalias/blob/master/docs/img/demo.gif?raw=true
 
-NOTE: In the above demonstration, I have aliased ``la`` to ``localalias --color``. I strongly
-recommend using this alias or one similar to it (since a primary goal of this project is to
-reduce keystrokes).
+NOTE: This demonstration uses the `helper function`__, ``la``, in place of the standard
+``localalias`` command.
+
+__ https://localalias.readthedocs.io/en/latest/usage.html#use-la-and-al-over-localalias
 
 Description
 -----------
@@ -43,7 +44,9 @@ the top-level directory of the localalias project directory, running ``r`` is eq
 like this to simplify my own workflow: ``t`` runs the tests, ``b`` builds the project, ``v`` opens
 up files in ``vim``. [#]_
 
-.. [#] I normally use multiple variations of this last one: ``v`` opens up the most active files (the ones I am most likely to want to edit), ``vt`` opens up test files, ``vd`` opens up doc files, etc..
+.. [#] I normally use multiple variations of this last one: ``v`` opens up the most active files
+   (the ones I am most likely to want to edit), ``vt`` opens up test files, ``vd`` opens up doc
+   files, etc..
 
 .. inclusion-marker-do-not-remove
 

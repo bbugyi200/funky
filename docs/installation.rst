@@ -88,7 +88,7 @@ for more information.
 .. important:: 
     
    If you have `oh-my-zsh`_ installed, a symbolic link should have been created from  the
-   ``localalias.sh`` script---described in the :ref:`install-bash-zsh` section---to 
+   ``localalias.zsh`` script---described in the :ref:`install-manual` section---to 
 
    .. code-block:: shell
 
@@ -101,29 +101,29 @@ for more information.
    .. code-block:: shell
 
         mkdir ~/.oh-my-zsh/custom/plugins/localalias        
-        ln -s ~/.config/localalias/localalias.sh ~/.oh-my-zsh/custom/plugins/localalias/localalias.plugin.zsh         
+        ln -s ~/.config/localalias/localalias.zsh ~/.oh-my-zsh/custom/plugins/localalias/localalias.plugin.zsh         
 
-.. _install-bash-zsh:
+.. _install-manual:
 
 Manual Integration
 ~~~~~~~~~~~~~~~~~~
 
-A shell script by the name of ``localalias.sh`` should have been copied to
+A shell script by the name of ``localalias.zsh`` should have been copied to
 
 .. code-block:: shell
 
-   $XDG_CONFIG_HOME/localalias/localalias.sh
+   $XDG_CONFIG_HOME/localalias/localalias.zsh
 
 during the installation process (it can also be found `here`__). If you do NOT have `oh-my-zsh`_
-installed, you can integrate localalias into your shell by sourcing the ``localalias.sh`` script
+installed, you can integrate localalias into your shell by sourcing the ``localalias.zsh`` script
 into your shell's configuration file. Assuming the script was copied to
-``~/.config/localalias/localalias.sh`` (its default location), for example, you would add the
-following line to your ``.zshrc`` or ``.bashrc`` file:
+``~/.config/localalias/localalias.zsh`` (its default location), for example, you would add the
+following line to your ``.zshrc``:
 
 .. code-block:: shell
 
-   source ~/.config/localalias/localalias.sh
+   source ~/.config/localalias/localalias.zsh
 
 
-__  https://github.com/bbugyi200/localalias/blob/master/scripts/shell/localalias.sh
+__  https://github.com/bbugyi200/localalias/blob/master/scripts/zsh/localalias.zsh
 .. _oh-my-zsh: https://github.com/robbyrussell/oh-my-zsh
