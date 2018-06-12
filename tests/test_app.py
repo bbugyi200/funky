@@ -5,6 +5,7 @@ import unittest.mock as mock
 
 import pytest
 
+import localalias
 from localalias import app
 from localalias import errors
 
@@ -34,8 +35,10 @@ def test_main(commands, argv, cmd_cls_string):
 @mock.patch('localalias.utils.log.logger')
 def test_main_validate_args(logger, argv):
     """Tests that arguments are validated properly."""
-    app.main(argv) == 1
+    assert app.main(argv) == 2
     logger.error.called_once()
+    localalias.app._CmdAction.flag = None
+    localalias.app._CmdAction.option_string = None
 
 
 @mock.patch('localalias.app._get_argparser')

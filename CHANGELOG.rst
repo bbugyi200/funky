@@ -13,6 +13,14 @@ Added:
 
 * Configuration file.
 
+v2.2.2 (2018-06-11)
+-------------------
+
+Fixed:
+
+* Using ``-x`` without argument should fail explicitly. (v2.2.1 did not resolve this issue as I had
+  thought.)
+
 
 v2.2.1 (2018-06-11)
 -------------------

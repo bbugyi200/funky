@@ -33,7 +33,7 @@ def main(argv=None):
     except errors.ArgumentError as e:
         log.logger.error('%s\n', str(e))
         parser.print_usage()
-        return 1
+        return 2
     except errors.LocalAliasError as e:
         log.logger.debug('Exit Status: %s', e.returncode)
         log.logger.error(str(e))
@@ -93,11 +93,11 @@ def _validate_args(args, flag):
             'are always checked (in that order) when the -x option is given.'
         )
 
-    # if flag == _CmdFlag.EXECUTE and len(args.command_args) < 1:
-    #     raise errors.ArgumentError(
-    #         'The -x option requires atleast one argument. Namely, the alias that you would like '
-    #         'to execute.'
-    #     )
+    if flag == _CmdFlag.EXECUTE and len(args.command_args) < 1:
+        raise errors.ArgumentError(
+            'The -x option requires atleast one argument. Namely, the alias that you would like '
+            'to execute.'
+        )
 
     if flag == _CmdFlag.EXECUTE and not args.debug:
         log.silence_streams()
