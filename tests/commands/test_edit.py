@@ -34,7 +34,7 @@ def test_edit_empty(remove_alias, sp, tempfile, setup_edit_patches, cleandir, fa
     cmd = commands.Edit([some_alias])
     cmd()
 
-    remove_alias.assert_called_once()
+    assert remove_alias.call_count == 1
 
 
 @pytest.fixture
