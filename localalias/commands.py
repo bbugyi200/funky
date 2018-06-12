@@ -69,10 +69,6 @@ class Command(metaclass=ABCMeta):
         except FileNotFoundError as e:
             return {}
 
-    def remove_alias(self):
-        self.alias_dict.pop(self.alias)
-        log.logger.info('Removed alias "{}".'.format(self.alias))
-
     @abstractmethod
     def __call__(self):
         log.logger.debug('Running {} command.'.format(self.__class__.__name__))
@@ -134,6 +130,10 @@ class Show(Command):
 
 class Edit(Command):
     """Edit an existing alias."""
+    def remove_alias(self):
+        self.alias_dict.pop(self.alias)
+        log.logger.info('Removed alias "{}".'.format(self.alias))
+
     def edit_alias(self, alias=None):
         """Opens up alias definition using temp file in $EDITOR for editing.
 
@@ -232,7 +232,7 @@ class Rename(Command):
         self.commit()
 
 
-class Remove(Show):
+class Remove(Edit):
     """Remove an existing alias. If no alias is given, prompt to remove all aliases (in scope)."""
     def __call__(self):
         Command.__call__(self)
@@ -259,10 +259,7 @@ class Remove(Show):
 
         self.commit()
 
-        if self.alias_dict:
-            print()
-            self.show_search()
-        else:
+        if not self.alias_dict:
             log.logger.debug('Removing {}.'.format(self.ACTIVE_DB_FILENAME))
             os.remove(self.ACTIVE_DB_FILENAME)
 
