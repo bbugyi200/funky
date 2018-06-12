@@ -3,7 +3,10 @@
 #########################################
 
 ##### WHAT DOES THIS SCRIPT DO?
-# TODO
+# - Disables single letter aliases and builtins (these are desirable for use as local aliases)
+# - Source local and global aliases on startup.
+# - Source local aliases everytime the directory changes.
+# - Define two wrapper functions, `la` and `al`.
 
 ##### INSTALLATION
 # In order to take advantage of the full benefits of localalias, this script must either be used as
@@ -12,7 +15,7 @@
 # 
 # https://localalias.readthedocs.io/en/latest/installation.html#additional-installation-steps
 
-## Disable aliases and unwanted builtins
+## Disable aliases
 for i in {a..z}; do
     unalias "$i" &> /dev/null
 done
@@ -26,6 +29,7 @@ for i in "${arr[@]}"; do
     unalias "$i" &> /dev/null
 done
 
+## Disable builtins
 disable r
 
 ## Source aliases on startup
@@ -44,7 +48,7 @@ chpwd() {
     fi 
 }
 
-## Used to interact with local aliases
+## Wrapper used to interact with local aliases
 la() {
     touch /tmp/localalias.timestamp
     localalias --color "$@"
@@ -53,7 +57,7 @@ la() {
     fi
 }
 
-## Used to interact with global aliases
+## Wrapper used to interact with global aliases
 al() {
     touch /tmp/localalias.timestamp
     localalias --global --color "$@"
