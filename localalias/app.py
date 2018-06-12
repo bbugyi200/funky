@@ -24,8 +24,6 @@ def main(argv=None):
 
         log.init_logger(debug=args.debug)
 
-        _validate_args(args, _CmdAction.flag)
-
         log.logger.debug('Starting localalias.')
         log.logger.vdebug('Command-line Arguments: {}'.format(args))
 
@@ -69,9 +67,6 @@ def _get_argparser():
                                action=_CmdAction, metavar='ALIAS', help=commands.Remove.__doc__)
     command_group.add_argument(_CmdFlag.EDIT.value, nargs=1, dest='command_args',
                                action=_CmdAction, metavar='ALIAS', help=commands.Edit.__doc__)
-    command_group.add_argument(_CmdFlag.EXECUTE.value, nargs=argparse.REMAINDER,
-                               dest='command_args', action=_CmdAction, metavar='ARG',
-                               help=argparse.SUPPRESS)
     command_group.add_argument(_CmdFlag.RENAME.value, nargs=2, dest='command_args',
                                action=_CmdAction, metavar=('OLD', 'NEW'),
                                help=commands.Rename.__doc__)
@@ -79,28 +74,6 @@ def _get_argparser():
                                help=commands.Show.__doc__)
 
     return parser
-
-
-def _validate_args(args, flag):
-    """Run extra validation checks on command-line arguments.
-
-    This function also makes necessary changes to the environment when necessary given certain
-    argument combinations (e.g. silence logs when -x is present but -d is not).
-    """
-    if flag == _CmdFlag.EXECUTE and args.global_:
-        raise errors.ArgumentError(
-            'The --global option is redundant when used with -x. Both local and global aliases '
-            'are always checked (in that order) when the -x option is given.'
-        )
-
-    if flag == _CmdFlag.EXECUTE and len(args.command_args) < 1:
-        raise errors.ArgumentError(
-            'The -x option requires atleast one argument. Namely, the alias that you would like '
-            'to execute.'
-        )
-
-    if flag == _CmdFlag.EXECUTE and not args.debug:
-        log.silence_streams()
 
 
 class _CmdAction(argparse.Action):
@@ -135,7 +108,6 @@ class _CmdAction(argparse.Action):
         cmd_builder = {_CmdFlag.ADD: commands.Add,
                        _CmdFlag.REMOVE: commands.Remove,
                        _CmdFlag.EDIT: commands.Edit,
-                       _CmdFlag.EXECUTE: commands.Execute,
                        _CmdFlag.RENAME: commands.Rename,
                        _CmdFlag.SHOW: commands.Show}[cls.flag]
 
@@ -152,6 +124,5 @@ class _CmdFlag(enum.Enum):
     ADD = '-a'
     REMOVE = '-r'
     EDIT = '-e'
-    EXECUTE = '-x'
     SHOW = None
     RENAME = '-R'

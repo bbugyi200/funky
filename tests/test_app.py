@@ -14,7 +14,6 @@ from localalias import errors
     (['-a', 'new_alias'], 'Add'),
     (['-e', 'new_alias'], 'Edit'),
     (['-r', 'new_alias'], 'Remove'),
-    (['-x', 't', '-x'], 'Execute'),
 ])
 @mock.patch('localalias.app.commands')
 def test_main(commands, argv, cmd_cls_string):
@@ -28,9 +27,7 @@ def test_main(commands, argv, cmd_cls_string):
 
 
 @pytest.mark.parametrize('argv', [
-    ['-g', '-x', 'my_alias'],
     ['-a', 'new_alias', '-e', 'existing_alias'],
-    ['-x'],
 ])
 @mock.patch('localalias.utils.log.logger')
 def test_main_validate_args(logger, argv):

@@ -6,7 +6,6 @@ import json
 import os
 import re
 import subprocess as sp
-import sys
 import tempfile
 import time
 
@@ -73,54 +72,6 @@ class Command(metaclass=ABCMeta):
     @abstractmethod
     def __call__(self):
         log.logger.debug('Running {} command.'.format(self.__class__.__name__))
-
-
-class Execute(Command):
-    """
-    Execute an existing alias. The first argument must be the alias to execute. The remaining
-    arguments are optional. If given, they are passed on to the command that is to be executed.
-    This action command is used by the shell integration script but is not generally meant to be
-    run manually.
-    """
-    def __init__(self, *args, **kwargs):
-        self.global_alias_dict = self.load(self.GLOBALALIAS_DB_FILENAME)
-        super().__init__(*args, **kwargs)
-
-    def execute(self, alias=None):
-        """Evaluates and executes the command string corresponding with the given alias.
-
-        Args:
-            alias (optional): The alias to edit. If not given, this function uses the alias defined
-                at instance creation time.
-        """
-        if alias is None:
-            alias = self.alias
-
-        log.logger.debug('Executing command string mapped to "{}" alias.'.format(alias))
-        args = '"{}"'.format('" "'.join(self.args)) if self.args else ''
-
-        try:
-            cmd_string = self.alias_dict[alias]
-            log.logger.debug('Alias found in local database.')
-        except KeyError as e:
-            cmd_string = self.global_alias_dict[alias]
-            log.logger.debug('Alias found in global database.')
-
-        ps = sp.Popen(['bash', '-c', 'set -- {}\n{}'.format(args, cmd_string)])
-        returncode = ps.wait()
-
-        # 127 is interpretted by zsh plugin as a "command not found" error
-        if returncode == 127:
-            returncode = 27
-
-        sys.exit(returncode)
-
-    def __call__(self):
-        super().__call__()
-        if self.alias in self.alias_dict or self.alias in self.global_alias_dict:
-            self.execute()
-        else:
-            raise errors.AliasNotDefinedError(alias=self.alias, returncode=127)
 
 
 class Show(Command):

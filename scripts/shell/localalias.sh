@@ -12,8 +12,19 @@
 # 
 # https://localalias.readthedocs.io/en/latest/installation.html#additional-installation-steps
 
-setopt ALIAS_FUNC_DEF
+## Disable aliases and unwanted builtins
+for i in {a..z}; do
+    unalias "$i" &> /dev/null
+done
 
+arr=("la" "ls" "ll")
+for i in "${arr[@]}"; do
+    unalias "$i" &> /dev/null
+done
+
+disable r
+
+## Source aliases on startup
 if [[ -f ~/.globalalias ]]; then
     localalias --global | source /dev/stdin
 fi
@@ -22,12 +33,14 @@ if [[ -f $PWD/.localalias ]]; then
     localalias | source /dev/stdin
 fi
 
+## Source local aliases everytime the directory is changed
 chpwd() {
     if [[ -f $PWD/.localalias ]]; then
         localalias | source /dev/stdin
     fi 
 }
 
+## Used to interact with local aliases
 la() {
     touch /tmp/localalias.timestamp
     localalias --color "$@"
@@ -36,6 +49,7 @@ la() {
     fi
 }
 
+## Used to interact with global aliases
 al() {
     touch /tmp/localalias.timestamp
     localalias --global --color "$@"
