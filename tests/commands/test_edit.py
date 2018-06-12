@@ -22,6 +22,21 @@ def test_edit(sp, tempfile, setup_edit_patches, cleandir, fake_db, edit_cmd):
     assert loaded_aliases[edit_cmd.alias] == '{} "$@"'.format(edited_cmd_string)
 
 
+@mock.patch('localalias.commands.tempfile')
+@mock.patch('localalias.commands.sp')
+@mock.patch('localalias.commands.Edit.remove_alias')
+def test_edit_empty(remove_alias, sp, tempfile, setup_edit_patches, cleandir, fake_db, alias_dict):
+    """Tests that an alias definition left empty results in the alias being removed."""
+    edited_cmd_string = ''
+    setup_edit_patches(sp, tempfile, edited_cmd_string)
+
+    some_alias = list(alias_dict.keys())[0]
+    cmd = commands.Edit([some_alias])
+    cmd()
+
+    remove_alias.assert_called_once()
+
+
 @pytest.fixture
 def edit_cmd(args):
     """Builds and returns 'edit' command."""
@@ -38,8 +53,8 @@ def test_edit_format(sp, tempfile, setup_edit_patches, cleandir, fake_db, alias_
     setup_edit_patches(sp, tempfile, edited_cmd_string)
 
     some_alias = list(alias_dict.keys())[0]
-    edit_cmd = commands.Edit([some_alias])
-    edit_cmd()
+    cmd = commands.Edit([some_alias])
+    cmd()
 
     loaded_aliases = shared.load_aliases()
     assert loaded_aliases[some_alias] == '{} "$@"'.format(edited_cmd_string)
