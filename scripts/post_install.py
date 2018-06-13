@@ -13,18 +13,20 @@ _user = getpass.getuser()
 
 
 def run():
-    _copy_shell_ext()
+    """Runs all post install hooks."""
+    _copy_zsh_ext()
     _install_omz_plugin()
 
 
-def _copy_shell_ext():
+def _copy_zsh_ext():
+    """Copy zsh extension to localalias config directory."""
     src = '{}/zsh/localalias.zsh'.format(_this_dir)
     dest = '{}/localalias.zsh'.format(_config_dir)
     shutil.copyfile(src, dest)
 
 
 def _install_omz_plugin():
-    """Install oh-my-zsh Plugin
+    """Install oh-my-zsh Plugin.
 
     Creates symlink from localalias shell extension to zsh plugin in oh-my-zsh plugin dir
     (if oh-my-zsh is installed).
@@ -55,6 +57,7 @@ def _install_omz_plugin():
 
 
 def _create_dir(directory):
+    """Create directory."""
     try:
         os.makedirs(directory)
     except OSError as e:
