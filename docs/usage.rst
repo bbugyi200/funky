@@ -48,11 +48,19 @@ Local and global aliases can be manipulated (created, removed, edited, renamed, 
 Use ``la`` and ``al`` over ``localalias``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Two helper functions, ``la`` and ``al``, are defined during installation.  It is recommended that
-these functions be used in place of the standard ``localalias`` command. ``la`` acts as a wrapper
-for ``localalias --color``, whereas ``al`` acts as a wrapper for ``localalias --color --global``.
-After using either of these helper functions, any newly created or altered aliases will be sourced
-into your current shell environment so they will be ready for immediate use.
+Two helper functions, ``la`` and ``al``, are defined during installation. It is recommended that
+these functions be used in place of the standard ``localalias`` command.
+
+``la`` acts as a wrapper for ``localalias --color``, whereas ``al`` acts as a wrapper for
+``localalias --color --global``.  After using either of these helper functions, any newly created
+or altered aliases will be sourced into your current shell environment so they will be ready for
+immediate use.
+
+.. note::
+
+   If these functions do not appear to be defined, you may have forgotten to integrate localalias
+   into your shell environment. Refer to :ref:`install-additional` for instructions on how to do
+   this.
 
 .. _usage-funcs:
 
