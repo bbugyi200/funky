@@ -143,6 +143,7 @@ class Show(Command):
 class Edit(Command):
     """Edit an existing alias."""
     def remove_alias(self):
+        """Removes the alias defined at instance creation time."""
         self.alias_dict.pop(self.alias)
         log.logger.info('Removed alias "{}".'.format(self.alias))
 
