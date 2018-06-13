@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file. This projec
 `Semantic Versioning <http://semver.org/>`_, though minor breaking changes can happen in minor
 releases.
 
+v2.3.3 (2018-06-12)
+-------------------
+
+Fixed:
+
+* Local aliases were not consistently overriding global aliases
+
 v2.3.2 (2018-06-12)
 -------------------
 

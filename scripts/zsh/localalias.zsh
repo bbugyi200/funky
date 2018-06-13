@@ -32,28 +32,32 @@ done
 ## Disable builtins
 disable r
 
+## Function used for sourcing aliases
+_source_globals() { localalias --global | source /dev/stdin; }
+_source_locals() { localalias | source /dev/stdin; }
+
+_maybe_source_locals() {
+    if [[ -f $PWD/.localalias ]]; then
+        _source_locals
+    fi
+}
+
 ## Source aliases on startup
 if [[ -f ~/.globalalias ]]; then
-    localalias --global | source /dev/stdin
+    _source_globals
 fi
 
-if [[ -f $PWD/.localalias ]]; then
-    localalias | source /dev/stdin
-fi
+_maybe_source_locals
 
 ## Source local aliases everytime the directory is changed
-chpwd() {
-    if [[ -f $PWD/.localalias ]]; then
-        localalias | source /dev/stdin
-    fi 
-}
+chpwd() { _maybe_source_locals; }
 
 ## Wrapper used to interact with local aliases
 la() {
     touch /tmp/localalias.timestamp
     localalias --color "$@"
     if [[ .localalias -nt /tmp/localalias.timestamp ]]; then
-        localalias | source /dev/stdin
+        _source_locals
     fi
 }
 
@@ -62,6 +66,7 @@ al() {
     touch /tmp/localalias.timestamp
     localalias --global --color "$@"
     if [[ ~/.globalalias -nt /tmp/localalias.timestamp ]]; then
-        localalias --global | source /dev/stdin
+        _source_globals
+        _maybe_source_locals
     fi
 }
