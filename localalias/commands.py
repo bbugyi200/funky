@@ -56,11 +56,22 @@ class Command(metaclass=ABCMeta):
 
         log.logger.vdebug('Existing Aliases: {}'.format(self.alias_dict))
 
+    def purge_db(self):
+        """Removes the database file."""
+        try:
+            os.remove(self.ACTIVE_DB_FILENAME)
+        except FileNotFoundError as e:
+            pass
+
     def commit(self):
         """Saves alias changes to database."""
-        log.logger.debug('Committing changes to database: {}'.format(self.ACTIVE_DB_FILENAME))
-        with open(self.ACTIVE_DB_FILENAME, 'w') as f:
-            json.dump(self.alias_dict, f)
+        if self.alias_dict:
+            log.logger.debug('Committing changes to database: {}'.format(self.ACTIVE_DB_FILENAME))
+            with open(self.ACTIVE_DB_FILENAME, 'w') as f:
+                json.dump(self.alias_dict, f)
+        else:
+            log.logger.debug('Removing {}.'.format(self.ACTIVE_DB_FILENAME))
+            self.purge_db()
 
     def load(self, DB_FILENAME):
         try:
@@ -120,6 +131,7 @@ class Show(Command):
     def __call__(self):
         super().__call__()
         if not self.alias_dict:
+            self.purge_db()
             raise errors.AliasNotDefinedError()
 
         if self.alias is None:
@@ -258,10 +270,6 @@ class Remove(Edit):
             self.remove_alias()
 
         self.commit()
-
-        if not self.alias_dict:
-            log.logger.debug('Removing {}.'.format(self.ACTIVE_DB_FILENAME))
-            os.remove(self.ACTIVE_DB_FILENAME)
 
 
 class Add(Edit):
