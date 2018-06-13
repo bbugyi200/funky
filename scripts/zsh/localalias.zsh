@@ -61,14 +61,16 @@ _maybe_source_locals
 
 ##### Source local aliases everytime the directory is changed
 chpwd() {
-    if [[ -f $PWD/.localalias ]]; then
-        _source_locals
-        if [[ ! -f $_temp_path/localpath ]] || [[ $PWD != "$(cat $_temp_path/localpath)"* ]]; then
-            echo $PWD > $_temp_path/localpath
-        fi
-    elif [[ -f $_temp_path/localpath ]] && [[ $PWD != "$(cat $_temp_path/localpath)"* ]]; then
+    if [[ -f $_temp_path/localpath ]] && [[ $PWD != "$(cat $_temp_path/localpath)"* ]]; then
         _maybe_source_globals
         rm -f $_temp_path/localpath
+    fi
+
+    if [[ -f $PWD/.localalias ]]; then
+        _source_locals
+        if [[ ! -f $_temp_path/localpath ]]; then
+            echo $PWD > $_temp_path/localpath
+        fi
     fi
 }
 
