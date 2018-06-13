@@ -59,7 +59,11 @@ _maybe_source_globals() {
 _maybe_source_globals
 _maybe_source_locals
 
-##### Source local aliases everytime the directory is changed
+##### Source appropriate aliases everytime the directory is changed
+#
+# - Is run everytime the directory is changed.
+# - Lazily loads global aliases and local aliases while attempting to maintain parent's local
+#   aliases.
 chpwd() {
     if [[ -f $_temp_path/localpath ]] && [[ $PWD != "$(cat $_temp_path/localpath)"* ]]; then
         _maybe_source_globals
