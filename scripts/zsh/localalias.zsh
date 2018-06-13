@@ -15,23 +15,6 @@
 # 
 # https://localalias.readthedocs.io/en/latest/installation.html#additional-installation-steps
 
-##### Disable aliases
-for i in {a..z}; do
-    unalias "$i" &> /dev/null
-done
-
-for i in {0..9}; do
-    unalias "$i" &> /dev/null
-done
-
-arr=("la" "ls" "ll")
-for i in "${arr[@]}"; do
-    unalias "$i" &> /dev/null
-done
-
-##### Disable builtins
-disable r
-
 ##### Create temporary localalias directory
 _temp_path=/tmp/localalias
 
