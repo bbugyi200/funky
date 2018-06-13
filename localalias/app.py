@@ -52,8 +52,10 @@ def _get_argparser():
     parser.add_argument('--version', action='version',
             version='%(prog)s {}'.format(localalias.__version__))
     parser.add_argument('-c', '--color', action='store_true', help="Colorize output.")
+
+    # Run action command with global scope.
     parser.add_argument('-g', '--global', dest='global_', action='store_true',
-                        help='Run action command with global scope.')
+                        help=argparse.SUPPRESS)
 
     command_group = parser.add_argument_group(
         title='Action Commands',
