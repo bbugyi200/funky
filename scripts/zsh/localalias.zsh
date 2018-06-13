@@ -15,7 +15,7 @@
 # 
 # https://localalias.readthedocs.io/en/latest/installation.html#additional-installation-steps
 
-## Disable aliases
+##### Disable aliases
 for i in {a..z}; do
     unalias "$i" &> /dev/null
 done
@@ -29,10 +29,17 @@ for i in "${arr[@]}"; do
     unalias "$i" &> /dev/null
 done
 
-## Disable builtins
+##### Disable builtins
 disable r
 
-## Function used for sourcing aliases
+##### Create temporary localalias directory
+_temp_path=/tmp/localalias
+
+if [[ ! -d $_temp_path ]]; then
+    mkdir $_temp_path
+fi
+
+##### Function used for sourcing aliases
 _source_globals() { localalias --global | source /dev/stdin; }
 _source_locals() { localalias | source /dev/stdin; }
 
@@ -42,30 +49,43 @@ _maybe_source_locals() {
     fi
 }
 
-## Source aliases on startup
-if [[ -f ~/.globalalias ]]; then
-    _source_globals
-fi
+_maybe_source_globals() {
+    if [[ -f ~/.globalalias ]]; then
+        _source_globals
+    fi
+}
 
+##### Source aliases on startup
+_maybe_source_globals
 _maybe_source_locals
 
-## Source local aliases everytime the directory is changed
-chpwd() { _maybe_source_locals; }
+##### Source local aliases everytime the directory is changed
+chpwd() {
+    if [[ -f $PWD/.localalias ]]; then
+        _source_locals
+        if [[ ! -f $_temp_path/localpath ]] || [[ $PWD != "$(cat $_temp_path/localpath)"* ]]; then
+            echo $PWD > $_temp_path/localpath
+        fi
+    elif [[ -f $_temp_path/localpath ]] && [[ $PWD != "$(cat $_temp_path/localpath)"* ]]; then
+        _maybe_source_globals
+        rm -f $_temp_path/localpath
+    fi
+}
 
-## Wrapper used to interact with local aliases
+##### Wrapper used to interact with local aliases
 la() {
-    touch /tmp/localalias.timestamp
+    touch $_temp_path/timestamp
     localalias --color "$@"
-    if [[ .localalias -nt /tmp/localalias.timestamp ]]; then
+    if [[ .localalias -nt $_temp_path/timestamp ]]; then
         _source_locals
     fi
 }
 
-## Wrapper used to interact with global aliases
+##### Wrapper used to interact with global aliases
 al() {
-    touch /tmp/localalias.timestamp
+    touch $_temp_path/timestamp
     localalias --global --color "$@"
-    if [[ ~/.globalalias -nt /tmp/localalias.timestamp ]]; then
+    if [[ ~/.globalalias -nt $_temp_path/timestamp ]]; then
         _source_globals
         _maybe_source_locals
     fi
