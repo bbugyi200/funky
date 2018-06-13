@@ -6,6 +6,15 @@ All notable changes to this project will be documented in this file. This projec
 `Semantic Versioning <http://semver.org/>`_, though minor breaking changes can happen in minor
 releases.
 
+v2.3.4 (2018-06-12)
+-------------------
+
+Fixed:
+
+* Leaving a directory with local aliases should unmask globalaliases.
+
+  - Meaning that any global aliases that were previously overridden should be back in scope.
+
 v2.3.3 (2018-06-12)
 -------------------
 
