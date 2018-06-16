@@ -100,10 +100,8 @@ class Show(Command):
             show_output = '{0}() {{ {1}; }}'.format(alias, cmd_string)
 
         if self.color:
-            log.logger.debug('Showing colorized output.')
             final_output = highlight(show_output, BashLexer(), TerminalFormatter()).strip()
         else:
-            log.logger.debug('Showing normal output.')
             final_output = show_output
 
         print(final_output)

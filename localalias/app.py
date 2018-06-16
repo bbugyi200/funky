@@ -22,7 +22,7 @@ def main(argv=None):
         parser = _get_argparser()
         args = parser.parse_args(argv)
 
-        log.init_logger(debug=args.debug)
+        log.init_logger(debug=args.debug, verbose=args.verbose)
 
         log.logger.debug('Starting localalias.')
         log.logger.vdebug('Command-line Arguments: {}'.format(args))
@@ -49,6 +49,7 @@ def _get_argparser():
     """
     parser = argparse.ArgumentParser(prog='localalias', description=localalias.__doc__)
     parser.add_argument('-d', '--debug', action='store_true', help="Enable debug mode.")
+    parser.add_argument('-v', '--verbose', action='store_true', help="Enable verbose output.")
     parser.add_argument('--version', action='version',
             version='%(prog)s {}'.format(localalias.__version__))
     parser.add_argument('-c', '--color', action='store_true', help="Colorize output.")

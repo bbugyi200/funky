@@ -10,14 +10,20 @@ import localalias.utils.xdg as xdg
 
 logger = logging.getLogger("localalias")
 
-# This assignment is temporary. Will be removed when I define a VDEBUG logging level.
-logger.vdebug = logger.debug
 
-
-def init_logger(*, debug=False):
+def init_logger(*, debug=False, verbose=False):
     """Initializes the main logger."""
+    _add_vdebug_level(logging)
     root = logging.getLogger()
-    level = logging.DEBUG if debug else logging.INFO
+
+    if debug:
+        if verbose:
+            level = logging.VDEBUG
+        else:
+            level = logging.DEBUG
+    else:
+        level = logging.INFO
+
     root.setLevel(level)
 
     sh = logging.StreamHandler()
@@ -34,6 +40,19 @@ def init_logger(*, debug=False):
         fh.setLevel(level)
         root.addHandler(fh)
         root.debug('Debug mode enabled.')
+
+
+def _add_vdebug_level(logging):
+    """Adds custom logging level for verbose debug logs."""
+    VDEBUG_LEVEL_NUM = 5
+    logging.addLevelName(VDEBUG_LEVEL_NUM, "VDEBUG")
+
+    def vdebug(self, message, *args, **kwargs):
+        if self.isEnabledFor(VDEBUG_LEVEL_NUM):
+            self._log(VDEBUG_LEVEL_NUM, message, args, **kwargs)
+
+    logging.Logger.vdebug = vdebug
+    logging.VDEBUG = VDEBUG_LEVEL_NUM
 
 
 def _getFormatter(*, verbose=False):
