@@ -29,7 +29,7 @@ class Command(metaclass=ABCMeta):
             (if any exist) vary depending on what command is being used.
         color (bool): If True, colorize output (if command produces output).
         global_ (bool): If True, the global database will be used instead of the local database.
-        verbose (bool): If True, show command displays verbose command definition.
+        verbose (bool): If True, Show command displays verbose command definition.
 
     IMPORTANT: The class docstring of a Command subclass is used by argparse to generate output
                for the help command.

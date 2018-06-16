@@ -46,6 +46,9 @@ def main(argv=None):
 def _get_argparser(*, verbose=False):
     """Get command-line arguments.
 
+    Args:
+        verbose (bool): If True, do not suppress the help output of any arguments.
+
     Returns:
         argparse.ArgumentParser object.
     """
@@ -62,7 +65,7 @@ def _get_argparser(*, verbose=False):
     command_group = parser.add_argument_group(
         title='Action Commands',
         description='All of these options act on the current set of local aliases in some way. If '
-                    'no action command is provided, the default action is to show all of the '
+                    'no action command is provided, the default action is to display all of the '
                     'local aliases currently in scope. These commands are mutually exclusive.'
     )
     command_group.add_argument(_CmdFlag.ADD.value, nargs=1, dest='command_args', action=_CmdAction,

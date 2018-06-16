@@ -12,7 +12,13 @@ logger = logging.getLogger("localalias")
 
 
 def init_logger(*, debug=False, verbose=False):
-    """Initializes the main logger."""
+    """Initializes the main logger.
+
+    Args:
+        debug (bool): If True, then set logging level to DEBUG (unless @verbose is also set).
+            Also, send log output to file in addition to stdout.
+        verbose (bool): If True and @debug is True, then set logging level to VDEBUG
+    """
     _add_vdebug_level(logging)
     root = logging.getLogger()
 
