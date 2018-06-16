@@ -145,6 +145,22 @@ class Show(Command):
             self.show_search(self.alias)
 
 
+class Rename(Command):
+    """Rename an existing alias. OLD alias is renamed to NEW."""
+    def __call__(self):
+        super().__call__()
+        if self.alias not in self.alias_dict:
+            raise errors.AliasNotDefinedError(alias=self.alias)
+
+        new_alias = self.args[0]
+        self.alias_dict[new_alias] = self.alias_dict[self.alias]
+        self.alias_dict.pop(self.alias)
+
+        msg_fmt = 'Alias "{}" has successfully been renamed to "{}".'
+        log.logger.info(msg_fmt.format(self.alias, new_alias))
+        self.commit()
+
+
 class Edit(Command):
     """Edit an existing alias."""
     def remove_alias(self):
@@ -232,22 +248,6 @@ class Edit(Command):
             log.logger.info(str(e))
             self.remove_alias()
 
-        self.commit()
-
-
-class Rename(Command):
-    """Rename an existing alias. OLD alias is renamed to NEW."""
-    def __call__(self):
-        super().__call__()
-        if self.alias not in self.alias_dict:
-            raise errors.AliasNotDefinedError(alias=self.alias)
-
-        new_alias = self.args[0]
-        self.alias_dict[new_alias] = self.alias_dict[self.alias]
-        self.alias_dict.pop(self.alias)
-
-        msg_fmt = 'Alias "{}" has successfully been renamed to "{}".'
-        log.logger.info(msg_fmt.format(self.alias, new_alias))
         self.commit()
 
 
