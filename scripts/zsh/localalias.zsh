@@ -23,8 +23,8 @@ if [[ ! -d $_temp_path ]]; then
 fi
 
 ##### Function used for sourcing aliases
-_source_globals() { localalias --global | source /dev/stdin; }
-_source_locals() { localalias | source /dev/stdin; }
+_source_globals() { localalias --verbose --global | source /dev/stdin; }
+_source_locals() { localalias --verbose | source /dev/stdin; }
 
 _maybe_source_locals() {
     if [[ -f $PWD/.localalias ]]; then
@@ -62,6 +62,7 @@ chpwd() {
 }
 
 ##### Wrapper used to interact with local aliases
+unalias la &> /dev/null
 la() {
     touch $_temp_path/timestamp
     localalias --color "$@"
@@ -72,6 +73,7 @@ la() {
 }
 
 ##### Wrapper used to interact with global aliases
+unalias al &> /dev/null
 al() {
     touch $_temp_path/timestamp
     localalias --global --color "$@"

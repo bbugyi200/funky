@@ -29,6 +29,7 @@ class Command(metaclass=ABCMeta):
             (if any exist) vary depending on what command is being used.
         color (bool): If True, colorize output (if command produces output).
         global_ (bool): If True, the global database will be used instead of the local database.
+        verbose (bool): If True, show command displays verbose command definition.
 
     IMPORTANT: The class docstring of a Command subclass is used by argparse to generate output
                for the help command.
@@ -36,7 +37,7 @@ class Command(metaclass=ABCMeta):
     LOCALALIAS_DB_FILENAME = '.localalias'
     GLOBALALIAS_DB_FILENAME = '/home/{}/.globalalias'.format(getpass.getuser())
 
-    def __init__(self, args, *, color=False, global_=False):
+    def __init__(self, args, *, color=False, global_=False, verbose=False):
         try:
             iter(args)
             if isinstance(args, str):
@@ -52,6 +53,7 @@ class Command(metaclass=ABCMeta):
         self.alias = args[0]
         self.args = args[1:]
         self.color = color
+        self.verbose = verbose
         self.alias_dict = self.load(self.ACTIVE_DB_FILENAME)
 
         log.logger.vdebug('Existing Aliases: {}'.format(self.alias_dict))
@@ -99,8 +101,13 @@ class Show(Command):
         else:
             show_output = '{0}() {{ {1}; }}'.format(alias, cmd_string)
 
+        if self.verbose:
+            show_output = '\nunalias {0} &> /dev/null\n{1}'.format(alias, show_output)
+
         if self.color:
-            final_output = highlight(show_output, BashLexer(), TerminalFormatter()).strip()
+            final_output = highlight(show_output, BashLexer(), TerminalFormatter())
+            if not self.verbose:
+                final_output = final_output.strip()
         else:
             final_output = show_output
 
