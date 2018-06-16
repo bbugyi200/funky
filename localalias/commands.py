@@ -188,7 +188,7 @@ class Edit(Command):
         os.unlink(tf.name)
 
         if edited_cmd_string.strip() == '':
-            raise errors.LocalAliasError('Alias definition was left blank.')
+            raise errors.BlankDefinition('Alias defined using blank definition.')
 
         log.logger.debug('New Command String: "%s"', edited_cmd_string)
         formatted_cmd_string = self._format_cmd_string(edited_cmd_string.strip())
@@ -223,7 +223,8 @@ class Edit(Command):
         try:
             self.edit_alias()
             log.logger.info('Edited alias: "%s".', self.alias)
-        except errors.LocalAliasError as e:
+        except errors.BlankDefinition as e:
+            log.logger.info(str(e))
             self.remove_alias()
 
         self.commit()
@@ -285,7 +286,7 @@ class Add(Edit):
         try:
             self.edit_alias()
             log.logger.info('Added alias "{}".'.format(self.alias))
-        except errors.LocalAliasError as e:
-            raise errors.LocalAliasError('Alias definition cannot be empty.')
+        except errors.BlankDefinition as e:
+            raise errors.LocalAliasError(str(e))
 
         self.commit()

@@ -23,3 +23,7 @@ class AliasNotDefinedError(LocalAliasError):
 
 class ArgumentError(LocalAliasError):
     """Raised when the given command-line arguments fail validation check."""
+
+
+class BlankDefinition(LocalAliasError):
+    """Raised when the user attempts to define an alias using a blank definition."""
