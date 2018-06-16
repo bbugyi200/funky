@@ -19,10 +19,12 @@ def main(argv=None):
         if argv is None:
             argv = sys.argv[1:]
 
-        parser = _get_argparser()
+        verbose = True if '-v' in argv or '--verbose' in argv else False
+        parser = _get_argparser(verbose=verbose)
         args = parser.parse_args(argv)
 
         log.init_logger(debug=args.debug, verbose=args.verbose)
+        log.logger.vdebug('argv = {}'.format(argv))
 
         log.logger.debug('Starting localalias.')
         log.logger.vdebug('Command-line Arguments: {}'.format(args))
@@ -41,7 +43,7 @@ def main(argv=None):
         raise
 
 
-def _get_argparser():
+def _get_argparser(*, verbose=False):
     """Get command-line arguments.
 
     Returns:
@@ -54,9 +56,8 @@ def _get_argparser():
             version='%(prog)s {}'.format(localalias.__version__))
     parser.add_argument('-c', '--color', action='store_true', help="Colorize output.")
 
-    # Run action command with global scope.
     parser.add_argument('-g', '--global', dest='global_', action='store_true',
-                        help=argparse.SUPPRESS)
+                        help=("Enable global scope." if verbose else argparse.SUPPRESS))
 
     command_group = parser.add_argument_group(
         title='Action Commands',
