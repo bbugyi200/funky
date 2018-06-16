@@ -12,19 +12,19 @@ v2.3.6 (2018-06-16)
 Added:
 
 * New VDEBUG ("verbose debug") logging level.
-* `--verbose` option
+* ``--verbose`` option
 
-  - Used with `--debug` it sets new VDEBUG logging level.
+  - Used with ``--debug`` it sets new VDEBUG logging level.
   - Used without any other options, the Show action command is run using verbose output. Going
     forward this will be used when sourcing function definitions.
-  - Used with `--help` it unsuppresses any suppressed options (e.g. currently `--global` is
+  - Used with ``--help`` it unsuppresses any suppressed options (e.g. currently ``--global`` is
     normally suppressed).
 
 Fixed:
 
 * No longer unalias all single-letter aliases automatically. Instead, functions/aliases created
   with localalias will automatically unalias function name before function definitions. (This
-  requires the `--verbose` option to make visible in Show command output.)
+  requires the ``--verbose`` option to make visible in Show command output.)
 
 v2.3.5 (2018-06-12)
 -------------------
