@@ -66,6 +66,7 @@ la() {
     touch $_temp_path/timestamp
     localalias --color "$@"
     if [[ .localalias -nt $_temp_path/timestamp ]]; then
+        _maybe_source_globals
         _source_locals
     fi
 }
