@@ -1,6 +1,7 @@
 """Tests for main application (entry point)."""
 
 import argparse
+import functools
 import unittest.mock as mock
 
 import pytest
@@ -22,7 +23,7 @@ def test_main(commands, argv, cmd_cls_string):
     cmd_class = getattr(commands, cmd_cls_string)
     app.main(argv)
 
-    cmd_class.assert_called_once_with(argv[1:], color=False, global_=False)
+    cmd_class.assert_called_once_with(argv[1:], color=False, global_=False, verbose=False)
     app._CmdAction.flag = None
 
 
@@ -44,15 +45,15 @@ def test_main_exceptions(_get_argparser):
     class TestError(Exception):
         pass
 
-    def raise_error(opt):
+    def raise_error(opt, verbose=False):
         if opt == 1:
             raise errors.LocalAliasError(returncode=5)
         elif opt == 2:
             raise TestError('Test Exception')
 
-    _get_argparser.side_effect = lambda: raise_error(1)
+    _get_argparser.side_effect = functools.partial(raise_error, 1)
     assert app.main() == 5
 
-    _get_argparser.side_effect = lambda: raise_error(2)
+    _get_argparser.side_effect = functools.partial(raise_error, 2)
     with pytest.raises(TestError):
         app.main()
