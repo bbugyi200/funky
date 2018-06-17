@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file. This projec
 `Semantic Versioning <http://semver.org/>`_, though minor breaking changes can happen in minor
 releases.
 
+v2.5.0 (Unreleased)
+-------------------
+
+Changed:
+
+* No longer separate multiline function defs from single-line function defs in Show command output.
+* Use case-insensitive sort when sorting function names.
+
 v2.4.0 (2018-06-16)
 -------------------
 
