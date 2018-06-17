@@ -109,9 +109,6 @@ class Show(Command):
         else:
             final_output = show_output
 
-        if self.verbose:
-            print()
-
         print(final_output)
 
     def show_search(self, prefix=''):
@@ -122,17 +119,10 @@ class Show(Command):
         if not sorted_aliases:
             raise errors.AliasNotDefinedError(alias=self.alias)
 
-        short_aliases_exist = False
         for alias in sorted_aliases:
-            if '\n' not in self.alias_dict[alias]:
-                self.show(alias)
-                short_aliases_exist = True
-
-        for i, alias in enumerate(sorted_aliases):
-            if '\n' in self.alias_dict[alias]:
-                if i > 0 or short_aliases_exist:
-                    print()
-                self.show(alias)
+            if self.verbose:
+                print()
+            self.show(alias)
 
     def __call__(self):
         super().__call__()
