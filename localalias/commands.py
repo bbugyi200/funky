@@ -114,7 +114,8 @@ class Show(Command):
     def show_search(self, prefix=''):
         """Prints all aliases that start with @prefix to stdout."""
         log.logger.debug('Running show command for all defined aliases.')
-        sorted_aliases = sorted([alias for alias in self.alias_dict if alias.startswith(prefix)])
+        sorted_aliases = sorted([alias for alias in self.alias_dict if alias.startswith(prefix)],
+                                key=lambda x: x.lower())
 
         if not sorted_aliases:
             raise errors.AliasNotDefinedError(alias=self.alias)

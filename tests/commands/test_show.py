@@ -20,9 +20,9 @@ def test_show_all(capsys, cleandir, _show_expected, fake_db):
     show_cmd = commands.Show(None, color=False)
     show_cmd()
     expected = '{0}{1}{2}'.format(
+        _show_expected['multiline'],
         _show_expected['T'],
         _show_expected['TT'],
-        _show_expected['multiline'],
     )
     captured = capsys.readouterr()
     assert captured.out == expected
