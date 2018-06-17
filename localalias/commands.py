@@ -35,7 +35,7 @@ class Command(metaclass=ABCMeta):
                for the help command.
     """
     LOCALALIAS_DB_FILENAME = '.localalias'
-    GLOBALALIAS_DB_FILENAME = '/home/{}/.globalalias'.format(getpass.getuser())
+    GLOBALALIAS_DB_FILENAME = '/home/{}/.localalias'.format(getpass.getuser())
 
     def __init__(self, args, *, color=False, global_=False, verbose=False):
         try:
@@ -54,6 +54,7 @@ class Command(metaclass=ABCMeta):
         self.args = args[1:]
         self.color = color
         self.verbose = verbose
+        self.global_ = global_
         self.alias_dict = self.load(self.ACTIVE_DB_FILENAME)
 
         log.logger.vdebug('Existing Aliases: {}'.format(self.alias_dict))
@@ -129,7 +130,7 @@ class Show(Command):
         super().__call__()
         if not self.alias_dict:
             self.purge_db()
-            raise errors.AliasNotDefinedError()
+            raise errors.AliasNotDefinedError(global_=self.global_)
 
         if self.alias is None:
             self.show_search()
@@ -251,7 +252,7 @@ class Remove(Edit):
             raise errors.AliasNotDefinedError(alias=self.alias)
 
         if not self.alias_dict:
-            raise errors.AliasNotDefinedError()
+            raise errors.AliasNotDefinedError(global_=self.global_)
 
         if self.alias is None:
             log.logger.debug('Prompting to destroy local alias database.')

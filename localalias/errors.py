@@ -10,9 +10,12 @@ class LocalAliasError(Exception):
 
 class AliasNotDefinedError(LocalAliasError):
     """Raised when an undefined alias is referenced in a mannor that is not allowed."""
-    def __init__(self, *args, alias=None, **kwargs):
+    def __init__(self, *args, alias=None, global_=False, **kwargs):
         if alias is None:
-            msg = 'No local aliases are defined in the current directory.'
+            if global_:
+                msg = 'No global aliases are defined.'
+            else:
+                msg = 'No local aliases are defined in the current directory.'
         else:
             msg_fmt = '"{}" does not match any local aliases defined in the current '\
                 'directory.'.format(alias)

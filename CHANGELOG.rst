@@ -6,13 +6,20 @@ All notable changes to this project will be documented in this file. This projec
 `Semantic Versioning <http://semver.org/>`_, though minor breaking changes can happen in minor
 releases.
 
-v2.5.0 (Unreleased)
+v2.5.0 (2018-06-17)
 -------------------
 
 Changed:
 
 * No longer separate multiline function defs from single-line function defs in Show command output.
 * Use case-insensitive sort when sorting function names.
+* Changed global function database from /home/<user>/.globalalias to /home/<user>/.localalias.
+
+Fixed:
+
+* Creating a .localalias file at /home/<user> would break chpwd() function, causing all global
+  function overrides to persist until the end of the session even if the user changes back to the
+  his/her home directory.
 
 v2.4.0 (2018-06-16)
 -------------------

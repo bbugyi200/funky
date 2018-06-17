@@ -33,7 +33,7 @@ _maybe_source_locals() {
 }
 
 _maybe_source_globals() {
-    if [[ -f ~/.globalalias ]]; then
+    if [[ -f ~/.localalias ]]; then
         _source_globals
     fi
 }
@@ -53,7 +53,7 @@ chpwd() {
         rm -f $_temp_path/localpath
     fi
 
-    if [[ -f $PWD/.localalias ]]; then
+    if [[ $PWD != /home/$USER ]] && [[ -f $PWD/.localalias ]]; then
         _source_locals
         if [[ ! -f $_temp_path/localpath ]]; then
             echo $PWD > $_temp_path/localpath
@@ -65,6 +65,7 @@ chpwd() {
 unalias la &> /dev/null
 la() {
     touch $_temp_path/timestamp
+
     localalias --color "$@"
     if [[ .localalias -nt $_temp_path/timestamp ]]; then
         _source_locals
@@ -76,7 +77,7 @@ unalias al &> /dev/null
 al() {
     touch $_temp_path/timestamp
     localalias --global --color "$@"
-    if [[ ~/.globalalias -nt $_temp_path/timestamp ]]; then
+    if [[ ~/.localalias -nt $_temp_path/timestamp ]]; then
         _source_globals
         _maybe_source_locals
     fi
