@@ -102,14 +102,15 @@ class Show(Command):
             show_output = '{0}() {{ {1}; }}'.format(alias, cmd_string)
 
         if self.verbose:
-            show_output = '\nunalias {0} &> /dev/null\n{1}'.format(alias, show_output)
+            show_output = 'unalias {0} &> /dev/null\n{1}'.format(alias, show_output)
 
         if self.color:
-            final_output = highlight(show_output, BashLexer(), TerminalFormatter())
-            if not self.verbose:
-                final_output = final_output.strip()
+            final_output = highlight(show_output, BashLexer(), TerminalFormatter()).strip()
         else:
             final_output = show_output
+
+        if self.verbose:
+            print()
 
         print(final_output)
 
