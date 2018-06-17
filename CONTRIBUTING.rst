@@ -78,13 +78,6 @@ In addition, for all code contributions excluding bugfixes, it is expected that:
 
       Pull requests that drastically reduce test coverage will not be accepted!
 
-Tips
-----
-
-To run a subset of tests::
-
-$ py.test tests.test_feature
-
 
 Deploying
 ---------
