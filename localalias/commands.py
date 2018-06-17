@@ -59,6 +59,11 @@ class Command(metaclass=ABCMeta):
 
         log.logger.vdebug('Existing Aliases: {}'.format(self.alias_dict))
 
+    def abort(self):
+        """Print abort message."""
+        print()
+        log.logger.info('OK. Aborting...')
+
     def purge_db(self):
         """Removes the database file."""
         try:
@@ -146,6 +151,13 @@ class Rename(Command):
             raise errors.AliasNotDefinedError(alias=self.alias)
 
         new_alias = self.args[0]
+        if new_alias in self.alias_dict:
+            y_or_n = utils.getch('"{}" is already in use. Overwrite? (y/n): '.format(new_alias))
+            if y_or_n == 'y':
+                print()
+            else:
+                return self.abort()
+
         self.alias_dict[new_alias] = self.alias_dict[self.alias]
         self.alias_dict.pop(self.alias)
 
@@ -263,9 +275,7 @@ class Remove(Edit):
                 print()
                 log.logger.info('Done. The local alias database has been removed.')
             else:
-                print()
-                log.logger.info('OK. Nothing has been done.')
-                return
+                return self.abort()
         else:
             self.remove_alias()
 

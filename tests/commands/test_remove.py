@@ -35,16 +35,23 @@ def test_remove_last(cleandir, alias_dict, fake_db):
     assert not os.path.isfile(commands.Command.LOCALALIAS_DB_FILENAME)
 
 
+@pytest.mark.parametrize('y_or_n', ['y', 'n'])
 @mock.patch('localalias.utils.getch')
-def test_remove_all(getch, cleandir, fake_db):
+def test_remove_all(getch, y_or_n, cleandir, fake_db):
     """Tests that the local alias database is removed when no alias is provided and the
     user confirms.
     """
-    getch.side_effect = lambda x: 'y'
+    getch.side_effect = lambda x: y_or_n
 
     assert os.path.isfile(commands.Command.LOCALALIAS_DB_FILENAME)
 
     remove_cmd = commands.Remove(None)
     remove_cmd()
 
-    assert not os.path.isfile(commands.Command.LOCALALIAS_DB_FILENAME)
+    isfile = os.path.isfile(commands.Command.LOCALALIAS_DB_FILENAME)
+    if y_or_n == 'y':
+        expected = not isfile
+    else:
+        expected = isfile
+
+    assert expected
