@@ -48,7 +48,7 @@ _maybe_source_locals
 # - Lazily loads global aliases and local aliases while attempting to maintain parent's local
 #   aliases.
 chpwd() {
-    if [[ -f $_temp_path/localpath ]] && [[ $PWD != "$(cat $_temp_path/localpath)"* ]]; then
+    if [[ -f $_temp_path/localpath ]] && [[ $PWD != "$(cat $_temp_path/localpath)/"* ]]; then
         _maybe_source_globals
         rm -f $_temp_path/localpath
     fi

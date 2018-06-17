@@ -6,6 +6,18 @@ All notable changes to this project will be documented in this file. This projec
 `Semantic Versioning <http://semver.org/>`_, though minor breaking changes can happen in minor
 releases.
 
+v2.5.1 (2018-06-17)
+-------------------
+
+Fixed:
+
+* When traveling back to the project root directory (the first directory to have sourced local
+  functions), it is certain that sourcing the global functions will not override any local
+  functions defined in parent directories. Since it is safe, it is preferred to do so; otherwise,
+  some global functions may still be overriden by local ones even after traveling back to an
+  ancestor of the directory where said local functions were defined. This can still happen, but
+  sourcing global functions when traveling back to the project root dir makes it less likely.
+
 v2.5.0 (2018-06-17)
 -------------------
 
