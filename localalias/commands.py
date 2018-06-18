@@ -214,7 +214,7 @@ class Edit(Command):
         os.unlink(tf.name)
 
         if edited_cmd_string.strip() == '':
-            raise errors.BlankDefinition('Alias defined using blank definition.')
+            raise errors.BlankDefinition('Alias definition cannot be blank.')
 
         log.logger.debug('New Command String: "%s"', edited_cmd_string)
         formatted_cmd_string = self._format_cmd_string(edited_cmd_string.strip())
