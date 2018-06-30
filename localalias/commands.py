@@ -253,7 +253,7 @@ class Edit(Command):
         <alias> using any argument variables (e.g. $0, $1, ..., $@, $*, etc.), however, the
         command string is left unaltered.
         """
-        if re.search(r'(\$[0-9@\*]|\n)', cmd_string):
+        if re.search(r'(\$|\n)', cmd_string):
             new_cmd_string = cmd_string
         else:
             new_cmd_string = '{} "$@"'.format(cmd_string)
