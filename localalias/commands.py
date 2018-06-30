@@ -104,11 +104,22 @@ class Show(Command):
         cmd_string = self.alias_dict[alias]
         if '\n' in cmd_string:
             show_output = '{0}() {{\n\t{1}\n}}'.format(alias, cmd_string.replace('\n', '\n\t'))
+            multiline = True
         else:
             show_output = '{0}() {{ {1}; }}'.format(alias, cmd_string)
+            multiline = False
 
         if self.verbose:
-            show_output = 'unalias {0} &> /dev/null\n{1}'.format(alias, show_output)
+            unalias_out = 'unalias {} &> /dev/null\n'.format(alias)
+
+            if not multiline:
+                cmd_chain = re.split(' *(?:&&?|;) *', cmd_string)
+                mirrored_cmd = cmd_chain[-1].split(None, 1)[0]
+                compdef_out = 'compdef {}={} &> /dev/null\n'.format(alias, mirrored_cmd)
+            else:
+                compdef_out = ''
+
+            show_output = ''.join([unalias_out, compdef_out, show_output])
 
         if self.color:
             final_output = highlight(show_output, BashLexer(), TerminalFormatter()).strip()
