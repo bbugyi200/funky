@@ -114,7 +114,15 @@ class Show(Command):
 
             if not multiline:
                 cmd_chain = re.split(' *(?:&&?|;) *', cmd_string)
-                mirrored_cmd = cmd_chain[-1].split(None, 1)[0]
+
+                index = -1
+                for i in range(len(cmd_chain)):
+                    ineg = 0 - (i + 1)
+                    if '$' in cmd_chain[ineg]:
+                        index = ineg
+                        break
+
+                mirrored_cmd = cmd_chain[index].split(None, 1)[0]
                 compdef_out = 'compdef {}={} &> /dev/null\n'.format(alias, mirrored_cmd)
             else:
                 compdef_out = ''
