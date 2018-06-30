@@ -15,6 +15,21 @@ def test_show(capsys, cleandir, fake_db, show_cmd):
     assert captured.out == show_cmd.expected
 
 
+def test_show_verbose(capsys, cleandir, fake_db, alias_dict):
+    """Tests show command with verbose output."""
+    cmd = commands.Show(None, verbose=True)
+    cmd()
+    captured = capsys.readouterr()
+
+    count_no_newlines = 0
+    for cmd_string in alias_dict.values():
+        if '\n' not in cmd_string:
+            count_no_newlines += 1
+
+    assert captured.out.count('unalias') == len(alias_dict)
+    assert captured.out.count('compdef') == count_no_newlines
+
+
 def test_show_all(capsys, cleandir, _show_expected, fake_db):
     """Tests show command when no specific alias is provided."""
     show_cmd = commands.Show(None, color=False)

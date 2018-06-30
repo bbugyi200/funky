@@ -136,7 +136,7 @@ class Show(Command):
 
         print(final_output)
 
-    def show_search(self, prefix=''):
+    def show_search(self, *, prefix):
         """Prints all aliases that start with @prefix to stdout."""
         log.logger.debug('Running show command for all defined aliases.')
         sorted_aliases = sorted([alias for alias in self.alias_dict if alias.startswith(prefix)],
@@ -157,9 +157,9 @@ class Show(Command):
             raise errors.AliasNotDefinedError(global_=self.global_)
 
         if self.alias is None:
-            self.show_search()
+            self.show_search(prefix='')
         else:
-            self.show_search(self.alias)
+            self.show_search(prefix=self.alias)
 
 
 class Rename(Command):
