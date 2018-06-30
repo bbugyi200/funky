@@ -6,6 +6,18 @@ All notable changes to this project will be documented in this file. This projec
 `Semantic Versioning <http://semver.org/>`_, though minor breaking changes can happen in minor
 releases.
 
+Unreleased
+----------
+
+Added:
+
+* Automatically add zsh autocompletion for single-line funks.
+
+Fixed:
+
+* If the ``--rename`` is used to rename a funk to an existing funk's name, the user should be
+  prompted to confirm.
+
 v2.5.1 (2018-06-17)
 -------------------
 
