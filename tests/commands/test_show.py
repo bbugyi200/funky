@@ -15,6 +15,14 @@ def test_show(capsys, cleandir, fake_db, show_cmd):
     assert captured.out == show_cmd.expected
 
 
+def test_show_prefix(capsys, cleandir, fake_db, show_expected):
+    """Tests show command when funk prefix is used."""
+    cmd = commands.Show('T..')
+    cmd()
+    captured = capsys.readouterr()
+    assert captured.out == '{}{}'.format(show_expected['T'], show_expected['TT'])
+
+
 def test_show_verbose(capsys, cleandir, fake_db, alias_dict):
     """Tests show command with verbose output."""
     cmd = commands.Show(None, verbose=True)
