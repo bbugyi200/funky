@@ -13,6 +13,12 @@ Added:
 
 * Automatically add zsh autocompletion for single-line funks.
 
+Changed:
+
+* The show command (used by default when no other command group is specified) now only treats
+  the given funk as a prefix if it ends in '..'. Otherwise, the funk is matched exactly. Prior
+  to this change, there was no way to specify an exact match.
+
 Fixed:
 
 * If the ``--rename`` is used to rename a funk to an existing funk's name, the user should be
