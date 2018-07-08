@@ -30,14 +30,14 @@ def test_show_verbose(capsys, cleandir, fake_db, alias_dict):
     assert captured.out.count('compdef') == count_no_newlines
 
 
-def test_show_all(capsys, cleandir, _show_expected, fake_db):
+def test_show_all(capsys, cleandir, show_expected, fake_db):
     """Tests show command when no specific alias is provided."""
     show_cmd = commands.Show(None, color=False)
     show_cmd()
     expected = '{0}{1}{2}'.format(
-        _show_expected['multiline'],
-        _show_expected['T'],
-        _show_expected['TT'],
+        show_expected['multiline'],
+        show_expected['T'],
+        show_expected['TT'],
     )
     captured = capsys.readouterr()
     assert captured.out == expected
@@ -58,19 +58,7 @@ def show_cmd(args, show_expected):
 
 
 @pytest.fixture
-def show_expected(_show_expected):
-    """Expected results for show command tests."""
-    show_expected = {
-        'T': '{}{}'.format(_show_expected['T'], _show_expected['TT']),  # example of prefix matching
-        'TT': _show_expected['TT'],
-        'multiline': _show_expected['multiline']
-    }
-
-    return show_expected
-
-
-@pytest.fixture
-def _show_expected(alias_dict):
+def show_expected(alias_dict):
     """Expected results for show command tests BEFORE prefix matching feature was added."""
     show_expected = {
         'T': 'T() {{ {0}; }}\n'.format(alias_dict['T']),
