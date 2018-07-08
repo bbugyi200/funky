@@ -158,8 +158,12 @@ class Show(Command):
 
         if self.alias is None:
             self.show_search(prefix='')
+        elif self.alias[-2:] == '..':
+            self.show_search(prefix=self.alias[:-2])
+        elif self.alias not in self.alias_dict:
+            raise errors.AliasNotDefinedError(alias=self.alias)
         else:
-            self.show_search(prefix=self.alias)
+            self.show(self.alias)
 
 
 class Rename(Command):

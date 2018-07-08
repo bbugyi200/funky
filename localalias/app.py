@@ -24,9 +24,8 @@ def main(argv=None):
         args = parser.parse_args(argv)
 
         log.init_logger(debug=args.debug, verbose=args.verbose)
-        log.logger.vdebug('argv = {}'.format(argv))
-
         log.logger.debug('Starting localalias.')
+        log.logger.vdebug('argv = {}'.format(argv))
         log.logger.vdebug('Command-line Arguments: {}'.format(args))
 
         _CmdAction.command(args)
