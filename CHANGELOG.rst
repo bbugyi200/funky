@@ -16,13 +16,13 @@ Added:
 Changed:
 
 * The show command (used by default when no other command group is specified) now only treats
-  the given funk as a prefix if it ends in '..'. Otherwise, the funk is matched exactly. Prior
+  the given funk as a prefix if it ends in two periods (``..``). Otherwise, the funk is matched exactly. Prior
   to this change, there was no way to specify an exact match.
 
 Fixed:
 
-* If the ``--rename`` is used to rename a funk to an existing funk's name, the user should be
-  prompted to confirm.
+* If the Rename command (``-R``) is used to rename a funk to an existing funk's name, the user
+  should be prompted to confirm.
 
 v2.5.1 (2018-06-17)
 -------------------
