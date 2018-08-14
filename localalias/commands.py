@@ -95,9 +95,10 @@ class Command(metaclass=ABCMeta):
 
 class Show(Command):
     """
-    When no action commands are specified, the default action is to show existing aliases. An
-    alias PREFIX can optionally be given and will be used to filter the output by showing only
-    those aliases that start with PREFIX.
+    When no action commands are specified, the default action is to display existing aliases. An
+    alias name (ALIAS) can optionally be provided as an argument to display only ALIAS. If ALIAS
+    ends in two periods ('..'), it is treated as a prefix instead of an exact match: all aliases
+    that start with ALIAS (not including the trailing '..') will be displayed.
     """
     def show(self, alias):
         """Print alias and alias command definition to stdout."""

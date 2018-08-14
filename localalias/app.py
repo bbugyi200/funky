@@ -76,7 +76,7 @@ def _get_argparser(*, verbose=False):
     command_group.add_argument(_CmdFlag.RENAME.value, nargs=2, dest='command_args',
                                action=_CmdAction, metavar=('OLD', 'NEW'),
                                help=commands.Rename.__doc__)
-    command_group.add_argument('command_args', nargs='?', action=_CmdAction, metavar='PREFIX',
+    command_group.add_argument('command_args', nargs='?', action=_CmdAction, metavar='ALIAS',
                                help=commands.Show.__doc__)
 
     return parser
