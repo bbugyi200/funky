@@ -42,7 +42,7 @@ class Command(metaclass=ABCMeta):
             iter(args)
             if isinstance(args, str):
                 raise ValueError
-        except (TypeError, ValueError) as e:
+        except (TypeError, ValueError):
             args = [args]
 
         if global_:
@@ -68,7 +68,7 @@ class Command(metaclass=ABCMeta):
         """Removes the database file."""
         try:
             os.remove(self.ACTIVE_DB_FILENAME)
-        except FileNotFoundError as e:
+        except FileNotFoundError:
             pass
 
     def commit(self):
@@ -85,7 +85,7 @@ class Command(metaclass=ABCMeta):
         try:
             with open(DB_FILENAME, 'r') as f:
                 return json.load(f)
-        except FileNotFoundError as e:
+        except FileNotFoundError:
             return {}
 
     @abstractmethod
@@ -228,7 +228,7 @@ class Edit(Command):
         editor_cmd_list = [editor, tf.name]
         try:
             sp.check_call(editor_cmd_list)
-        except sp.CalledProcessError as e:
+        except sp.CalledProcessError:
             raise errors.LocalAliasError('Failed to open editor using: {}'.format(editor_cmd_list))
 
         tf = open(tf.name, 'r')

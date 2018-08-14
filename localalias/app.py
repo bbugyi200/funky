@@ -103,7 +103,7 @@ class _CmdAction(argparse.Action):
             iter(values)
             if isinstance(values, str):
                 raise ValueError
-        except (TypeError, ValueError) as e:
+        except (TypeError, ValueError):
             values = [values]
 
         setattr(namespace, self.dest, values)
