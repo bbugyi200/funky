@@ -95,7 +95,7 @@ class Command(metaclass=ABCMeta):
 
 class Show(Command):
     """
-    When no action commands are specified, the default action is to display existing aliases. An
+    When no action command is specified, the default action is to display existing aliases. An
     alias name (ALIAS) can optionally be provided as an argument to display only ALIAS. If ALIAS
     ends in two periods ('..'), it is treated as a prefix instead of an exact match: all aliases
     that start with ALIAS (not including the trailing '..') will be displayed.
@@ -281,7 +281,10 @@ class Edit(Command):
 
 
 class Remove(Edit):
-    """Remove an existing alias. If no alias is given, prompt to remove all aliases (in scope)."""
+    """
+    Remove an existing alias. Or (if ALIAS is not given) remove all aliases defined in this
+    directory.
+    """
     def __call__(self):
         Command.__call__(self)
         if self.alias and self.alias not in self.alias_dict:
