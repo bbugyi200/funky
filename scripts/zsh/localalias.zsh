@@ -3,7 +3,6 @@
 #########################################
 
 ##### WHAT DOES THIS SCRIPT DO?
-# - Disables single letter aliases and builtins (these are desirable for use as local aliases)
 # - Source local and global aliases on startup.
 # - Source local aliases everytime the directory changes.
 # - Define two wrapper functions, `la` and `al`.

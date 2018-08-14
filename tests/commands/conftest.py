@@ -63,7 +63,7 @@ def _fake_db_factory(DB_FILENAME, alias_dict_builder):
         yield my_alias_dict
         try:
             os.remove(DB_FILENAME)
-        except FileNotFoundError as e:
+        except FileNotFoundError:
             pass
     return _fake_db
 

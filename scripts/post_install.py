@@ -50,7 +50,7 @@ def _install_omz_plugin():
 
     try:
         os.unlink(dest)
-    except FileNotFoundError as e:
+    except FileNotFoundError:
         pass
 
     os.symlink(src, dest)
