@@ -61,6 +61,10 @@ def _get_argparser(*, verbose=False):
     parser.add_argument('-g', '--global', dest='global_', action='store_true',
                         help=("Enable global scope." if verbose else argparse.SUPPRESS))
 
+    def format_docstring(doc):
+        """Converts command docstring to argparse help doc"""
+        return doc.strip().replace('\n', ' ')
+
     command_group = parser.add_argument_group(
         title='Action Commands',
         description='All of these options act on the current set of local aliases in some way. If '
@@ -68,16 +72,18 @@ def _get_argparser(*, verbose=False):
                     'local aliases currently in scope. These commands are mutually exclusive.'
     )
     command_group.add_argument(_CmdFlag.ADD.value, nargs=1, dest='command_args', action=_CmdAction,
-                               metavar='ALIAS', help=commands.Add.__doc__)
+                               metavar='ALIAS', help=format_docstring(commands.Add.__doc__))
     command_group.add_argument(_CmdFlag.REMOVE.value, nargs='?', dest='command_args',
-                               action=_CmdAction, metavar='ALIAS', help=commands.Remove.__doc__)
+                               action=_CmdAction, metavar='ALIAS',
+                               help=format_docstring(commands.Remove.__doc__))
     command_group.add_argument(_CmdFlag.EDIT.value, nargs=1, dest='command_args',
-                               action=_CmdAction, metavar='ALIAS', help=commands.Edit.__doc__)
+                               action=_CmdAction, metavar='ALIAS',
+                               help=format_docstring(commands.Edit.__doc__))
     command_group.add_argument(_CmdFlag.RENAME.value, nargs=2, dest='command_args',
                                action=_CmdAction, metavar=('OLD', 'NEW'),
-                               help=commands.Rename.__doc__)
+                               help=format_docstring(commands.Rename.__doc__))
     command_group.add_argument('command_args', nargs='?', action=_CmdAction, metavar='ALIAS',
-                               help=commands.Show.__doc__)
+                               help=format_docstring(commands.Show.__doc__))
 
     return parser
 
