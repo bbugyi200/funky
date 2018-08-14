@@ -23,6 +23,7 @@ Fixed:
 
 * If the Rename command (``-R``) is used to rename a funk to an existing funk's name, the user
   should be prompted to confirm.
+* Using ``-vh`` or ``-hv`` command-line options should show verbose help output.
 
 v2.5.1 (2018-06-17)
 -------------------

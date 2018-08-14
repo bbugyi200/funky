@@ -19,7 +19,7 @@ def main(argv=None):
         if argv is None:
             argv = sys.argv[1:]
 
-        verbose = True if '-v' in argv or '--verbose' in argv else False
+        verbose = True if any(x in argv for x in ['--verbose', '-v', '-hv', '-vh']) else False
         parser = _get_argparser(verbose=verbose)
         args = parser.parse_args(argv)
 
