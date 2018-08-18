@@ -272,7 +272,7 @@ class Edit(Command):
 
         try:
             self.edit_alias()
-            log.logger.info('Edited alias: "%s".', self.alias)
+            log.logger.info('Edited alias "%s".', self.alias)
         except errors.BlankDefinition as e:
             log.logger.info(str(e))
             self.remove_alias()
@@ -313,14 +313,16 @@ class Add(Edit):
     """Add a new alias."""
     def __call__(self):
         Command.__call__(self)
+        already_exists = False
         if self.alias in self.alias_dict:
+            already_exists = True
             msg_fmt = 'Alias "{}" is already defined. Running edit command.'
             log.logger.info(msg_fmt.format(self.alias))
             time.sleep(1)
 
         try:
             self.edit_alias()
-            log.logger.info('Added alias "{}".'.format(self.alias))
+            log.logger.info('%s alias "%s".', 'Edited' if already_exists else 'Added', self.alias)
         except errors.BlankDefinition as e:
             raise errors.LocalAliasError(str(e))
 
