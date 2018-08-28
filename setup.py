@@ -58,7 +58,7 @@ setup(
     include_package_data=True,
     keywords='localalias',
     name='localalias',
-    packages=find_packages(include=['localalias', 'localalias.utils']),
+    packages=find_packages(),
     test_suite='tests',
     tests_require=['pytest'],
     url='https://github.com/bbugyi200/localalias',
