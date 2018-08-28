@@ -24,6 +24,8 @@ Fixed:
 * If the Rename command (``-R``) is used to rename a funk to an existing funk's name, the user
   should be prompted to confirm.
 * Using ``-vh`` or ``-hv`` command-line options should show verbose help output.
+* Moved 'timestamp' and 'localpath' files to user specific directory to keep this data from being
+  overwritten by other users (notably, to keep root from overwritting these files).
 
 v2.5.1 (2018-06-17)
 -------------------
