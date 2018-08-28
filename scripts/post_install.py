@@ -14,8 +14,9 @@ _user = getpass.getuser()
 
 def run():
     """Runs all post install hooks."""
-    _copy_zsh_ext()
-    _install_omz_plugin()
+    # ----- Temporarily disabled until I come up with a better way to copy these config files -----
+    # _copy_zsh_ext()
+    # _install_omz_plugin()
 
 
 def _copy_zsh_ext():
