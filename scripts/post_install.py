@@ -31,9 +31,8 @@ def _install_omz_plugin():
     Creates symlink from localalias shell extension to zsh plugin in oh-my-zsh plugin dir
     (if oh-my-zsh is installed).
     """
-    zsh_custom_dirs = ['/usr/share/oh-my-zsh/custom']
-    if _user != 'root':
-        zsh_custom_dirs.append('/home/{}/.oh-my-zsh/custom'.format(_user))
+    zsh_custom_dirs = ['/home/{}/.oh-my-zsh/custom'.format(_user),
+                       '/usr/share/oh-my-zsh/custom']
 
     ohmyzsh_dir = None
     for directory in zsh_custom_dirs:

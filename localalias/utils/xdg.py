@@ -23,18 +23,15 @@ def getdir(userdir):
         raise ValueError("Argument @userdir MUST be one of the following "
                          "options: {}".format(userdir_opts))
 
-    getters = {'config': _getter_factory('XDG_CONFIG_HOME',
-                                         '/home/{}/.config/localalias',
-                                         '/etc/localalias'),
-               'data': _getter_factory('XDG_DATA_HOME',
-                                       '/home/{}/.local/share/localalias',
-                                       '/usr/share/localalias'),
-               'runtime': _getter_factory('XDG_RUNTIME_DIR', '/tmp/localalias')}
+    getters = {'config': _getter_factory('XDG_CONFIG_HOME', '/home/{}/.config/localalias'),
+               'data': _getter_factory('XDG_DATA_HOME', '/home/{}/.local/share/localalias'),
+               'runtime': _getter_factory('XDG_RUNTIME_DIR', '/run/user/1000/localalias'),
+               'cache': _getter_factory('XDG_CACHE_HOME', '/home/{}/.cache/localalias')}
 
     return getters[userdir]()
 
 
-def _getter_factory(envvar, dirfmt, rootdir=None):
+def _getter_factory(envvar, dirfmt):
     """ Returns XDG getter function that serves to fetch some XDG standard directory.
 
     Args:
@@ -49,9 +46,7 @@ def _getter_factory(envvar, dirfmt, rootdir=None):
         if envvar in os.environ:
             xdg_dir = '{}/localalias'.format(os.environ[envvar])
         else:
-            if _user == 'root' and rootdir is not None:
-                xdg_dir = rootdir
-            elif dirfmt.count('{}') > 0:
+            if dirfmt.count('{}') > 0:
                 xdg_dir = dirfmt.format(_user)
             else:
                 xdg_dir = dirfmt
