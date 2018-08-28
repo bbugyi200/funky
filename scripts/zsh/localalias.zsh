@@ -15,10 +15,17 @@
 # https://localalias.readthedocs.io/en/latest/installation.html#additional-installation-steps
 
 ##### Create temporary localalias directory
-_temp_path=/tmp/localalias
+# ensure running as root
+if [ "$EUID" -eq 0 ]; then
+    _home_dir=/root
+else
+    _home_dir="/home/$USER"
+fi
 
-if [[ ! -d $_temp_path ]]; then
-    mkdir $_temp_path
+_xdg_data_dir="$_home_dir/.local/share/localalias"
+
+if [[ ! -d $_xdg_data_dir ]]; then
+    mkdir $_xdg_data_dir
 fi
 
 ##### Function used for sourcing aliases
@@ -47,15 +54,15 @@ _maybe_source_locals
 # - Lazily loads global aliases and local aliases while attempting to maintain parent's local
 #   aliases.
 chpwd() {
-    if [[ -f $_temp_path/localpath ]] && [[ $PWD != "$(cat $_temp_path/localpath)/"* ]]; then
+    if [[ -f $_xdg_data_dir/localpath ]] && [[ $PWD != "$(cat $_xdg_data_dir/localpath)/"* ]]; then
         _maybe_source_globals
-        rm -f $_temp_path/localpath
+        rm -f $_xdg_data_dir/localpath
     fi
 
     if [[ $PWD != /home/$USER ]] && [[ -f $PWD/.localalias ]]; then
         _source_locals
-        if [[ ! -f $_temp_path/localpath ]]; then
-            echo $PWD > $_temp_path/localpath
+        if [[ ! -f $_xdg_data_dir/localpath ]]; then
+            echo $PWD > $_xdg_data_dir/localpath
         fi
     fi
 }
@@ -63,10 +70,10 @@ chpwd() {
 ##### Wrapper used to interact with local aliases
 unalias la &> /dev/null
 la() {
-    touch $_temp_path/timestamp
+    touch $_xdg_data_dir/timestamp
 
     localalias --color "$@"
-    if [[ .localalias -nt $_temp_path/timestamp ]]; then
+    if [[ .localalias -nt $_xdg_data_dir/timestamp ]]; then
         _source_locals
     fi
 }
@@ -74,9 +81,9 @@ la() {
 ##### Wrapper used to interact with global aliases
 unalias al &> /dev/null
 al() {
-    touch $_temp_path/timestamp
+    touch $_xdg_data_dir/timestamp
     localalias --global --color "$@"
-    if [[ ~/.localalias -nt $_temp_path/timestamp ]]; then
+    if [[ ~/.localalias -nt $_xdg_data_dir/timestamp ]]; then
         _source_globals
         _maybe_source_locals
     fi
