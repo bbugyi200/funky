@@ -7,9 +7,9 @@ import shutil
 
 from localalias.utils import xdg
 
-_config_dir = xdg.getdir('config')
-_this_dir = os.path.dirname(os.path.realpath(__file__))
-_user = getpass.getuser()
+# _config_dir = xdg.getdir('config')
+# _this_dir = os.path.dirname(os.path.realpath(__file__))
+# _user = getpass.getuser()
 
 
 def run():
