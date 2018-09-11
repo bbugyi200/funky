@@ -1,8 +1,10 @@
 """Setuptools post install script."""
 
 import errno
+import getpass
 import os
 import shutil
+import sys
 
 
 def run(install):
@@ -18,7 +20,9 @@ def _copy_zsh_ext(install):
     if 'XDG_DATA_HOME' in os.environ:
         xdg_data_dir = root + os.environ['XDG_DATA_HOME']
     else:
-        xdg_data_dir = root + "{}/.local/share/localalias".format(os.environ['HOME'])
+        home = 'Users' if sys.platform == 'darwin' else 'home'
+        user = getpass.getuser()
+        xdg_data_dir = root + "/{}/{}/.local/share/localalias".format(home, user)
 
     _create_dir(xdg_data_dir)
 
