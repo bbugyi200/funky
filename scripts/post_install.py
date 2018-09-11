@@ -1,60 +1,31 @@
 """Setuptools post install script."""
 
 import errno
-import getpass
 import os
 import shutil
 
-from localalias.utils import xdg
 
-# _config_dir = xdg.getdir('config')
-# _this_dir = os.path.dirname(os.path.realpath(__file__))
-# _user = getpass.getuser()
-
-
-def run():
+def run(install):
     """Runs all post install hooks."""
-    # ----- Temporarily disabled until I come up with a better way to copy these config files -----
-    # _copy_zsh_ext()
-    # _install_omz_plugin()
+    _copy_zsh_ext(install)
 
 
-def _copy_zsh_ext():
+def _copy_zsh_ext(install):
     """Copy zsh extension to localalias config directory."""
-    src = '{}/zsh/localalias.zsh'.format(_this_dir)
-    dest = '{}/localalias.zsh'.format(_config_dir)
+    this_dir = os.path.dirname(os.path.realpath(__file__))
+    root = install.root if install.root else ''
+
+    if 'XDG_DATA_HOME' in os.environ:
+        xdg_data_dir = root + os.environ['XDG_DATA_HOME']
+    else:
+        xdg_data_dir = root + "{}/.local/share/localalias".format(os.environ['HOME'])
+
+    _create_dir(xdg_data_dir)
+
+    src = '{}/zsh/localalias.zsh'.format(this_dir)
+    dest = '{}/localalias.zsh'.format(xdg_data_dir)
+
     shutil.copyfile(src, dest)
-
-
-def _install_omz_plugin():
-    """Install oh-my-zsh Plugin.
-
-    Creates symlink from localalias shell extension to zsh plugin in oh-my-zsh plugin dir
-    (if oh-my-zsh is installed).
-    """
-    zsh_custom_dirs = ['/home/{}/.oh-my-zsh/custom'.format(_user),
-                       '/usr/share/oh-my-zsh/custom']
-
-    ohmyzsh_dir = None
-    for directory in zsh_custom_dirs:
-        if os.path.isdir(directory):
-            ohmyzsh_dir = directory
-            break
-
-    if ohmyzsh_dir is None:
-        return
-
-    _create_dir(ohmyzsh_dir + '/plugins/localalias')
-
-    src = '{}/localalias.zsh'.format(_config_dir)
-    dest = '{}/plugins/localalias/{}'.format(ohmyzsh_dir, 'localalias.plugin.zsh')
-
-    try:
-        os.unlink(dest)
-    except FileNotFoundError:
-        pass
-
-    os.symlink(src, dest)
 
 
 def _create_dir(directory):

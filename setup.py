@@ -14,7 +14,7 @@ from scripts import post_install
 class PostInstallCommand(install):
     """Post-installation for install mode."""
     def run(self):
-        post_install.run()
+        post_install.run(self)
         install.run(self)
 
 

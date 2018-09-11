@@ -19,14 +19,16 @@
 if [ "$EUID" -eq 0 ]; then
     _home_dir=/root
 else
-    _home_dir="/home/$USER"
+    _home_dir="$HOME"
 fi
 
-_xdg_data_dir="$_home_dir/.local/share/localalias"
-
-if [[ ! -d $_xdg_data_dir ]]; then
-    mkdir $_xdg_data_dir
+if [[ -n "$XDG_DATA_HOME" ]]; then
+    _xdg_data_dir="$XDG_DATA_HOME"/localalias
+else
+    _xdg_data_dir="$_home_dir"/.local/share/localalias
 fi
+
+[[ -d "$_xdg_data_dir" ]] || mkdir -p "$_xdg_data_dir"
 
 ##### Function used for sourcing aliases
 _source_globals() { localalias --verbose --global | source /dev/stdin; }
@@ -59,7 +61,7 @@ chpwd() {
         rm -f $_xdg_data_dir/localpath
     fi
 
-    if [[ $PWD != /home/$USER ]] && [[ -f $PWD/.localalias ]]; then
+    if [[ $PWD != "$_home_dir" ]] && [[ -f $PWD/.localalias ]]; then
         _source_locals
         if [[ ! -f $_xdg_data_dir/localpath ]]; then
             echo $PWD > $_xdg_data_dir/localpath

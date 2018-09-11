@@ -21,6 +21,7 @@ Changed:
 
 Fixed:
 
+* localalias.zsh incorrectly assumes that $HOME==/home/<user>
 * If the Rename command (``-R``) is used to rename a funk to an existing funk's name, the user
   should be prompted to confirm.
 * Using ``-vh`` or ``-hv`` command-line options should show verbose help output.
