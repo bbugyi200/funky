@@ -71,16 +71,19 @@ A shell script by the name of ``localalias.zsh`` should have been copied to
 
    $XDG_DATA_HOME/localalias/localalias.zsh
 
-during the installation process (it can also be found `here`__). If you do NOT have `oh-my-zsh`_
-installed, you can integrate localalias into your shell by sourcing the ``localalias.zsh`` script
-into your shell's configuration file. Assuming the script was copied to
-``~/.local/share/localalias/localalias.zsh`` (its default location), for example, you would add the
-following line to your ``.zshrc``:
+during the installation process (it can also be found `here`__).  You can integrate localalias into
+your shell by sourcing the ``localalias.zsh`` script into your shell's configuration file. Assuming
+the script was copied to ``~/.local/share/localalias/localalias.zsh`` (its default location), for
+example, you would add the following line to your ``.zshrc``:
 
 .. code-block:: shell
 
    [ -f ~/.local/share/localalias/localalias.zsh ] && source ~/.local/share/localalias/localalias.zsh
 
+.. important::
+
+  If you install localalias with root permissions, the localalias.zsh script will instead be
+  installed to /usr/share/localalias/localalias.zsh.
 
 __  https://github.com/bbugyi200/localalias/blob/master/scripts/zsh/localalias.zsh
 .. _oh-my-zsh: https://github.com/robbyrussell/oh-my-zsh
