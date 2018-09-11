@@ -82,8 +82,8 @@ example, you would add the following line to your ``.zshrc``:
 
 .. important::
 
-  If you install localalias with root permissions, the localalias.zsh script will instead be
-  installed to /usr/share/localalias/localalias.zsh.
+  If you install localalias with root permissions, the ``localalias.zsh`` script will instead be
+  installed to ``/usr/share/localalias/localalias.zsh``.
 
 __  https://github.com/bbugyi200/localalias/blob/master/scripts/zsh/localalias.zsh
 .. _oh-my-zsh: https://github.com/robbyrussell/oh-my-zsh
