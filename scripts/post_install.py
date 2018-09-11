@@ -22,7 +22,11 @@ def _copy_zsh_ext(install):
     else:
         home = 'Users' if sys.platform == 'darwin' else 'home'
         user = getpass.getuser()
-        xdg_data_dir = root + "/{}/{}/.local/share/localalias".format(home, user)
+
+        if user == 'root':
+            xdg_data_dir = root + "/usr/share/localalias"
+        else:
+            xdg_data_dir = root + "/{}/{}/.local/share/localalias".format(home, user)
 
     _create_dir(xdg_data_dir)
 
