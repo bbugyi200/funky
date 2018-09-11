@@ -28,6 +28,11 @@ Fixed:
 * Moved 'timestamp' and 'localpath' files to user specific directory to keep this data from being
   overwritten by other users (notably, to keep root from overwritting these files).
 
+Removed:
+
+* Oh-My-ZSH plugin support. The ``localalias.zsh`` script will now need to be manually sourced
+  into the user's ``zshrc``.
+
 v2.5.1 (2018-06-17)
 -------------------
 
