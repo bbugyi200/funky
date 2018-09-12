@@ -80,7 +80,7 @@ example, you would add the following line to your ``.zshrc``:
 
    [ -f ~/.local/share/localalias/localalias.zsh ] && source ~/.local/share/localalias/localalias.zsh
 
-.. important::
+.. note::
 
   If you install localalias with root permissions, the ``localalias.zsh`` script will instead be
   installed to ``/usr/share/localalias/localalias.zsh``.
