@@ -1,0 +1,1 @@
+{"vs": "vim scripts/**/*.zsh scripts/**/[^_]*.py \"$@\"", "LL": "ls -a && task project:Dev.localalias -BLOCKED next \"$@\"", "vd": "vim CHANGELOG.rst README.rst CONTRIBUTING.rst docs/installation.rst docs/usage.rst \"$@\"", "t": "pytest tests \"$@\""}
