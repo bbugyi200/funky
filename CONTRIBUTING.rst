@@ -68,15 +68,11 @@ The pull request should work for Python 3.4, 3.5 and 3.6, and for PyPy. Check
 https://travis-ci.org/bbugyi200/localalias/pull_requests and make sure that the tests pass for all
 supported Python versions.
 
-In addition, for all code contributions excluding bugfixes, it is expected that:
+In addition, for all code contributions excluding bugfixes, it is expected that the documentation
+has been updated and/or additional documentation has been added.
 
-1. The documentation has been updated and/or additional documentation has been added.
-
-2. Additional tests have been added.
-   
-   .. warning::
-
-      Pull requests that drastically reduce test coverage will not be accepted!
+Furthermore, additional tests should be created before submitting any major changes to the
+codebase.
 
 
 Deploying
