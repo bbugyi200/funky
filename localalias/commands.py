@@ -5,6 +5,7 @@ import getpass
 import json
 import os
 import re
+import shlex
 import subprocess as sp
 import tempfile
 import time
@@ -220,13 +221,13 @@ class Edit(Command):
         tf.close()
 
         if 'EDITOR' in os.environ:
-            editor = os.environ['EDITOR']
-            log.logger.debug('Editor set to $EDITOR: {}'.format(editor))
+            editor_cmd_list = shlex.split(os.environ['EDITOR'])
+            log.logger.debug('Editor command set to $EDITOR: {}'.format(editor_cmd_list))
         else:
-            editor = 'vim'
-            log.logger.debug('Editor falling back to default: {}'.format(editor))
+            editor_cmd_list = ['vim']
+            log.logger.debug('Editor command falling back to default: {}'.format(editor_cmd_list))
 
-        editor_cmd_list = [editor, tf.name]
+        editor_cmd_list.append(tf.name)
         try:
             sp.check_call(editor_cmd_list)
         except sp.CalledProcessError:
