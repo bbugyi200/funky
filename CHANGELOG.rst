@@ -6,8 +6,15 @@ All notable changes to this project will be documented in this file. This projec
 `Semantic Versioning <http://semver.org/>`_, though minor breaking changes can happen in minor
 releases.
 
+v2.6.1 (2018-10-20)
+-------------------
+
+Fixed:
+
+* Editor call breaks when $EDITOR includes command-line options
+
 v2.6.0 (2018-09-11)
-----------
+-------------------
 
 Added:
 
