@@ -57,8 +57,8 @@ Once you have a copy of the source, you can install it with:
 Additional Installation Steps
 -----------------------------
 
-For the best experience, localalias needs to be integrated into your preferred shell environment
-using a shell script/plugin.
+For the best experience, localalias needs to be integrated into your shell environment using the
+provided shell script.
 
 .. _install-manual:
 
