@@ -52,7 +52,7 @@ See the official [Bash docs] for more information on Bash's special parameters.
 To install funky, run this command in your terminal:
 
 ``` shell
-$ pip install funky
+$ pip install pyfunky
 ```
 
 This is the preferred method to install funky, as it will always install the most recent stable release.
