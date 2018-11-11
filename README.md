@@ -16,7 +16,7 @@ treated in the [Local vs Global](#lvg) section below.
 **Local** funks are stored using a hidden database file that is located in the same directory
 where the funk was created. These can be manipulated using the action command options described
 above. Once created, a local funk can be used just like any other command or normal funk---as
-long as you have activated the provided shell extension (see :ref:`install-additional`) and are
+long as you have activated the provided shell extension (see [Additional Install Steps](#AIS)) and are
 inside of the directory where the local funk was originally defined.
 
 **Global** funks, on the other hand, are stored in your home directory (``/home/<user>``) and can
@@ -84,7 +84,7 @@ Once you have a copy of the source, you can install it with:
 $ python setup.py install
 ```
 
-#### Additional Installation Steps
+#### <a name="AIS">Additional Installation Steps</a>
 
 For the best experience, funky needs to be integrated into your shell environment using the
 provided shell script.
