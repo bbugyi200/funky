@@ -2,8 +2,6 @@
 funky
 ==========
 
-*Don't kill your fingers by typing out long commands! Funky makes shell functions more powerful and
-WAY easier to manage!*
 
 .. image:: https://travis-ci.org/bbugyi200/funky.svg?branch=master
     :target: https://travis-ci.org/bbugyi200/funky
@@ -21,11 +19,6 @@ Demonstration
 
 __ https://zsh-funky.readthedocs.io/en/latest/usage.html#use-la-and-al-over-funky
 
-Description
------------
-
-funky is **a light-weight shell wrapper that allows you to create per-directory command
-funks.**
 
 .. inclusion-marker-do-not-remove
 
