@@ -7,7 +7,7 @@ import unittest.mock as mock
 
 import pytest
 
-from localalias import commands
+from funky import commands
 
 
 @pytest.fixture
@@ -36,31 +36,31 @@ def setup_edit_patches():
 
 @pytest.fixture
 def fake_global_db(global_filename):
-    """Setup/teardown a global alias database"""
-    _fake_db = _fake_db_factory(global_filename, global_alias_dict)
+    """Setup/teardown a global funk database"""
+    _fake_db = _fake_db_factory(global_filename, global_funk_dict)
     yield from _fake_db()
 
 
 @pytest.fixture
 def global_filename():
     """Returns a fake global database path so the production global db is not overwritten."""
-    return "/tmp/.globalalias"
+    return "/tmp/.globalfunk"
 
 
 @pytest.fixture
-def fake_db():
-    """Setup/teardown a local alias database"""
-    _fake_db = _fake_db_factory(commands.Command.LOCALALIAS_DB_FILENAME, alias_dict)
+def fake_db(funk_dict):
+    """Setup/teardown a local funk database"""
+    _fake_db = _fake_db_factory(commands.Command.FUNKY_DB_FILENAME, funk_dict)
     yield from _fake_db()
 
 
-def _fake_db_factory(DB_FILENAME, alias_dict_builder):
+def _fake_db_factory(DB_FILENAME, funk_dict_builder):
     """Builds a generator fixture for creating a fake database."""
     def _fake_db():
-        my_alias_dict = alias_dict_builder()
+        my_funk_dict = funk_dict_builder
         with open(DB_FILENAME, 'w') as f:
-            json.dump(my_alias_dict, f)
-        yield my_alias_dict
+            json.dump(my_funk_dict, f)
+        yield my_funk_dict
         try:
             os.remove(DB_FILENAME)
         except FileNotFoundError:
@@ -69,21 +69,21 @@ def _fake_db_factory(DB_FILENAME, alias_dict_builder):
 
 
 @pytest.fixture
-def alias_dict():
-    alias_dict = {
+def funk_dict():
+    funk_dict = {
         'multiline': 'echo Hello\necho world!',
         'T': 'echo RUN $1',
         'TT': 'echo CHICKEN $@',
     }
-    return alias_dict
+    return funk_dict
 
 
 @pytest.fixture
-def global_alias_dict():
-    g_alias_dict = {
+def global_funk_dict():
+    g_funk_dict = {
         'T': 'echo "GLOBAL ALIAS"',
     }
-    return g_alias_dict
+    return g_funk_dict
 
 
 @pytest.fixture(params=[

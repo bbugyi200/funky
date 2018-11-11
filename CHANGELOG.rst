@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file. This projec
 `Semantic Versioning <http://semver.org/>`_, though minor breaking changes can happen in minor
 releases.
 
+v3.0.0 (2018-11-10)
+-------------------
+
+Changed:
+
+* Renamed project from 'localalias' to 'funky'.
+
 v2.6.1 (2018-10-20)
 -------------------
 
@@ -28,7 +35,7 @@ Changed:
 
 Fixed:
 
-* localalias.zsh incorrectly assumes that $HOME==/home/<user>
+* funky.zsh incorrectly assumes that $HOME==/home/<user>
 * If the Rename command (``-R``) is used to rename a funk to an existing funk's name, the user
   should be prompted to confirm.
 * Using ``-vh`` or ``-hv`` command-line options should show verbose help output.
@@ -37,7 +44,7 @@ Fixed:
 
 Removed:
 
-* Oh-My-ZSH plugin support. The ``localalias.zsh`` script will now need to be manually sourced
+* Oh-My-ZSH plugin support. The ``funky.zsh`` script will now need to be manually sourced
   into the user's ``zshrc``.
 
 v2.5.1 (2018-06-17)
@@ -59,11 +66,11 @@ Changed:
 
 * No longer separate multiline function defs from single-line function defs in Show command output.
 * Use case-insensitive sort when sorting function names.
-* Changed global function database from ``/home/<user>/.globalalias`` to ``/home/<user>/.localalias``.
+* Changed global function database from ``/home/<user>/.globalfunk`` to ``/home/<user>/.funky``.
 
 Fixed:
 
-* Creating a ``.localalias`` file at ``/home/<user>`` would break ``chpwd()`` function, causing all
+* Creating a ``.funky`` file at ``/home/<user>`` would break ``chpwd()`` function, causing all
   global function overrides to persist until the end of the session even if the user changes back
   to the his/her home directory.
 
@@ -83,8 +90,8 @@ Added:
 
 Fixed:
 
-* No longer unalias all single-letter aliases automatically. Instead, functions/aliases created
-  with localalias will automatically unalias function name before function definitions. (This
+* No longer unalias all single-letter funks automatically. Instead, functions/funks created
+  with funky will automatically unalias function name before function definitions. (This
   requires the ``--verbose`` option to make visible in Show command output.)
 
 v2.3.5 (2018-06-12)
@@ -92,24 +99,24 @@ v2.3.5 (2018-06-12)
 
 Fixed:
 
-* Switching to another folder with local aliases causes old local aliases to continue to override
-  global aliases
+* Switching to another folder with local funks causes old local funks to continue to override
+  global funks
 
 v2.3.4 (2018-06-12)
 -------------------
 
 Fixed:
 
-* Leaving a directory with local aliases should unmask globalaliases.
+* Leaving a directory with local funks should unmask globalfunks.
 
-  - Meaning that any global aliases that were previously overridden should be back in scope.
+  - Meaning that any global funks that were previously overridden should be back in scope.
 
 v2.3.3 (2018-06-12)
 -------------------
 
 Fixed:
 
-* Local aliases were not consistently overriding global aliases
+* Local funks were not consistently overriding global funks
 
 v2.3.2 (2018-06-12)
 -------------------
@@ -131,11 +138,11 @@ v2.3.0 (2018-06-12)
 
 Changed:
 
-* Local aliases are now sourced into ``.zshrc``.
+* Local funks are now sourced into ``.zshrc``.
 
 Removed:
 
-* Execute command (``-x``). No longer needed now that aliased are sourced directly into ``.zshrc``.
+* Execute command (``-x``). No longer needed now that funked are sourced directly into ``.zshrc``.
 * Bash support
 
   - I wanted to focus on providing one service well. ZSH has some more advanced features than bash.
@@ -164,9 +171,9 @@ v2.2.0 (2018-06-10)
 
 Added:
 
-* Global aliases (invoked with the ``--global`` option):
+* Global funks (invoked with the ``--global`` option):
 
-  - Global aliases allow you to create default definitions for aliases that can be overridden on
+  - Global funks allow you to create default definitions for funks that can be overridden on
     a local basis.
   - All action commands still work properly when ``--global`` is used but they operate on the global
     database instead of the local one.
@@ -176,7 +183,7 @@ v2.1.1 (2018-06-09)
 
 Fixed:
 
-* Dashed command-line arguments are not properly passed to command definition when an alias is
+* Dashed command-line arguments are not properly passed to command definition when a funk is
   executed.
 
 v2.1.0 (2018-06-09)
@@ -192,7 +199,7 @@ Changed:
 * Remodeled argument parsing strategy. This remodel is mostly internal. A few actual changes in the
   API have taken place:
 
-  - Options take arguments now, so the alias name must follow the action command.
+  - Options take arguments now, so the funk name must follow the action command.
   - The Show command no longer has an explicit option.
   - Long options have been removed.
     
@@ -202,7 +209,7 @@ v2.0.6 (2018-06-07)
 
 Fixed:
 
-* Automatic command-line arguments are word-splitting for single-line alias definitions without
+* Automatic command-line arguments are word-splitting for single-line funk definitions without
   param arguments.
 
 v2.0.5 (2018-06-06)
@@ -228,22 +235,22 @@ Added:
 
 Changed:
 
-* ``la`` is no longer an entry point. It is now only a recommended alias.
-* localalias.sh is now copied to ``$XDG_CONFIG_HOME/localalias/localalias.sh`` for easy access.
-* localalias.sh is now symlinked to oh-my-zsh custom plugin directory instead of being copied.
+* ``la`` is no longer an entry point. It is now only a recommended funk.
+* funky.sh is now copied to ``$XDG_CONFIG_HOME/funky/funky.sh`` for easy access.
+* funky.sh is now symlinked to oh-my-zsh custom plugin directory instead of being copied.
 
 v2.0.2 (2018-06-01)
 -------------------
 
 Changed:
 
-* Condensed show command output by grouping together single-line alias definitions.
+* Condensed show command output by grouping together single-line funk definitions.
 
 Fixed:
 
-* Alias arguments are handled intuitively again (without needing to explicitly append $@ to the definition).
-* Automatic la alias on some systems blocks entry point. It is now unaliased at install time.
-* Alias execution masks exit status.
+* Funk arguments are handled intuitively again (without needing to explicitly append $@ to the definition).
+* Automatic la funk on some systems blocks entry point. It is now unaliased at install time.
+* Funk execution masks exit status.
 
 v2.0.1 (2018-05-31)
 -------------------
@@ -260,4 +267,4 @@ Migration from bash script prototype to python project and uploaded to PyPI.
 v1.0.0 (2018-03-18)
 -------------------
 
-Prototype version. LocalAlias bash script.
+Prototype version. Funky bash script.

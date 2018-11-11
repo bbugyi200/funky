@@ -1,4 +1,4 @@
-"""Tests the localalias.utils.xdg utilities."""
+"""Tests the funky.utils.xdg utilities."""
 
 import getpass
 import os
@@ -6,15 +6,15 @@ import unittest.mock as mock
 
 import pytest
 
-import localalias.utils.xdg as xdg
+import funky.utils.xdg as xdg
 
 user = getpass.getuser()
 
 
 @pytest.mark.parametrize('key,expected', [
-    ('config', '/home/{}/.config/localalias'.format(user)),
-    ('data', '/home/{}/.local/share/localalias'.format(user)),
-    ('cache', '/home/{}/.cache/localalias'.format(user))
+    ('config', '/home/{}/.config/funky'.format(user)),
+    ('data', '/home/{}/.local/share/funky'.format(user)),
+    ('cache', '/home/{}/.cache/funky'.format(user))
 ])
 def test_getdir(key, expected):
     """Tests that each user directory returned meets the XDG standard."""

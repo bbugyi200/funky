@@ -7,7 +7,7 @@ from setuptools import setup, find_packages
 from setuptools.command.install import install
 from setuptools.command.develop import develop
 
-import localalias
+import funky
 from scripts import post_install
 
 
@@ -47,21 +47,21 @@ setup(
         'install': PostInstallCommand,
         'develop': PostDevelopCommand,
     },
-    description=localalias.__doc__,
+    description=funky.__doc__,
     entry_points={
         'console_scripts': [
-            'localalias = localalias.app:main',
+            'funky = funky.app:main',
         ]
     },
     license="MIT license",
     long_description=readme,
     include_package_data=True,
-    keywords='localalias',
-    name='localalias',
+    keywords='funky',
+    name='funky',
     packages=find_packages(),
     test_suite='tests',
     tests_require=['pytest'],
-    url='https://github.com/bbugyi200/localalias',
+    url='https://github.com/bbugyi200/funky',
     version='2.6.1',
     zip_safe=False,
 )

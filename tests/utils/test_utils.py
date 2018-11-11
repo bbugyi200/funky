@@ -4,13 +4,13 @@ import unittest.mock as mock
 
 import pytest
 
-from localalias import utils
+from funky import utils
 
 
-@mock.patch('localalias.utils.core.tty')
-@mock.patch('localalias.utils.core.termios')
-@mock.patch('localalias.utils.core.sys.stdin.fileno')
-@mock.patch('localalias.utils.core.sys.stdin.read')
+@mock.patch('funky.utils.core.tty')
+@mock.patch('funky.utils.core.termios')
+@mock.patch('funky.utils.core.sys.stdin.fileno')
+@mock.patch('funky.utils.core.sys.stdin.read')
 def test_getch(read, fileno, termios, tty, capsys):
     """Tests getch utility function.
 

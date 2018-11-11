@@ -5,33 +5,33 @@ import unittest.mock as mock
 
 import pytest
 
-from localalias import commands
-from localalias import errors
+from funky import commands
+from funky import errors
 import shared
 
 
-@mock.patch('localalias.commands.tempfile')
-@mock.patch('localalias.commands.sp')
-def test_add(sp, tempfile, setup_edit_patches, cleandir, add_cmd, alias_dict):
+@mock.patch('funky.commands.tempfile')
+@mock.patch('funky.commands.sp')
+def test_add(sp, tempfile, setup_edit_patches, cleandir, add_cmd, funk_dict):
     """Tests add command."""
-    alias_cmd_string = alias_dict[add_cmd.alias]
-    setup_edit_patches(sp, tempfile, alias_cmd_string)
+    funk_cmd_string = funk_dict[add_cmd.funk]
+    setup_edit_patches(sp, tempfile, funk_cmd_string)
     add_cmd()
 
-    loaded_aliases = shared.load_aliases()
-    assert loaded_aliases == {add_cmd.alias: alias_cmd_string}
-    assert len(loaded_aliases) == 1
+    loaded_funks = shared.load_funks()
+    assert loaded_funks == {add_cmd.funk: funk_cmd_string}
+    assert len(loaded_funks) == 1
 
 
-@mock.patch('localalias.commands.tempfile')
-@mock.patch('localalias.commands.sp')
+@mock.patch('funky.commands.tempfile')
+@mock.patch('funky.commands.sp')
 def test_add_empty(sp, tempfile, setup_edit_patches, cleandir):
-    """Tests that add command does NOT accept empty alias definitions."""
-    alias_cmd_string = ''
-    setup_edit_patches(sp, tempfile, alias_cmd_string)
+    """Tests that add command does NOT accept empty funk definitions."""
+    funk_cmd_string = ''
+    setup_edit_patches(sp, tempfile, funk_cmd_string)
 
-    with pytest.raises(errors.LocalAliasError):
-        cmd = commands.Add(['new_alias'])
+    with pytest.raises(errors.FunkyError):
+        cmd = commands.Add(['new_funk'])
         cmd()
 
 

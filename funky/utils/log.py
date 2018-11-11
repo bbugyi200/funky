@@ -6,9 +6,9 @@ Attributes:
 
 import logging
 
-import localalias.utils.xdg as xdg
+import funky.utils.xdg as xdg
 
-logger = logging.getLogger("localalias")
+logger = logging.getLogger("funky")
 
 
 def init_logger(*, debug=False, verbose=False):

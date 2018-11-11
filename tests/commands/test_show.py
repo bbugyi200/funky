@@ -4,8 +4,8 @@ import unittest.mock as mock
 
 import pytest
 
-from localalias import commands
-from localalias import errors
+from funky import commands
+from funky import errors
 
 
 def test_show(capsys, cleandir, fake_db, show_cmd):
@@ -23,23 +23,23 @@ def test_show_prefix(capsys, cleandir, fake_db, show_expected):
     assert captured.out == '{}{}'.format(show_expected['T'], show_expected['TT'])
 
 
-def test_show_verbose(capsys, cleandir, fake_db, alias_dict):
+def test_show_verbose(capsys, cleandir, fake_db, funk_dict):
     """Tests show command with verbose output."""
     cmd = commands.Show(None, verbose=True)
     cmd()
     captured = capsys.readouterr()
 
     count_no_newlines = 0
-    for cmd_string in alias_dict.values():
+    for cmd_string in funk_dict.values():
         if '\n' not in cmd_string:
             count_no_newlines += 1
 
-    assert captured.out.count('unalias') == len(alias_dict)
+    assert captured.out.count('unalias') == len(funk_dict)
     assert captured.out.count('compdef') == count_no_newlines
 
 
 def test_show_all(capsys, cleandir, show_expected, fake_db):
-    """Tests show command when no specific alias is provided."""
+    """Tests show command when no specific funk is provided."""
     show_cmd = commands.Show(None, color=False)
     show_cmd()
     expected = '{0}{1}{2}'.format(
@@ -52,8 +52,8 @@ def test_show_all(capsys, cleandir, show_expected, fake_db):
 
 
 def test_show_failure(cleandir, show_cmd):
-    """Tests show command fails properly when no local alias database exists."""
-    with pytest.raises(errors.AliasNotDefinedError):
+    """Tests show command fails properly when no local funk database exists."""
+    with pytest.raises(errors.FunkNotDefinedError):
         show_cmd()
 
 
@@ -66,12 +66,12 @@ def show_cmd(args, show_expected):
 
 
 @pytest.fixture
-def show_expected(alias_dict):
+def show_expected(funk_dict):
     """Expected results for show command tests BEFORE prefix matching feature was added."""
     show_expected = {
-        'T': 'T() {{ {0}; }}\n'.format(alias_dict['T']),
-        'TT': 'TT() {{ {0}; }}\n'.format(alias_dict['TT']),
-        'multiline': 'multiline() {{\n\t{0}\n}}\n'.format(alias_dict['multiline'].replace('\n', '\n\t'))
+        'T': 'T() {{ {0}; }}\n'.format(funk_dict['T']),
+        'TT': 'TT() {{ {0}; }}\n'.format(funk_dict['TT']),
+        'multiline': 'multiline() {{\n\t{0}\n}}\n'.format(funk_dict['multiline'].replace('\n', '\n\t'))
     }
 
     return show_expected

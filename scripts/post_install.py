@@ -13,7 +13,7 @@ def run(install):
 
 
 def _copy_zsh_ext(install):
-    """Copy zsh extension to localalias config directory."""
+    """Copy zsh extension to funky config directory."""
     this_dir = os.path.dirname(os.path.realpath(__file__))
     root = install.root if install.root else ''
 
@@ -24,14 +24,14 @@ def _copy_zsh_ext(install):
         user = getpass.getuser()
 
         if user == 'root':
-            xdg_data_dir = root + "/usr/share/localalias"
+            xdg_data_dir = root + "/usr/share/funky"
         else:
-            xdg_data_dir = root + "/{}/{}/.local/share/localalias".format(home, user)
+            xdg_data_dir = root + "/{}/{}/.local/share/funky".format(home, user)
 
     _create_dir(xdg_data_dir)
 
-    src = '{}/zsh/localalias.zsh'.format(this_dir)
-    dest = '{}/localalias.zsh'.format(xdg_data_dir)
+    src = '{}/zsh/funky.zsh'.format(this_dir)
+    dest = '{}/funky.zsh'.format(xdg_data_dir)
 
     shutil.copyfile(src, dest)
 

@@ -1,1 +1,1 @@
-"""Various scripts used by localalias."""
+"""Various scripts used by funky."""

@@ -1,8 +1,8 @@
 [run]
-source = localalias
+source = funky
 branch = true
 omit =
-    localalias/__main__.py
+    funky/__main__.py
     */__init__.py
 
 [report]

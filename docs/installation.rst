@@ -10,13 +10,13 @@ Installation
 Using ``pip`` to Install
 ------------------------
 
-To install localalias, run this command in your terminal:
+To install funky, run this command in your terminal:
 
 .. code-block:: console
 
-    $ pip install localalias
+    $ pip install funky
 
-This is the preferred method to install localalias, as it will always install the most recent stable release.
+This is the preferred method to install funky, as it will always install the most recent stable release.
 
 If you don't have `pip`_ installed, this `Python installation guide`_ can guide
 you through the process.
@@ -28,19 +28,19 @@ you through the process.
 Building from Source
 --------------------
 
-The sources for localalias can be downloaded from the `Github repo`_.
+The sources for funky can be downloaded from the `Github repo`_.
 
 You can either clone the public repository:
 
 .. code-block:: console
 
-    $ git clone git://github.com/bbugyi200/localalias
+    $ git clone git://github.com/bbugyi200/funky
 
 Or download the `tarball`_:
 
 .. code-block:: console
 
-    $ curl  -OL https://github.com/bbugyi200/localalias/tarball/master
+    $ curl  -OL https://github.com/bbugyi200/funky/tarball/master
 
 Once you have a copy of the source, you can install it with:
 
@@ -49,15 +49,15 @@ Once you have a copy of the source, you can install it with:
     $ python setup.py install
 
 
-.. _Github repo: https://github.com/bbugyi200/localalias
-.. _tarball: https://github.com/bbugyi200/localalias/tarball/master
+.. _Github repo: https://github.com/bbugyi200/funky
+.. _tarball: https://github.com/bbugyi200/funky/tarball/master
 
 .. _install-additional:
 
 Additional Installation Steps
 -----------------------------
 
-For the best experience, localalias needs to be integrated into your shell environment using the
+For the best experience, funky needs to be integrated into your shell environment using the
 provided shell script.
 
 .. _install-manual:
@@ -65,25 +65,25 @@ provided shell script.
 Manual Integration
 ~~~~~~~~~~~~~~~~~~
 
-A shell script by the name of ``localalias.zsh`` should have been copied to
+A shell script by the name of ``funky.zsh`` should have been copied to
 
 .. code-block:: shell
 
-   $XDG_DATA_HOME/localalias/localalias.zsh
+   $XDG_DATA_HOME/funky/funky.zsh
 
-during the installation process (it can also be found `here`__).  You can integrate localalias into
-your shell by sourcing the ``localalias.zsh`` script into your shell's configuration file. Assuming
-the script was copied to ``~/.local/share/localalias/localalias.zsh`` (its default location), for
+during the installation process (it can also be found `here`__).  You can integrate funky into
+your shell by sourcing the ``funky.zsh`` script into your shell's configuration file. Assuming
+the script was copied to ``~/.local/share/funky/funky.zsh`` (its default location), for
 example, you would add the following line to your ``.zshrc``:
 
 .. code-block:: shell
 
-   [ -f ~/.local/share/localalias/localalias.zsh ] && source ~/.local/share/localalias/localalias.zsh
+   [ -f ~/.local/share/funky/funky.zsh ] && source ~/.local/share/funky/funky.zsh
 
 .. note::
 
-  If you install localalias with root permissions, the ``localalias.zsh`` script will instead be
-  installed to ``/usr/share/localalias/localalias.zsh``.
+  If you install funky with root permissions, the ``funky.zsh`` script will instead be
+  installed to ``/usr/share/funky/funky.zsh``.
 
-__  https://github.com/bbugyi200/localalias/blob/master/scripts/zsh/localalias.zsh
+__  https://github.com/bbugyi200/funky/blob/master/scripts/zsh/funky.zsh
 .. _oh-my-zsh: https://github.com/robbyrussell/oh-my-zsh

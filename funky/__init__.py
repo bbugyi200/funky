@@ -1,4 +1,4 @@
-"""A light-weight shell wrapper that allows you to create per-directoy command aliases."""
+"""A light-weight shell wrapper that allows you to create per-directoy command funks."""
 
 __author__ = """Bryan M Bugyi"""
 __email__ = 'bryanbugyi34@gmail.com'

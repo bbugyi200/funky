@@ -1,17 +1,17 @@
-"""Initialize and run localalias.
+"""Initialize and run funky.
 
 Do not execute this file directly. Use __main__.py by executing this modules containing directory.
-In other words, use `python localalias`.
+In other words, use `python funky`.
 """
 
 import argparse
 import enum
 import sys
 
-import localalias
-from localalias import commands
-from localalias import errors
-from localalias.utils import log
+import funky
+from funky import commands
+from funky import errors
+from funky.utils import log
 
 
 def main(argv=None):
@@ -24,7 +24,7 @@ def main(argv=None):
         args = parser.parse_args(argv)
 
         log.init_logger(debug=args.debug, verbose=args.verbose)
-        log.logger.debug('Starting localalias.')
+        log.logger.debug('Starting funky.')
         log.logger.vdebug('argv = {}'.format(argv))
         log.logger.vdebug('Command-line Arguments: {}'.format(args))
 
@@ -33,7 +33,7 @@ def main(argv=None):
         log.logger.error('%s\n', str(e))
         parser.print_usage()
         return 2
-    except errors.LocalAliasError as e:
+    except errors.FunkyError as e:
         log.logger.debug('Exit Status: %s', e.returncode)
         log.logger.error(str(e))
         return e.returncode
@@ -51,11 +51,11 @@ def _get_argparser(*, verbose=False):
     Returns:
         argparse.ArgumentParser object.
     """
-    parser = argparse.ArgumentParser(prog='localalias', description=localalias.__doc__)
+    parser = argparse.ArgumentParser(prog='funky', description=funky.__doc__)
     parser.add_argument('-d', '--debug', action='store_true', help="Enable debug mode.")
     parser.add_argument('-v', '--verbose', action='store_true', help="Enable verbose output.")
     parser.add_argument('--version', action='version',
-            version='%(prog)s {}'.format(localalias.__version__))
+            version='%(prog)s {}'.format(funky.__version__))
     parser.add_argument('-c', '--color', action='store_true', help="Colorize output.")
 
     parser.add_argument('-g', '--global', dest='global_', action='store_true',
@@ -67,9 +67,9 @@ def _get_argparser(*, verbose=False):
 
     command_group = parser.add_argument_group(
         title='Action Commands',
-        description='All of these options act on the current set of local aliases in some way. If '
+        description='All of these options act on the current set of local funks in some way. If '
                     'no action command is provided, the default action is to display all of the '
-                    'local aliases currently in scope. These commands are mutually exclusive.'
+                    'local funks currently in scope. These commands are mutually exclusive.'
     )
     command_group.add_argument(_CmdFlag.ADD.value, nargs=1, dest='command_args', action=_CmdAction,
                                metavar='ALIAS', help=format_docstring(commands.Add.__doc__))

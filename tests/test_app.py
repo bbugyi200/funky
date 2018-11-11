@@ -6,17 +6,17 @@ import unittest.mock as mock
 
 import pytest
 
-import localalias
-from localalias import app
-from localalias import errors
+import funky
+from funky import app
+from funky import errors
 
 
 @pytest.mark.parametrize('argv,cmd_cls_string', [
-    (['-a', 'new_alias'], 'Add'),
-    (['-e', 'new_alias'], 'Edit'),
-    (['-r', 'new_alias'], 'Remove'),
+    (['-a', 'new_funk'], 'Add'),
+    (['-e', 'new_funk'], 'Edit'),
+    (['-r', 'new_funk'], 'Remove'),
 ])
-@mock.patch('localalias.app.commands')
+@mock.patch('funky.app.commands')
 def test_main(commands, argv, cmd_cls_string):
     """Tests that arguments are parsed correctly."""
     setattr(commands, cmd_cls_string, mock.Mock())
@@ -28,18 +28,18 @@ def test_main(commands, argv, cmd_cls_string):
 
 
 @pytest.mark.parametrize('argv', [
-    ['-a', 'new_alias', '-e', 'existing_alias'],
+    ['-a', 'new_funk', '-e', 'existing_funk'],
 ])
-@mock.patch('localalias.utils.log.logger')
+@mock.patch('funky.utils.log.logger')
 def test_main_validate_args(logger, argv):
     """Tests that arguments are validated properly."""
     assert app.main(argv) == 2
     logger.error.called_once()
-    localalias.app._CmdAction.flag = None
-    localalias.app._CmdAction.option_string = None
+    funky.app._CmdAction.flag = None
+    funky.app._CmdAction.option_string = None
 
 
-@mock.patch('localalias.app._get_argparser')
+@mock.patch('funky.app._get_argparser')
 def test_main_exceptions(_get_argparser):
     """Tests that main handles exceptions appropriately."""
     class TestError(Exception):
@@ -47,7 +47,7 @@ def test_main_exceptions(_get_argparser):
 
     def raise_error(opt, verbose=False):
         if opt == 1:
-            raise errors.LocalAliasError(returncode=5)
+            raise errors.FunkyError(returncode=5)
         elif opt == 2:
             raise TestError('Test Exception')
 

@@ -23,10 +23,10 @@ def getdir(userdir):
         raise ValueError("Argument @userdir MUST be one of the following "
                          "options: {}".format(userdir_opts))
 
-    getters = {'config': _getter_factory('XDG_CONFIG_HOME', '/home/{}/.config/localalias'),
-               'data': _getter_factory('XDG_DATA_HOME', '/home/{}/.local/share/localalias'),
-               'runtime': _getter_factory('XDG_RUNTIME_DIR', '/run/user/1000/localalias'),
-               'cache': _getter_factory('XDG_CACHE_HOME', '/home/{}/.cache/localalias')}
+    getters = {'config': _getter_factory('XDG_CONFIG_HOME', '/home/{}/.config/funky'),
+               'data': _getter_factory('XDG_DATA_HOME', '/home/{}/.local/share/funky'),
+               'runtime': _getter_factory('XDG_RUNTIME_DIR', '/run/user/1000/funky'),
+               'cache': _getter_factory('XDG_CACHE_HOME', '/home/{}/.cache/funky')}
 
     return getters[userdir]()
 
@@ -44,7 +44,7 @@ def _getter_factory(envvar, dirfmt):
     """
     def _getter():
         if envvar in os.environ:
-            xdg_dir = '{}/localalias'.format(os.environ[envvar])
+            xdg_dir = '{}/funky'.format(os.environ[envvar])
         else:
             if dirfmt.count('{}') > 0:
                 xdg_dir = dirfmt.format(_user)
