@@ -24,7 +24,7 @@ __ https://zsh-funky.readthedocs.io/en/latest/usage.html#use-la-and-al-over-funk
 Description
 -----------
 
-funky is **a light-weight shell wrapper that allows you to create per-directoy command
+funky is **a light-weight shell wrapper that allows you to create per-directory command
 funks.**
 
 .. inclusion-marker-do-not-remove

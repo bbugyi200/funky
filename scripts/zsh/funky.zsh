@@ -31,8 +31,8 @@ fi
 [[ -d "$_xdg_data_dir" ]] || mkdir -p "$_xdg_data_dir"
 
 ##### Function used for sourcing funks
-_source_globals() { funky --verbose --global | source /dev/stdin; }
-_source_locals() { funky --verbose | source /dev/stdin; }
+_source_globals() { /usr/bin/funky --verbose --global | source /dev/stdin; }
+_source_locals() { /usr/bin/funky --verbose | source /dev/stdin; }
 
 _maybe_source_locals() {
     if [[ -f $PWD/.funky ]]; then
@@ -74,7 +74,7 @@ unalias funky &> /dev/null
 funky() {
     touch $_xdg_data_dir/timestamp
 
-    funky --color "$@"
+    /usr/bin/funky --color "$@"
     if [[ .funky -nt $_xdg_data_dir/timestamp ]]; then
         _source_locals
     fi
@@ -84,7 +84,7 @@ funky() {
 unalias gfunky &> /dev/null
 gfunky() {
     touch $_xdg_data_dir/timestamp
-    funky --global --color "$@"
+    /usr/bin/funky --global --color "$@"
     if [[ ~/.funky -nt $_xdg_data_dir/timestamp ]]; then
         _source_globals
         _maybe_source_locals
