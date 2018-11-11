@@ -1,6 +1,6 @@
-include CONTRIBUTING.rst
+include CONTRIBUTING.md
 include LICENSE
-include README.rst
+include README.md
 
 recursive-include scripts *
 recursive-include tests *
@@ -8,4 +8,4 @@ recursive-include funky *
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]
 
-recursive-include docs *.rst conf.py Makefile make.bat *.jpg *.png *.gif
+recursive-include docs *.md conf.py Makefile make.bat *.jpg *.png *.gif

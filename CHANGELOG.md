@@ -1,27 +1,22 @@
-==========
-Change Log
-==========
+# Change Log
 
 All notable changes to this project will be documented in this file. This project adheres to
-`Semantic Versioning <http://semver.org/>`_, though minor breaking changes can happen in minor
+[Semantic Versioning](https://semver.org/), though minor breaking changes can happen in minor
 releases.
 
-v3.0.0 (2018-11-10)
--------------------
+### v3.0.0 (2018-11-10)
 
 Changed:
 
 * Renamed project from 'localalias' to 'funky'.
 
-v2.6.1 (2018-10-20)
--------------------
+### v2.6.1 (2018-10-20)
 
 Fixed:
 
 * Editor call breaks when $EDITOR includes command-line options
 
-v2.6.0 (2018-09-11)
--------------------
+### v2.6.0 (2018-09-11)
 
 Added:
 
@@ -47,8 +42,7 @@ Removed:
 * Oh-My-ZSH plugin support. The ``funky.zsh`` script will now need to be manually sourced
   into the user's ``zshrc``.
 
-v2.5.1 (2018-06-17)
--------------------
+### v2.5.1 (2018-06-17)
 
 Fixed:
 
@@ -59,8 +53,7 @@ Fixed:
   ancestor of the directory where said local functions were defined. This can still happen, but
   sourcing global functions when traveling back to the project root dir makes it less likely.
 
-v2.5.0 (2018-06-17)
--------------------
+### v2.5.0 (2018-06-17)
 
 Changed:
 
@@ -74,8 +67,7 @@ Fixed:
   global function overrides to persist until the end of the session even if the user changes back
   to the his/her home directory.
 
-v2.4.0 (2018-06-16)
--------------------
+### v2.4.0 (2018-06-16)
 
 Added:
 
@@ -94,16 +86,14 @@ Fixed:
   with funky will automatically unalias function name before function definitions. (This
   requires the ``--verbose`` option to make visible in Show command output.)
 
-v2.3.5 (2018-06-12)
--------------------
+### v2.3.5 (2018-06-12)
 
 Fixed:
 
 * Switching to another folder with local funks causes old local funks to continue to override
   global funks
 
-v2.3.4 (2018-06-12)
--------------------
+### v2.3.4 (2018-06-12)
 
 Fixed:
 
@@ -111,30 +101,26 @@ Fixed:
 
   - Meaning that any global funks that were previously overridden should be back in scope.
 
-v2.3.3 (2018-06-12)
--------------------
+### v2.3.3 (2018-06-12)
 
 Fixed:
 
 * Local funks were not consistently overriding global funks
 
-v2.3.2 (2018-06-12)
--------------------
+### v2.3.2 (2018-06-12)
 
 Fixed:
 
 * Local database was not being deleted consistently when empty, as it should be.
 
-v2.3.1 (2018-06-12)
--------------------
+### v2.3.1 (2018-06-12)
 
 Fixed:
 
 * Add (``-a``) and Edit (``-e``) commands now act more approriately when command definition is left
   blank.
 
-v2.3.0 (2018-06-12)
--------------------
+### v2.3.0 (2018-06-12)
 
 Changed:
 
@@ -149,8 +135,7 @@ Removed:
     Since I don't use bash, I'm not enthusiastic about supporting it. I'll reimplement it on
     request, but am not going to waste my time otherwise.
 
-v2.2.2 (2018-06-11)
--------------------
+### v2.2.2 (2018-06-11)
 
 Fixed:
 
@@ -158,16 +143,14 @@ Fixed:
   thought.)
 
 
-v2.2.1 (2018-06-11)
--------------------
+### v2.2.1 (2018-06-11)
 
 Fixed:
 
 * Using ``-x`` without arguments should fail explicitly
 
 
-v2.2.0 (2018-06-10)
--------------------
+### v2.2.0 (2018-06-10)
 
 Added:
 
@@ -178,16 +161,14 @@ Added:
   - All action commands still work properly when ``--global`` is used but they operate on the global
     database instead of the local one.
 
-v2.1.1 (2018-06-09)
--------------------
+### v2.1.1 (2018-06-09)
 
 Fixed:
 
 * Dashed command-line arguments are not properly passed to command definition when a funk is
   executed.
 
-v2.1.0 (2018-06-09)
--------------------
+### v2.1.0 (2018-06-09)
 
 Added:
 
@@ -204,30 +185,26 @@ Changed:
   - Long options have been removed.
     
 
-v2.0.6 (2018-06-07)
--------------------
+### v2.0.6 (2018-06-07)
 
 Fixed:
 
 * Automatic command-line arguments are word-splitting for single-line funk definitions without
   param arguments.
 
-v2.0.5 (2018-06-06)
--------------------
+### v2.0.5 (2018-06-06)
 
 Fixed:
 
 * Executed command's exit status not preserved (reintroduced this bug with v2.0.3).
 
-v2.0.4 (2018-06-06)
--------------------
+### v2.0.4 (2018-06-06)
 
 Fixed:
 
 * Double printout of "command not found" message (caused by debug message left active in v2.0.3).
 
-v2.0.3 (2018-06-06)
--------------------
+### v2.0.3 (2018-06-06)
 
 Added:
 
@@ -239,8 +216,7 @@ Changed:
 * funky.sh is now copied to ``$XDG_CONFIG_HOME/funky/funky.sh`` for easy access.
 * funky.sh is now symlinked to oh-my-zsh custom plugin directory instead of being copied.
 
-v2.0.2 (2018-06-01)
--------------------
+### v2.0.2 (2018-06-01)
 
 Changed:
 
@@ -252,19 +228,16 @@ Fixed:
 * Automatic la funk on some systems blocks entry point. It is now unaliased at install time.
 * Funk execution masks exit status.
 
-v2.0.1 (2018-05-31)
--------------------
+### v2.0.1 (2018-05-31)
 
 Fixed:
 
 * Demonstration gif not working on PyPI project page.
 
-v2.0.0 (2018-05-31)
--------------------
+### v2.0.0 (2018-05-31)
 
 Migration from bash script prototype to python project and uploaded to PyPI.
 
-v1.0.0 (2018-03-18)
--------------------
+### v1.0.0 (2018-03-18)
 
 Prototype version. Funky bash script.
