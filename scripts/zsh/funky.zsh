@@ -8,9 +8,9 @@
 # - Define two wrapper functions, `funky` and `gfunky`.
 
 ##### INSTALLATION
-# In order to take advantage of the full benefits of funky, this script must either be used as
-# an oh-my-zsh plugin or be sourced directly into your .bashrc / .zshrc file. See the official docs
-# for more information:
+# In order to take advantage of the full benefits of funky, this script must
+# be sourced directly into your .zshrc file. See the official docs for more
+# information:
 # 
 # https://funky.readthedocs.io/en/latest/installation.html#additional-installation-steps
 
