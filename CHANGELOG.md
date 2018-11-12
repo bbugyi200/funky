@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file. This projec
 [Semantic Versioning](https://semver.org/), though minor breaking changes can happen in minor
 releases.
 
+### Unreleased
+
+Fixed:
+
+* "$@" being appended to command string when command ends with keyword (e.g.
+  'return', 'done', 'fi', etc....).
+
 ### v3.0.1 (2018-11-11)
 
 Fixed:

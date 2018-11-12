@@ -142,7 +142,7 @@ class Show(Command):
         """Prints all funks that start with @prefix to stdout."""
         log.logger.debug('Running show command for all defined funks.')
         sorted_funks = sorted([funk for funk in self.funk_dict if funk.startswith(prefix)],
-                                key=lambda x: x.lower())
+                              key=lambda x: x.lower())
 
         if not sorted_funks:
             raise errors.FunkNotDefinedError(funk=self.funk)
@@ -259,7 +259,8 @@ class Edit(Command):
         <funk> using any argument variables (e.g. $0, $1, ..., $@, $*, etc.), however, the
         command string is left unaltered.
         """
-        if re.search(r'(\$|\n)', cmd_string):
+        bad_keys = [r'\$', r'\n', 'return', 'done', 'fi']
+        if re.search('({})'.format('|'.join(bad_keys)), cmd_string):
             new_cmd_string = cmd_string
         else:
             new_cmd_string = '{} "$@"'.format(cmd_string)
