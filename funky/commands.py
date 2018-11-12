@@ -213,7 +213,7 @@ class Edit(Command):
 
         tf = tempfile.NamedTemporaryFile(prefix='{}.'.format(funk),
                                          suffix='.sh',
-                                         dir=os.getcwd(),
+                                         dir='/var/tmp',
                                          mode='w',
                                          delete=False)
         if funk in self.funk_dict:

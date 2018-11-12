@@ -10,6 +10,7 @@ Fixed:
 
 * "$@" being appended to command string when command ends with keyword (e.g.
   'return', 'done', 'fi', etc....).
+* Store temporary file in /var/tmp instead of current working directory.
 
 ### v3.0.1 (2018-11-11)
 
