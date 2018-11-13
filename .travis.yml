@@ -7,6 +7,9 @@ install:
     - pip install -U tox-travis
     - pip install codecov
 script: tox
+os:
+    - linux
+    - osx
 after_success: codecov
 deploy:
   provider: pypi
