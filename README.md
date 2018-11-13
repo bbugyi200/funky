@@ -2,7 +2,7 @@
 
 ![logo] **Funky makes ZSH shell functions more powerful and easier to manage.**
 
-![travis] ![codecov]
+[![Build Status](https://travis-ci.org/bbugyi200/funky.svg?branch=master)](https://travis-ci.org/bbugyi200/funky) [![codecov](https://codecov.io/gh/bbugyi200/funky/branch/master/graph/badge.svg)](https://codecov.io/gh/bbugyi200/funky) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ![demo]
 
