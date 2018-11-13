@@ -6,6 +6,10 @@ releases.
 
 ### Unreleased
 
+Removed:
+
+* Delay when -a is used for existing funk.
+
 Fixed:
 
 * "$@" being appended to command string when command ends with keyword (e.g.

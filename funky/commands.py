@@ -8,7 +8,6 @@ import re
 import shlex
 import subprocess as sp
 import tempfile
-import time
 
 from pygments import highlight
 from pygments.lexers import BashLexer
@@ -320,7 +319,6 @@ class Add(Edit):
             already_exists = True
             msg_fmt = 'Funk "{}" is already defined. Running edit command.'
             log.logger.info(msg_fmt.format(self.funk))
-            time.sleep(1)
 
         try:
             self.edit_funk()
