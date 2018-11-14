@@ -2,7 +2,7 @@
 
 ![logo]
 
-**Funky takes shell functions to the next level by making them easier to define, more flexible, and WAY more interactive than ever before.**
+**Funky takes shell functions to the next level by making them easier to define, more flexible, and more interactive.**
 
 [![Build Status](https://travis-ci.org/bbugyi200/funky.svg?branch=master)](https://travis-ci.org/bbugyi200/funky) [![codecov](https://codecov.io/gh/bbugyi200/funky/branch/master/graph/badge.svg)](https://codecov.io/gh/bbugyi200/funky) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
