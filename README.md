@@ -148,7 +148,7 @@ Pull requests are welcome. See [CONTRIBUTING.md](https://github.com/bbugyi200/fu
 [logo]: https://raw.githubusercontent.com/bbugyi200/funky/master/img/logo-96.png
 [travis]: https://travis-ci.org/bbugyi200/funky.svg?branch=master
 [codecov]: https://codecov.io/gh/bbugyi200/funky/branch/master/graph/badge.svg
-[demo]: https://raw.githubusercontent.com/bbugyi200/funky/master/img/demo.gif
+[demo]: https://raw.githubusercontent.com/bbugyi200/funky/master/img/demo.gif "Funky Demonstration GIF"
 [funky.zsh]:  https://github.com/bbugyi200/funky/blob/master/scripts/zsh/funky.zsh
 [Github repo]: https://github.com/bbugyi200/funky
 [tarball]: https://github.com/bbugyi200/funky/tarball/master
