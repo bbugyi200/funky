@@ -134,6 +134,10 @@ during the installation process (it can also be found [here][funky.zsh]).  You c
 
 If you install funky with root permissions, the ``funky.zsh`` script will instead be installed to ``/usr/share/funky/funky.zsh``.
 
+## Similar Projects
+
+* [Desk](https://github.com/jamesob/desk) - A lightweight workspace manager for the shell
+
 
 ## Contributions
 
