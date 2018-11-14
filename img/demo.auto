@@ -1,13 +1,12 @@
-################################################################################################################################
-###### The commands run to produce demo.gif. Used with https://github.com/bbugyi200/scripts/blob/master/bin/main/autodemo ######
-################################################################################################################################
+# The commands run to produce demo.gif. Used with:
+# https://github.com/bbugyi200/scripts/blob/master/bin/main/autodemo
+#
+# peek dimensions: 
 ((50))# This is a demo for funky.<<1>>[CLEAR]((100))# We use 'funky' to create local funks and 'gfunky' to create global funks.<<1.5>>[CLEAR]# But funky is too hard to type, so let's start by creating a global funk for funky.<<1.5>>[CLEAR]((150))gfunky -a fu
 ifunky[ESC]:wq
-((100))# We'll do the same thing for gfunky.<<1>>[CLEAR]((150))gfunky -a fg
-igfunky[ESC]:wq
 ((100))# Now let's create some local (per-directory) funks.<<1>>[CLEAR]((150))mkdir foo bar
 cd foo
-((100))# Use the '-a' option to add funks.<<1.5>>[CLEAR]((150))fu -a run
+fu -a run
 ifor[TAB]<<0.5>>i[TAB]<<0.2>>{0..4}[TAB]<<0.5>>printf "COUNT: %s\\n" "$((i+1))"
 <<0.5>>sleep 0.1[ESC]<<0.5>>joecho "FOOOOOOO!"<<0.5>>[ESC]:wq
 run
@@ -22,8 +21,8 @@ run
 <<2.5>>((50))clear
 cd ../foo
 fu<<0.5>>
-<<2.5>>((100))# Show all global funks by running 'gfunky' with no arguments.<<1.5>>[CLEAR]((150))fg<<0.5>>
-<<3.5>>((50))clear
+<<2.5>>gfunky
+<<3>>((50))clear
 ((100))# Use the '-e' option to edit an existing funk.<<1.5>>[CLEAR]((150))fu -e run
 cGprintf "Kung FOOOOOOOOOO!"<<0.5>>[ESC]:wq
 run
