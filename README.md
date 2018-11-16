@@ -1,6 +1,8 @@
 # funky [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Funky%20makes%20ZSH%20shell%20functions%20more%20powerful%20and%20easier%20to%20manage&url=https://github.com/bbugyi200/funky&via=bryan_bugyi&hashtags=python,Linux,commandlineftw,developers)
 
-![logo] **Funky takes shell functions to the next level by making them easier to define, more flexible, and more interactive.**
+![logo]
+
+**Funky takes shell functions to the next level by making them easier to define, more flexible, and more interactive.**
 
 [![Build Status](https://travis-ci.org/bbugyi200/funky.svg?branch=master)](https://travis-ci.org/bbugyi200/funky) [![codecov](https://codecov.io/gh/bbugyi200/funky/branch/master/graph/badge.svg)](https://codecov.io/gh/bbugyi200/funky) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
