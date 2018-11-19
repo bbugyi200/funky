@@ -1,0 +1,8 @@
+start_on: ['20190211', '20190415', '20190715']
+title: {Python: 'Python Meets ZSH: Funky makes Shell Functions more Powerful and Easier
+    to Manage.', SideProject: 'funky: Funky makes Shell Functions more Powerful and
+    Easier to Manage.', bash: 'funky: Funky makes Shell Functions more Powerful and
+    Easier to Manage.', linux: 'funky: Funky makes Linux Shell Functions more Powerful
+    and Easier to Manage.', programming: 'Python Meets ZSH: Funky makes Shell Functions
+    more Powerful and Easier to Manage.'}
+url: https://github.com/bbugyi200/funky

@@ -1,4 +1,8 @@
-<meta property="og:image" content="https://raw.githubusercontent.com/bbugyi200/funky/master/img/logo-128.png"/>
+<html prefix="og: http://ogp.me/ns#">
+<head>
+<meta property="og:image" content="https://raw.githubusercontent.com/bbugyi200/funky/master/img/logo-128.png" />
+</head>
+</html>
 
 # funky [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Funky%20makes%20ZSH%20shell%20functions%20more%20powerful%20and%20easier%20to%20manage&url=https://github.com/bbugyi200/funky&via=bryan_bugyi&hashtags=python,Linux,commandlineftw,developers)
 
