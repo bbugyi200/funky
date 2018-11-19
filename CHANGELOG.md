@@ -6,6 +6,12 @@ releases.
 
 ### Unreleased
 
+### v3.0.3 (2018-11-19)
+
+Fixed:
+
+* Replace `which` with `command -v`
+
 ### v3.0.2 (2018-11-19)
 
 Removed:
