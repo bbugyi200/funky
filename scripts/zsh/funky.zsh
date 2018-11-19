@@ -84,7 +84,7 @@ funky() {
 unalias gfunky &> /dev/null
 gfunky() {
     touch $_xdg_data_dir/timestamp
-    "${funky_exe}" --global --color "$@"
+    command funky --global --color "$@"
     if [[ ~/.funky -nt $_xdg_data_dir/timestamp ]]; then
         _source_globals
         _maybe_source_locals
