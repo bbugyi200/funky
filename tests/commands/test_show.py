@@ -35,7 +35,6 @@ def test_show_verbose(capsys, cleandir, fake_db, funk_dict):
             count_no_newlines += 1
 
     assert captured.out.count('unalias') == len(funk_dict)
-    assert captured.out.count('compdef') == count_no_newlines
 
 
 def test_show_all(capsys, cleandir, show_expected, fake_db):

@@ -105,30 +105,13 @@ class Show(Command):
         cmd_string = self.funk_dict[funk]
         if '\n' in cmd_string:
             show_output = '{0}() {{\n\t{1}\n}}'.format(funk, cmd_string.replace('\n', '\n\t'))
-            multiline = True
         else:
             show_output = '{0}() {{ {1}; }}'.format(funk, cmd_string)
-            multiline = False
 
         if self.verbose:
             unalias_out = 'unalias {} &> /dev/null\n'.format(funk)
 
-            if not multiline:
-                cmd_chain = re.split(' *(?:&&?|;) *', cmd_string)
-
-                index = -1
-                for i in range(len(cmd_chain)):
-                    ineg = 0 - (i + 1)
-                    if '$' in cmd_chain[ineg]:
-                        index = ineg
-                        break
-
-                mirrored_cmd = cmd_chain[index].split(None, 1)[0]
-                compdef_out = 'compdef {}={} &> /dev/null\n'.format(funk, mirrored_cmd)
-            else:
-                compdef_out = ''
-
-            show_output = ''.join([unalias_out, compdef_out, show_output])
+            show_output = ''.join([unalias_out, show_output])
 
         if self.color:
             final_output = highlight(show_output, BashLexer(), TerminalFormatter()).strip()
