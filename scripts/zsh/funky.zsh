@@ -30,7 +30,7 @@ fi
 
 [[ -d "$_xdg_data_dir" ]] || mkdir -p "$_xdg_data_dir"
 
-funky_exe="$(which funky)"
+funky_exe="$(command -v funky)"
 
 ##### Function used for sourcing funks
 _source_globals() { "${funky_exe}" --verbose --global | source /dev/stdin; }
