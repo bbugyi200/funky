@@ -9,11 +9,11 @@ import sys
 
 def run(install):
     """Runs all post install hooks."""
-    _copy_zsh_ext(install)
+    _copy_sh_ext(install)
 
 
-def _copy_zsh_ext(install):
-    """Copy zsh extension to funky config directory."""
+def _copy_sh_ext(install):
+    """Copy shell extension to funky config directory."""
     this_dir = os.path.dirname(os.path.realpath(__file__))
     root = install.root if install.root else ''
 
@@ -30,8 +30,8 @@ def _copy_zsh_ext(install):
 
     _create_dir(xdg_data_dir)
 
-    src = '{}/zsh/funky.zsh'.format(this_dir)
-    dest = '{}/funky.zsh'.format(xdg_data_dir)
+    src = '{}/shell/funky.sh'.format(this_dir)
+    dest = '{}/funky.sh'.format(xdg_data_dir)
 
     shutil.copyfile(src, dest)
 

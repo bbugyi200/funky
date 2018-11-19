@@ -15,7 +15,7 @@ usage: funky [-h] [-d] [-v] [--version] [-c] [-a ALIAS] [-r [ALIAS]]
              [-e ALIAS] [-R OLD NEW]
              [ALIAS]
 
-Funky makes ZSH shell functions more powerful and easier to manage.
+Funky makes shell functions more powerful and easier to manage.
 
 optional arguments:
   -h, --help     show this help message and exit
@@ -120,19 +120,19 @@ $ python setup.py install
 For the best experience, funky needs to be integrated into your shell environment using the
 provided shell script.
 
-A shell script by the name of `funky.zsh` should have been copied to
+A shell script by the name of `funky.sh` should have been copied to
 
 ``` shell
-$XDG_DATA_HOME/funky/funky.zsh
+$XDG_DATA_HOME/funky/funky.sh
 ```
 
-during the installation process (it can also be found [here][funky.zsh]).  You can integrate funky into your shell by sourcing the `funky.zsh` script into your shell's configuration file. Assuming the script was copied to `~/.local/share/funky/funky.zsh` (its default location), for example, you would add the following line to your `.zshrc`:
+during the installation process (it can also be found [here][funky.sh]).  You can integrate funky into your shell by sourcing the `funky.sh` script into your shell's configuration file. Assuming the script was copied to `~/.local/share/funky/funky.sh` (its default location), for example, you would add the following line to your `.zshrc` OR `bashrc`:
 
 ``` shell
-[ -f ~/.local/share/funky/funky.zsh ] && source ~/.local/share/funky/funky.zsh
+[ -f ~/.local/share/funky/funky.sh ] && source ~/.local/share/funky/funky.sh
 ```
 
-If you install funky with root permissions, the ``funky.zsh`` script will instead be installed to ``/usr/share/funky/funky.zsh``.
+If you install funky with root permissions, the ``funky.sh`` script will instead be installed to ``/usr/share/funky/funky.sh``.
 
 ## Similar Projects
 
@@ -147,6 +147,6 @@ Pull requests are welcome. See [CONTRIBUTING.md](https://github.com/bbugyi200/fu
 [travis]: https://travis-ci.org/bbugyi200/funky.svg?branch=master
 [codecov]: https://codecov.io/gh/bbugyi200/funky/branch/master/graph/badge.svg
 [demo]: https://raw.githubusercontent.com/bbugyi200/funky/master/img/demo.gif "Funky Demonstration GIF"
-[funky.zsh]:  https://github.com/bbugyi200/funky/blob/master/scripts/zsh/funky.zsh
+[funky.sh]:  https://github.com/bbugyi200/funky/blob/master/scripts/shell/funky.sh
 [Github repo]: https://github.com/bbugyi200/funky
 [tarball]: https://github.com/bbugyi200/funky/tarball/master

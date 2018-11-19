@@ -6,6 +6,28 @@ releases.
 
 ### Unreleased
 
+### v3.1.0 (2018-11-19)
+
+Add:
+
+* Bash Support
+
+Rem:
+
+* Compdef ZSH autocompletion statements. These are incompatiable with bash.
+
+### v3.0.5 (2018-11-19)
+
+Fixed:
+
+* Continued issues with resolving executable path.
+
+### v3.0.4 (2018-11-19)
+
+Fixed:
+
+* Continued issues with resolving executable path.
+
 ### v3.0.3 (2018-11-19)
 
 Fixed:

@@ -31,8 +31,11 @@ fi
 [[ -d "$_xdg_data_dir" ]] || mkdir -p "$_xdg_data_dir"
 
 ##### Function used for sourcing funks
-_source_globals() { command funky --verbose --global | source /dev/stdin; }
-_source_locals() { command funky --verbose | source /dev/stdin; }
+
+# shellcheck disable=SC1090
+_source_globals() { source <(command funky --verbose --global); }
+# shellcheck disable=SC1090
+_source_locals() { source <(command funky --verbose); }
 
 _maybe_source_locals() {
     if [[ -f $PWD/.funky ]]; then
@@ -56,26 +59,28 @@ _maybe_source_locals
 # - Lazily loads global funks and local funks while attempting to maintain parent's local
 #   funks.
 chpwd() {
-    if [[ -f $_xdg_data_dir/localpath ]] && [[ $PWD != "$(cat $_xdg_data_dir/localpath)/"* ]]; then
+    if [[ -f "$_xdg_data_dir"/localpath ]] && [[ $PWD != "$(cat "$_xdg_data_dir"/localpath)/"* ]]; then
         _maybe_source_globals
-        rm -f $_xdg_data_dir/localpath
+        rm -f "$_xdg_data_dir"/localpath
     fi
 
     if [[ $PWD != "$_home_dir" ]] && [[ -f $PWD/.funky ]]; then
         _source_locals
         if [[ ! -f $_xdg_data_dir/localpath ]]; then
-            echo $PWD > $_xdg_data_dir/localpath
+            echo "$PWD" > "$_xdg_data_dir"/localpath
         fi
     fi
 }
 
+PROMPT_COMMAND=chpwd
+
 ##### Wrapper used to interact with local funks
 unalias funky &> /dev/null
 funky() {
-    touch $_xdg_data_dir/timestamp
+    touch "$_xdg_data_dir"/timestamp
 
     command funky --color "$@"
-    if [[ .funky -nt $_xdg_data_dir/timestamp ]]; then
+    if [[ .funky -nt "$_xdg_data_dir"/timestamp ]]; then
         _source_locals
     fi
 }
@@ -83,9 +88,9 @@ funky() {
 ##### Wrapper used to interact with global funks
 unalias gfunky &> /dev/null
 gfunky() {
-    touch $_xdg_data_dir/timestamp
+    touch "$_xdg_data_dir"/timestamp
     command funky --global --color "$@"
-    if [[ ~/.funky -nt $_xdg_data_dir/timestamp ]]; then
+    if [[ ~/.funky -nt "$_xdg_data_dir"/timestamp ]]; then
         _source_globals
         _maybe_source_locals
     fi
