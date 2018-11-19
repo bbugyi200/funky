@@ -6,6 +6,8 @@ releases.
 
 ### Unreleased
 
+### v3.0.2 (2018-11-19)
+
 Removed:
 
 * Delay when -a is used for existing funk.
@@ -15,6 +17,7 @@ Fixed:
 * "$@" being appended to command string when command ends with keyword (e.g.
   'return', 'done', 'fi', etc....).
 * Store temporary file in /var/tmp instead of current working directory.
+* /usr/bin/funky should not be hard-coded
 
 ### v3.0.1 (2018-11-11)
 
