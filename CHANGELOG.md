@@ -8,11 +8,11 @@ releases.
 
 ### v3.1.0 (2018-11-19)
 
-Add:
+Added:
 
 * Bash Support
 
-Rem:
+Removed:
 
 * Compdef ZSH autocompletion statements. These are incompatiable with bash.
 
