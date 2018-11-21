@@ -56,10 +56,10 @@ be used from any directory. Local funks can be used to override global funk defi
 Local and global funks can be manipulated (created, removed, edited, renamed, etc.) by using the
 ``funky`` and ``gfunky`` commands, respectively.
 
-#### Aliases vs Funks
+#### Aliases vs Shell Funtions
 
-This project originally used funks. The decision to migrate to shell functions was made based on
-the fact that shell functions are far more capable than funks. Moreover, there is very little
+This project originally used aliases. The decision to migrate to shell functions was made based on
+the fact that shell functions are far more capable than aliases. Moreover, there is very little
 benefit to using aliases over shell functions.
 
 With that said, actual aliases do have one appeal over shell functions. When you use an alias, any
