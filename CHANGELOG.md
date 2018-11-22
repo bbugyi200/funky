@@ -10,7 +10,7 @@ releases.
 
 Fixed:
 
-* Don't assume /home/<user> is home directory (breaks MacOS)
+* Don't assume `/home/<user>` is home directory (breaks MacOS)
 
 ### v3.1.0 (2018-11-19)
 
