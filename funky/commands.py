@@ -1,7 +1,6 @@
 """Command definitions."""
 
 from abc import ABCMeta, abstractmethod
-import getpass
 import json
 import os
 import re
@@ -35,7 +34,7 @@ class Command(metaclass=ABCMeta):
                for the help command.
     """
     FUNKY_DB_FILENAME = '.funky'
-    GLOBALALIAS_DB_FILENAME = '/home/{}/.funky'.format(getpass.getuser())
+    GLOBALALIAS_DB_FILENAME = '{}/.funky'.format(os.path.expanduser('~'))
 
     def __init__(self, args, *, color=False, global_=False, verbose=False):
         try:

@@ -4,7 +4,13 @@ All notable changes to this project will be documented in this file. This projec
 [Semantic Versioning](https://semver.org/), though minor breaking changes can happen in minor
 releases.
 
-### Unreleased
+### Unreleaseed
+
+### v3.1.1 (2018-11-21)
+
+Fixed:
+
+* Don't assume /home/<user> is home directory (breaks MacOS)
 
 ### v3.1.0 (2018-11-19)
 
