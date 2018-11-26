@@ -6,6 +6,10 @@ releases.
 
 ### Unreleased
 
+Added:
+
+* Replace `./` with absolute path for current working directory
+
 ### v3.1.1 (2018-11-21)
 
 Fixed:

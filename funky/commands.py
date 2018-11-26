@@ -246,6 +246,8 @@ class Edit(Command):
         else:
             new_cmd_string = '{} "$@"'.format(cmd_string)
 
+        new_cmd_string = new_cmd_string.replace(' ./', ' {}/'.format(os.getcwd()))
+
         return new_cmd_string
 
     def __call__(self):
