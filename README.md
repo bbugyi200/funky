@@ -9,7 +9,7 @@
 ## Usage
 Funks are manipulated using the `funky` and `gfunky` commands. These commands have the same user interface, which is specified in the [Command-line Interface](#cli) section. The difference between the two commands is treated in the [Local vs Global](#lvg) section.
 
-#### <a name="cli">Command-line Interface</cli>
+### <a name="cli">Command-line Interface</cli>
 ```
 usage: funky [-h] [-d] [-v] [--version] [-c] [-a FUNK] [-r [FUNK]] [-e FUNK]
              [-R OLD NEW]
@@ -42,7 +42,7 @@ Action Commands:
                  the trailing '..') will be displayed.
 ```
 
-#### <a name="lvg">Local vs Global</a>
+### <a name="lvg">Local vs Global</a>
 
 **Local** funks are stored using a hidden database file that is located in the same directory
 where the funk was created. These can be manipulated using the action command options described
@@ -56,7 +56,19 @@ be used from any directory. Local funks can be used to override global funk defi
 Local and global funks can be manipulated (created, removed, edited, renamed, etc.) by using the
 ``funky`` and ``gfunky`` commands, respectively.
 
-#### Aliases vs Shell Funtions
+### Funk Definition Shortcuts
+
+Normally when defining a funk, the provided raw definition (the final contents of the temp file) is inserted directly into the generated function definition. However, funky does try to make some alterations to the original funk definition when doing so is convenient. These *funky definition shortcuts* can make defining funks faster:
+
+#### Special `cd` Funks
+
+A funk definition of the form `./relative/path/to/directory` will be automatically changed to
+
+``` bash
+cd /absolute/path/to/directory || return 1
+```
+
+#### The "$@" Special Parameter
 
 This project originally used aliases. The decision to migrate to shell functions was made based on
 the fact that shell functions are far more capable than aliases. Moreover, there is very little

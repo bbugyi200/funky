@@ -240,7 +240,7 @@ class Edit(Command):
         <funk> using any argument variables (e.g. $0, $1, ..., $@, $*, etc.), however, the
         command string is left unaltered.
         """
-        if cmd_string.startswith('./'):
+        if cmd_string.startswith('./') and ' ' not in cmd_string:
             cmd_string = 'cd {} || return 1'.format(cmd_string.replace('./', '{}/'.format(os.getcwd())))
 
         bad_keys = [r'\$', r'\n', 'return', 'done', 'fi']
