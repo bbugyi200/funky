@@ -72,17 +72,17 @@ def _get_argparser(*, verbose=False):
                     'local funks currently in scope. These commands are mutually exclusive.'
     )
     command_group.add_argument(_CmdFlag.ADD.value, nargs=1, dest='command_args', action=_CmdAction,
-                               metavar='ALIAS', help=format_docstring(commands.Add.__doc__))
+                               metavar='FUNK', help=format_docstring(commands.Add.__doc__))
     command_group.add_argument(_CmdFlag.REMOVE.value, nargs='?', dest='command_args',
-                               action=_CmdAction, metavar='ALIAS',
+                               action=_CmdAction, metavar='FUNK',
                                help=format_docstring(commands.Remove.__doc__))
     command_group.add_argument(_CmdFlag.EDIT.value, nargs=1, dest='command_args',
-                               action=_CmdAction, metavar='ALIAS',
+                               action=_CmdAction, metavar='FUNK',
                                help=format_docstring(commands.Edit.__doc__))
     command_group.add_argument(_CmdFlag.RENAME.value, nargs=2, dest='command_args',
                                action=_CmdAction, metavar=('OLD', 'NEW'),
                                help=format_docstring(commands.Rename.__doc__))
-    command_group.add_argument('command_args', nargs='?', action=_CmdAction, metavar='ALIAS',
+    command_group.add_argument('command_args', nargs='?', action=_CmdAction, metavar='FUNK',
                                help=format_docstring(commands.Show.__doc__))
 
     return parser

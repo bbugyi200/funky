@@ -34,7 +34,7 @@ class Command(metaclass=ABCMeta):
                for the help command.
     """
     FUNKY_DB_FILENAME = '.funky'
-    GLOBALALIAS_DB_FILENAME = '{}/.funky'.format(os.path.expanduser('~'))
+    GLOBAL_FUNKY_DB_FILENAME = '{}/.funky'.format(os.path.expanduser('~'))
 
     def __init__(self, args, *, color=False, global_=False, verbose=False):
         try:
@@ -45,7 +45,7 @@ class Command(metaclass=ABCMeta):
             args = [args]
 
         if global_:
-            self.ACTIVE_DB_FILENAME = self.GLOBALALIAS_DB_FILENAME
+            self.ACTIVE_DB_FILENAME = self.GLOBAL_FUNKY_DB_FILENAME
         else:
             self.ACTIVE_DB_FILENAME = self.FUNKY_DB_FILENAME
 
@@ -95,9 +95,9 @@ class Command(metaclass=ABCMeta):
 class Show(Command):
     """
     When no action command is specified, the default action is to display existing funks. An
-    funk name (ALIAS) can optionally be provided as an argument to display only ALIAS. If ALIAS
+    funk name (FUNK) can optionally be provided as an argument to display only FUNK. If FUNK
     ends in two periods ('..'), it is treated as a prefix instead of an exact match: all funks
-    that start with ALIAS (not including the trailing '..') will be displayed.
+    that start with FUNK (not including the trailing '..') will be displayed.
     """
     def show(self, funk):
         """Print funk and funk command definition to stdout."""
@@ -265,7 +265,7 @@ class Edit(Command):
 
 class Remove(Edit):
     """
-    Remove an existing funk. Or (if ALIAS is not given) remove all funks defined in this
+    Remove an existing funk. Or (if FUNK is not given) remove all funks defined in this
     directory.
     """
     def __call__(self):

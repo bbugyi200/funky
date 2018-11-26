@@ -11,11 +11,11 @@ Funks are manipulated using the `funky` and `gfunky` commands. These commands ha
 
 #### <a name="cli">Command-line Interface</cli>
 ```
-usage: funky [-h] [-d] [-v] [--version] [-c] [-a ALIAS] [-r [ALIAS]]
-             [-e ALIAS] [-R OLD NEW]
-             [ALIAS]
+usage: funky [-h] [-d] [-v] [--version] [-c] [-a FUNK] [-r [FUNK]] [-e FUNK]
+             [-R OLD NEW]
+             [FUNK]
 
-Funky makes shell functions more powerful and easier to manage.
+Funky makes ZSH shell functions more powerful and easier to manage.
 
 optional arguments:
   -h, --help     show this help message and exit
@@ -29,17 +29,17 @@ Action Commands:
   no action command is provided, the default action is to display all of the
   local funks currently in scope. These commands are mutually exclusive.
 
-  -a ALIAS       Add a new funk.
-  -r [ALIAS]     Remove an existing funk. Or (if ALIAS is not given) remove
-                 all funks defined in this directory.
-  -e ALIAS       Edit an existing funk.
+  -a FUNK        Add a new funk.
+  -r [FUNK]      Remove an existing funk. Or (if FUNK is not given) remove all
+                 funks defined in this directory.
+  -e FUNK        Edit an existing funk.
   -R OLD NEW     Rename an existing funk. OLD funk is renamed to NEW.
-  ALIAS          When no action command is specified, the default action is to
-                 display existing funks. An funk name (ALIAS) can optionally
-                 be provided as an argument to display only ALIAS. If ALIAS
-                 ends in two periods ('..'), it is treated as a prefix instead
-                 of an exact match: all funks that start with ALIAS (not
-                 including the trailing '..') will be displayed.
+  FUNK           When no action command is specified, the default action is to
+                 display existing funks. An funk name (FUNK) can optionally be
+                 provided as an argument to display only FUNK. If FUNK ends in
+                 two periods ('..'), it is treated as a prefix instead of an
+                 exact match: all funks that start with FUNK (not including
+                 the trailing '..') will be displayed.
 ```
 
 #### <a name="lvg">Local vs Global</a>
