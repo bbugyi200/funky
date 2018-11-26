@@ -8,7 +8,7 @@ releases.
 
 Added:
 
-* Replace `./` with absolute path for current working directory
+* Funk definition shortcut for using `cd` command with relative directories.
 
 ### v3.1.1 (2018-11-21)
 
