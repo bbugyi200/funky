@@ -6,6 +6,7 @@ python:
 install: 
     - pip install -U tox-travis
     - pip install codecov
+    - ./scripts/install-deps
 script:
     - tox
     - ./tests/scripts/shell/runtests.sh
