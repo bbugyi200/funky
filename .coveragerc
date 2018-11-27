@@ -1,13 +1,12 @@
 [run]
-source = funky
+source = 
+    funky
+    scripts
 branch = true
 omit =
     funky/__main__.py
     */__init__.py
 
 [report]
-include =
-    scripts/post_install.py
-    scripts/shell/funky.sh
 exclude_lines =
     if __name__ == ["']__main__["']:
