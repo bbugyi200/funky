@@ -1,4 +1,11 @@
 [run]
+source =
+    funky
+    tests
+    scripts
+include =
+    scripts/post_install.py
+    scripts/shell/funky.sh
 branch = true
 omit =
     funky/__main__.py

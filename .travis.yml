@@ -3,9 +3,11 @@ python:
 - 3.6
 - 3.5
 - 3.4
+sudo: required
 install: 
     - pip install -U tox-travis
     - pip install codecov
+    - pip install -r requirements_dev.txt
     - ./scripts/install-deps
 script:
     - ./tests/runtests.py
@@ -19,10 +21,11 @@ addons:
       - libdw-dev
       - cmake
 after_success: |
-    # Run Python Tests
-    coverage run ./tests/runtests.py &&
+    # ------- Run Python Tests
+    coverage run --rcfile=.coveragerc ./tests/runtests.py &&
     bash <(curl -s https://codecov.io/bash) -cF python &&
-    # Run Bash Tests
+    # ------- Run Bash Tests
+    deactivate &&
     wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
     tar xzf master.tar.gz &&
     cd kcov-master &&
@@ -32,9 +35,9 @@ after_success: |
     make &&
     sudo make install &&
     cd ../.. &&
-    rm -rf kcov-master &&
+    rm -rf kcov-master coverage &&
     mkdir -p coverage &&
-    kcov coverage ./tests/scripts/shell/test_funky.sh &&
+    kcov coverage ./tests/scripts/shell/runtests.sh &&
     bash <(curl -s https://codecov.io/bash) -cF bash
 deploy:
   provider: pypi
