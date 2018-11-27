@@ -9,6 +9,7 @@ releases.
 Added:
 
 * Funk definition shortcut for using `cd` command with relative directories.
+* Start vim using `+startinsert` option when adding a new funk
 
 ### v3.1.1 (2018-11-21)
 

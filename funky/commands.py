@@ -179,7 +179,7 @@ class Edit(Command):
         self.funk_dict.pop(self.funk)
         log.logger.info('Removed funk "{}".'.format(self.funk))
 
-    def edit_funk(self, funk=None):
+    def edit_funk(self, funk=None, startinsert=False):
         """Opens up funk definition using temp file in $EDITOR for editing.
 
         Args:
@@ -207,6 +207,9 @@ class Edit(Command):
         else:
             editor_cmd_list = ['vim']
             log.logger.debug('Editor command falling back to default: {}'.format(editor_cmd_list))
+
+        if any('vim' in arg for arg in editor_cmd_list) and startinsert:
+            editor_cmd_list.append('+startinsert')
 
         editor_cmd_list.append(tf.name)
         try:
@@ -306,7 +309,7 @@ class Add(Edit):
             log.logger.info(msg_fmt.format(self.funk))
 
         try:
-            self.edit_funk()
+            self.edit_funk(startinsert=(not already_exists))
             log.logger.info('%s funk "%s".', 'Edited' if already_exists else 'Added', self.funk)
         except errors.BlankDefinition as e:
             raise errors.FunkyError(str(e))
