@@ -1,5 +1,8 @@
 [run]
-source = funky
+source = 
+    ./funky
+    ./scripts
+    ./scripts/shell/funky.sh
 branch = true
 omit =
     funky/__main__.py
