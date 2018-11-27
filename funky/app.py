@@ -127,7 +127,7 @@ class _CmdAction(argparse.Action):
         return cmd()
 
 
-class _CmdFlag():
+class _CmdFlag:
     """Command Flags
 
     The value of each command flag will be used by argparse to generate the option string
