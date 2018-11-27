@@ -11,6 +11,13 @@ script:
     - tox
     - ./tests/scripts/shell/runtests.sh
 os: linux
+addons:
+  apt:
+    packages:
+      - libcurl4-openssl-dev
+      - libelf-dev
+      - libdw-dev
+      - cmake
 after_success: |
     codecov &&
     wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
