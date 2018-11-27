@@ -6,10 +6,16 @@ releases.
 
 ### Unreleased
 
+### v3.2.0 (2018-11-27)
+
 Added:
 
 * Funk definition shortcut for using `cd` command with relative directories.
 * Start vim using `+startinsert` option when adding a new funk
+
+Fixed:
+
+* Python 2.7.x Support
 
 ### v3.1.1 (2018-11-21)
 

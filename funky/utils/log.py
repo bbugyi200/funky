@@ -11,7 +11,7 @@ import funky.utils.xdg as xdg
 logger = logging.getLogger("funky")
 
 
-def init_logger(*, debug=False, verbose=False):
+def init_logger(debug=False, verbose=False):
     """Initializes the main logger.
 
     Args:
@@ -61,7 +61,7 @@ def _add_vdebug_level(logging):
     logging.VDEBUG = VDEBUG_LEVEL_NUM
 
 
-def _getFormatter(*, verbose=False):
+def _getFormatter(verbose=False):
     """Get log formatter.
 
     Args:

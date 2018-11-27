@@ -1,5 +1,8 @@
 """Command definitions."""
 
+from __future__ import division, absolute_import, print_function
+from builtins import bytes, dict, int, range, str, super  # noqa
+
 from abc import ABCMeta, abstractmethod
 import json
 import os
@@ -17,7 +20,7 @@ from funky import utils
 from funky.utils import log
 
 
-class Command(metaclass=ABCMeta):
+class Command():
     """Abstract base command class.
 
     To use a command, the corresponding command class should be used to build a command instance.
@@ -33,10 +36,12 @@ class Command(metaclass=ABCMeta):
     IMPORTANT: The class docstring of a Command subclass is used by argparse to generate output
                for the help command.
     """
+    __metaclass__ = ABCMeta
+
     FUNKY_DB_FILENAME = '.funky'
     GLOBAL_FUNKY_DB_FILENAME = '{}/.funky'.format(os.path.expanduser('~'))
 
-    def __init__(self, args, *, color=False, global_=False, verbose=False):
+    def __init__(self, args, color=False, global_=False, verbose=False):
         try:
             iter(args)
             if isinstance(args, str):
@@ -119,7 +124,7 @@ class Show(Command):
 
         print(final_output)
 
-    def show_search(self, *, prefix):
+    def show_search(self, prefix):
         """Prints all funks that start with @prefix to stdout."""
         log.logger.debug('Running show command for all defined funks.')
         sorted_funks = sorted([funk for funk in self.funk_dict if funk.startswith(prefix)],

@@ -5,7 +5,6 @@ In other words, use `python funky`.
 """
 
 import argparse
-import enum
 import sys
 
 import funky
@@ -42,7 +41,7 @@ def main(argv=None):
         raise
 
 
-def _get_argparser(*, verbose=False):
+def _get_argparser(verbose=False):
     """Get command-line arguments.
 
     Args:
@@ -71,15 +70,15 @@ def _get_argparser(*, verbose=False):
                     'no action command is provided, the default action is to display all of the '
                     'local funks currently in scope. These commands are mutually exclusive.'
     )
-    command_group.add_argument(_CmdFlag.ADD.value, nargs=1, dest='command_args', action=_CmdAction,
+    command_group.add_argument(_CmdFlag.ADD, nargs=1, dest='command_args', action=_CmdAction,
                                metavar='FUNK', help=format_docstring(commands.Add.__doc__))
-    command_group.add_argument(_CmdFlag.REMOVE.value, nargs='?', dest='command_args',
+    command_group.add_argument(_CmdFlag.REMOVE, nargs='?', dest='command_args',
                                action=_CmdAction, metavar='FUNK',
                                help=format_docstring(commands.Remove.__doc__))
-    command_group.add_argument(_CmdFlag.EDIT.value, nargs=1, dest='command_args',
+    command_group.add_argument(_CmdFlag.EDIT, nargs=1, dest='command_args',
                                action=_CmdAction, metavar='FUNK',
                                help=format_docstring(commands.Edit.__doc__))
-    command_group.add_argument(_CmdFlag.RENAME.value, nargs=2, dest='command_args',
+    command_group.add_argument(_CmdFlag.RENAME, nargs=2, dest='command_args',
                                action=_CmdAction, metavar=('OLD', 'NEW'),
                                help=format_docstring(commands.Rename.__doc__))
     command_group.add_argument('command_args', nargs='?', action=_CmdAction, metavar='FUNK',
@@ -95,7 +94,7 @@ class _CmdAction(argparse.Action):
 
     def __call__(self, parser, namespace, values, option_string):
         if self.__class__.flag is None:
-            self.__class__.flag = _CmdFlag(option_string)
+            self.__class__.flag = option_string
             self.__class__.option_string = option_string
         elif option_string is not None:
             raise errors.ArgumentError(
@@ -128,7 +127,7 @@ class _CmdAction(argparse.Action):
         return cmd()
 
 
-class _CmdFlag(enum.Enum):
+class _CmdFlag():
     """Command Flags
 
     The value of each command flag will be used by argparse to generate the option string

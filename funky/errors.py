@@ -1,16 +1,24 @@
 """This module holds all custom exception class definitions."""
 
+from __future__ import division, absolute_import, print_function
+from builtins import bytes, dict, int, range, str, super  # noqa
+
 
 class FunkyError(Exception):
     """Base custom exception class."""
-    def __init__(self, *args, returncode=1, **kwargs):
+    def __init__(self, *args, **kwargs):
+        returncode = kwargs.pop('returncode', 1)
+
         super().__init__(*args, **kwargs)
         self.returncode = returncode
 
 
 class FunkNotDefinedError(FunkyError):
     """Raised when an undefined funk is referenced in a mannor that is not allowed."""
-    def __init__(self, *args, funk=None, global_=False, **kwargs):
+    def __init__(self, *args, **kwargs):
+        funk = kwargs.pop('funk', None)
+        global_ = kwargs.pop('global_', False)
+
         if funk is None:
             if global_:
                 msg = 'No global funks are defined.'
