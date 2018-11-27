@@ -8,7 +8,7 @@ install:
     - pip install codecov
     - ./scripts/install-deps
 script:
-    - tox
+    - ./tests/runtests.py
     - ./tests/scripts/shell/runtests.sh
 os: linux
 addons:
@@ -19,7 +19,10 @@ addons:
       - libdw-dev
       - cmake
 after_success: |
-    codecov &&
+    # Run Python Tests
+    coverage run ./tests/runtests.py &&
+    bash <(curl -s https://codecov.io/bash) -cF python &&
+    # Run Bash Tests
     wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
     tar xzf master.tar.gz &&
     cd kcov-master &&
@@ -32,7 +35,7 @@ after_success: |
     rm -rf kcov-master &&
     mkdir -p coverage &&
     kcov coverage ./tests/scripts/shell/test_funky.sh &&
-    bash <(curl -s https://codecov.io/bash)
+    bash <(curl -s https://codecov.io/bash) -cF bash
 deploy:
   provider: pypi
   distributions: sdist
