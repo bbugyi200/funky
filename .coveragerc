@@ -1,7 +1,6 @@
 [run]
 source =
     funky
-    tests
     scripts
 include =
     scripts/post_install.py

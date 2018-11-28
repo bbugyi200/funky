@@ -35,19 +35,6 @@ def setup_edit_patches():
 
 
 @pytest.fixture
-def fake_global_db(global_filename):
-    """Setup/teardown a global funk database"""
-    _fake_db = _fake_db_factory(global_filename, global_funk_dict)
-    yield from _fake_db()
-
-
-@pytest.fixture
-def global_filename():
-    """Returns a fake global database path so the production global db is not overwritten."""
-    return "/tmp/.globalfunk"
-
-
-@pytest.fixture
 def fake_db(funk_dict):
     """Setup/teardown a local funk database"""
     _fake_db = _fake_db_factory(commands.Command.FUNKY_DB_FILENAME, funk_dict)
@@ -76,14 +63,6 @@ def funk_dict():
         'TT': 'echo CHICKEN $@',
     }
     return funk_dict
-
-
-@pytest.fixture
-def global_funk_dict():
-    g_funk_dict = {
-        'T': 'echo "GLOBAL ALIAS"',
-    }
-    return g_funk_dict
 
 
 @pytest.fixture(params=[
