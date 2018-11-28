@@ -21,10 +21,10 @@ addons:
       - libdw-dev
       - cmake
 after_success: |
-    # ------- Run Python Tests
+    # ------- Generate Python Coverage Report
     coverage run --rcfile=.coveragerc ./tests/runtests.py &&
     bash <(curl -s https://codecov.io/bash) -cF python &&
-    # ------- Run Bash Tests
+    # ------- Generate Bash Coverage Report
     deactivate &&
     wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
     tar xzf master.tar.gz &&
