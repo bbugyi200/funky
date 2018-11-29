@@ -1,9 +1,7 @@
-alabaster==0.7.10
 codecov==2.0.15
-cookiecutter>=1.4.0
 coverage==4.5.1
+future==0.17.1
 Pygments==2.2.0
-pytest-cookies==0.3.0
 pytest-cov==2.5.1
 pytest==3.4.2
 tox==2.9.1
