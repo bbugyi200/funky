@@ -206,15 +206,7 @@ class Edit(Command):
             tf.write(self.funk_dict[funk])
         tf.close()
 
-        if 'EDITOR' in os.environ:
-            editor_cmd_list = shlex.split(os.environ['EDITOR'])
-            log.logger.debug('Editor command set to $EDITOR: {}'.format(editor_cmd_list))
-        else:
-            editor_cmd_list = ['vim']
-            log.logger.debug('Editor command falling back to default: {}'.format(editor_cmd_list))
-
-        if any('vim' in arg for arg in editor_cmd_list) and startinsert:
-            editor_cmd_list.append('+startinsert')
+        editor_cmd_list = self._editor_cmd_list(startinsert)
 
         editor_cmd_list.append(tf.name)
         try:
@@ -231,23 +223,25 @@ class Edit(Command):
             raise errors.BlankDefinition('Funk definition cannot be blank.')
 
         log.logger.debug('New Command String: "%s"', edited_cmd_string)
-        formatted_cmd_string = self._format_cmd_string(edited_cmd_string.strip())
+        formatted_cmd_string = self._apply_shortcuts(edited_cmd_string.strip())
         self.funk_dict[funk] = formatted_cmd_string
 
-    def _format_cmd_string(self, cmd_string):
-        """Formats command string for correct execution and display.
+    def _editor_cmd_list(self, startinsert=False):
+        """Generates and returns editor command list."""
+        if 'EDITOR' in os.environ:
+            editor_cmd_list = shlex.split(os.environ['EDITOR'])
+            log.logger.debug('Editor command set to $EDITOR: {}'.format(editor_cmd_list))
+        else:
+            editor_cmd_list = ['vim']
+            log.logger.debug('Editor command falling back to default: {}'.format(editor_cmd_list))
 
-        It is expected that a single line funk should act the same as a normal shell funk
-        would. Namely, once such a funk is defined, it is expected that the command
-        `<funk> [ARGS]` would send [ARGS] to the command string that was defined for <funk>.
-        Local funks behave more like shell functions tha funks, however, so this behavior
-        is not automatic.
+        if any('vim' in arg for arg in editor_cmd_list) and startinsert:
+            editor_cmd_list.append('+startinsert')
 
-        This method solves this problem by appending $@ to a single-line command string if and
-        only if the command string contains NO shell argument variables. If the user defines
-        <funk> using any argument variables (e.g. $0, $1, ..., $@, $*, etc.), however, the
-        command string is left unaltered.
-        """
+        return editor_cmd_list
+
+    def _apply_shortcuts(self, cmd_string):
+        """Formats command string for correct execution and display."""
         if cmd_string.startswith('./') and ' ' not in cmd_string:
             cmd_string = 'cd {} || return 1'.format(cmd_string.replace('./', '{}/'.format(os.getcwd())))
 
