@@ -7,7 +7,7 @@ check: check-python check-shell
 .PHONY: check-python
 check-python:
 	@printf "\n%s\n" "---------- Running Python Tests ----------"
-	./runtests $(pytest_args)
+	./runtests $(pytest_opts)
 
 .PHONY: check-shell
 check-shell:
