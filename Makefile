@@ -58,7 +58,10 @@ clean-test: ## remove test and coverage artifacts
 .PHONY: test check
 test: check
 check: ## run tests quickly with the default Python
-	py.test
+	@printf "%s\n" "---------- pytest Tests ----------"
+	./tests/runtests $(pytest_args)
+	@printf "\n%s\n" "---------- Shell Integration Tests ----------"
+	./tests/scripts/shell/test_funky.sh
 
 .PHONY: release
 release: dist ## package and upload a release

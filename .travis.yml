@@ -10,8 +10,8 @@ install:
     - pip install -r requirements_dev.txt
     - ./scripts/install-deps
 script:
-    - ./tests/runtests.py
-    - ./tests/scripts/shell/runtests.sh
+    - ./tests/runtests
+    - ./tests/scripts/shell/test_funky.sh
 os: linux
 addons:
   apt:
@@ -22,7 +22,7 @@ addons:
       - cmake
 after_success: |
     # ------- Generate Python Coverage Report
-    coverage run --rcfile=.coveragerc ./tests/runtests.py &&
+    coverage run --rcfile=.coveragerc ./tests/runtests &&
     bash <(curl -s https://codecov.io/bash) -cF python &&
     # ------- Generate Bash Coverage Report
     deactivate &&
@@ -37,7 +37,7 @@ after_success: |
     cd ../.. &&
     rm -rf kcov-master coverage &&
     mkdir -p coverage &&
-    kcov coverage ./tests/scripts/shell/runtests.sh &&
+    kcov coverage ./tests/scripts/shell/test_funky.sh &&
     bash <(curl -s https://codecov.io/bash) -cF bash
 deploy:
   provider: pypi
