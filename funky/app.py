@@ -55,7 +55,8 @@ def _get_argparser(verbose=False):
     parser.add_argument('-v', '--verbose', action='store_true', help="Enable verbose output.")
     parser.add_argument('--version', action='version',
             version='%(prog)s {}'.format(funky.__version__))
-    parser.add_argument('-c', '--color', action='store_true', help="Colorize output.")
+    parser.add_argument('--color', nargs=1, choices=('y', 'n'), default='n',
+                        help="Colorize funk definitions.")
 
     parser.add_argument('-g', '--global', dest='global_', action='store_true',
                         help=("Enable global scope." if verbose else argparse.SUPPRESS))
@@ -122,7 +123,7 @@ class _CmdAction(argparse.Action):
                        _CmdFlag.RENAME: commands.Rename,
                        _CmdFlag.SHOW: commands.Show}[cls.flag]
 
-        cmd = cmd_builder(args.command_args, color=args.color, global_=args.global_,
+        cmd = cmd_builder(args.command_args, color=(args.color == 'y'), global_=args.global_,
                           verbose=args.verbose)
         return cmd()
 

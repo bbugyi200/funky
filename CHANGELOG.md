@@ -6,6 +6,10 @@ releases.
 
 ### Unreleased
 
+Changed:
+
+* The `--color` option now accepts 'y' and 'n' arguments.
+
 ### v3.2.0 (2018-11-27)
 
 Added:

@@ -79,7 +79,7 @@ unalias funky &> /dev/null
 funky() {
     touch "$_xdg_data_dir"/timestamp
 
-    command funky --color "$@"
+    command funky --color=y "$@"
     if [[ .funky -nt "$_xdg_data_dir"/timestamp ]]; then
         _source_locals
     fi
@@ -89,7 +89,7 @@ funky() {
 unalias gfunky &> /dev/null
 gfunky() {
     touch "$_xdg_data_dir"/timestamp
-    command funky --global --color "$@"
+    command funky --global --color=y "$@"
     if [[ ~/.funky -nt "$_xdg_data_dir"/timestamp ]]; then
         _source_globals
         _maybe_source_locals
