@@ -28,10 +28,10 @@ addons:
       - cmake
 
 after_success: |
-    # ------- Generate Python Coverage Report
+    # ---------- Generate Python Coverage Report ----------
     coverage run --rcfile=.coveragerc ./tests/runtests &&
     bash <(curl -s https://codecov.io/bash) -cF python &&
-    # ------- Generate Bash Coverage Report
+    # ---------- Generate Shell Coverage Report ----------
     deactivate &&
     wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
     tar xzf master.tar.gz &&

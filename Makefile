@@ -57,16 +57,16 @@ clean-test: ## remove test and coverage artifacts
 
 .PHONY: test check
 test: check
-check: python-tests bash-tests ## run all tests
+check: python-tests shell-tests ## run all tests
 
 .PHONY: python-tests
 python-tests: ## run python tests
 	@printf "\n%s\n" "---------- Running Python Tests ----------"
 	./tests/runtests $(pytest_args)
 
-.PHONY: bash-tests
-bash-tests: ## run bash tests
-	@printf "\n%s\n" "---------- Running Bash Tests ----------"
+.PHONY: shell-tests
+shell-tests: ## run shell tests
+	@printf "\n%s\n" "---------- Running Shell Tests ----------"
 	./tests/scripts/shell/test_funky.sh
 
 .PHONY: release
