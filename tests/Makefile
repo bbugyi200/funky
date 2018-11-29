@@ -2,14 +2,14 @@ include ../shared.mk
 
 
 .PHONY: check
-check: python-tests shell-tests ## run all tests
+check: check-python check-shell ## run all tests
 
-.PHONY: python-tests
-python-tests: ## run python tests
+.PHONY: check-python
+check-python: ## run python tests
 	@printf "\n%s\n" "---------- Running Python Tests ----------"
 	./runtests $(pytest_args)
 
-.PHONY: shell-tests
-shell-tests: ## run shell tests
+.PHONY: check-shell
+check-shell: ## run shell tests
 	@printf "\n%s\n" "---------- Running Shell Tests ----------"
 	./scripts/shell/test_funky.sh

@@ -30,6 +30,14 @@ clean-test: ## remove test and coverage artifacts
 check: ## run all tests
 	@$(MAKE) --no-print-directory -C tests check
 
+.PHONY: check-python
+check-python: ## run python tests
+	@$(MAKE) --no-print-directory -C tests check-python
+
+.PHONY: check-python
+check-shell: ## run shell tests
+	@$(MAKE) --no-print-directory -C tests check-shell
+
 .PHONY: release
 release: dist ## package and upload a release
 	twine upload dist/*
