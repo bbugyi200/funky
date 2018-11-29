@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""The setup script."""
-
 from setuptools import setup, find_packages
 from setuptools.command.install import install
 from setuptools.command.develop import develop

@@ -14,8 +14,9 @@ from funky import errors
 
 
 ###############################################################################
-#  Add Command                                                                #
+#  Command Tests                                                              #
 ###############################################################################
+# ---------- Add Command ----------
 @mock.patch('funky.commands.tempfile')
 @mock.patch('funky.commands.sp')
 def test_add(sp, tempfile, setup_edit_patches, cleandir, add_cmd, funk_dict):
@@ -41,9 +42,7 @@ def test_add_empty(sp, tempfile, setup_edit_patches, cleandir):
         cmd()
 
 
-###############################################################################
-#  Rename Command                                                             #
-###############################################################################
+# ---------- Rename Command ----------
 def test_rename(cleandir, fake_db, rename_cmd, funk_dict):
     """Test rename command."""
     old_cmd_string = funk_dict[rename_cmd.funk]
@@ -78,9 +77,7 @@ def test_rename_overwrite(getch, y_or_n, cleandir, fake_db, funk_dict):
     assert loaded_funks[NEW] == cmd_string
 
 
-###############################################################################
-#  Show Command                                                               #
-###############################################################################
+# ---------- Show Command ----------
 def test_show(capsys, cleandir, fake_db, show_cmd):
     """Tests show command."""
     show_cmd()
@@ -129,9 +126,7 @@ def test_show_failure(cleandir, show_cmd):
         show_cmd()
 
 
-###############################################################################
-#  Edit Command                                                               #
-###############################################################################
+# ---------- Edit Command ----------
 @mock.patch('funky.commands.tempfile')
 @mock.patch('funky.commands.sp')
 def test_edit(sp, tempfile, setup_edit_patches, cleandir, fake_db, edit_cmd):
@@ -182,9 +177,7 @@ def test_edit_format(sp, tempfile, setup_edit_patches, cleandir, fake_db, funk_d
     assert loaded_funks[some_funk] == '{} "$@"'.format(edited_cmd_string)
 
 
-###############################################################################
-#  Remove Command                                                             #
-###############################################################################
+# ---------- Remove Command ----------
 def test_remove(cleandir, fake_db, remove_cmd):
     """Tests remove command."""
     remove_cmd()
@@ -343,7 +336,7 @@ def args(request):
 
 
 ###############################################################################
-#  Helper Functions                                                           #
+#  Utility Functions                                                          #
 ###############################################################################
 def load_funks():
     """Loads funks from database file"""

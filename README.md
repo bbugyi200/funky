@@ -121,10 +121,10 @@ Or download the [tarball]:
 $ curl  -OL https://github.com/bbugyi200/funky/tarball/master
 ```
 
-Once you have a copy of the source, you can install it with:
+Once you have a copy of the source, you can install funky by running:
 
 ``` shell
-$ python setup.py install
+make install
 ```
 
 #### <a name="AIS">Additional Installation Steps</a>

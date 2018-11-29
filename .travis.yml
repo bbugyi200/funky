@@ -1,18 +1,24 @@
 language: python
+
 python:
-- 3.6
-- 3.5
-- 3.4
+    - 3.6
+    - 3.5
+    - 3.4
+
 sudo: required
+
 install: 
     - pip install -U tox-travis
     - pip install codecov
     - pip install -r requirements_dev.txt
     - ./scripts/install-deps
+
 script:
     - ./tests/runtests
     - ./tests/scripts/shell/test_funky.sh
+
 os: linux
+
 addons:
   apt:
     packages:
@@ -20,6 +26,7 @@ addons:
       - libelf-dev
       - libdw-dev
       - cmake
+
 after_success: |
     # ------- Generate Python Coverage Report
     coverage run --rcfile=.coveragerc ./tests/runtests &&
@@ -39,6 +46,7 @@ after_success: |
     mkdir -p coverage &&
     kcov coverage ./tests/scripts/shell/test_funky.sh &&
     bash <(curl -s https://codecov.io/bash) -cF bash
+
 deploy:
   provider: pypi
   distributions: sdist
