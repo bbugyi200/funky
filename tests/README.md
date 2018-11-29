@@ -7,7 +7,7 @@ Funky uses two different types of tests:
 
 ## Python Tests
 
-The Python tests can be run using the following command: `runtests`
+The Python tests can be run using the following command: `./runtests`
 
 ## Shell Tests
 
