@@ -123,7 +123,7 @@ class _CmdAction(argparse.Action):
                        _CmdFlag.RENAME: commands.Rename,
                        _CmdFlag.SHOW: commands.Show}[cls.flag]
 
-        cmd = cmd_builder(args.command_args, color=(args.color == 'y'), global_=args.global_,
+        cmd = cmd_builder(args.command_args, color=(args.color[0] == 'y'), global_=args.global_,
                           verbose=args.verbose)
         return cmd()
 
