@@ -1,5 +1,6 @@
-include shared.mk
-
+.PHONY: help
+help:  ## Print this message.
+	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST) | sort
 
 .PHONY: clean
 clean: clean-build clean-pyc clean-test ## Remove all build, test, coverage and Python artifacts.
@@ -26,8 +27,18 @@ clean-test: ## Remove test and coverage artifacts.
 	rm -fr htmlcov/
 	rm -fr .pytest_cache
 
-check check-python check-shell:
-	@$(MAKE) --no-print-directory -C tests $@
+.PHONY: check
+check: check-python check-shell ## Run all tests.
+
+.PHONY: check-python
+check-python: ## Run Python tests.
+	@printf "\n%s\n" "---------- Running Python Tests ----------"
+	./tests/runtests $(pytest_opts)
+
+.PHONY: check-shell
+check-shell: ## Run Shell tests.
+	@printf "\n%s\n" "---------- Running Shell Tests ----------"
+	./tests/scripts/shell/test_funky.sh
 
 .PHONY: release
 release: dist ## Package and upload a release.
