@@ -2,20 +2,10 @@
 
 Funky uses two different types of tests:
 
-* Python tests, which test funky's core codebase. These tests use the [pytest] framework.
-* Shell tests, which test the shell integration script. These tests use the [shunit2] framework.
+* Python tests, which test funky's core codebase. These tests use the [pytest] framework and can be run by using the `make python-tests` command.
+* Shell tests, which test the shell integration script. These tests use the [shunit2] framework and can be run by using the `make shell-tests` command.
 
-## Python Tests
-
-The Python tests can be run using the following command: `./runtests`
-
-## Shell Tests
-
-The Shell tests can be run using the following command: `./scripts/shell/test_funky.sh`.
-
-## Running ALL Tests
-
-The easiest way to run all tests is to use the `make check` command.
+You can **run all the tests** using the `make check` command or the `make test` command.
 
 
 [pytest]: https://github.com/pytest-dev/pytest
