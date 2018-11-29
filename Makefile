@@ -26,17 +26,12 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr htmlcov/
 	rm -fr .pytest_cache
 
-.PHONY: check
+.PHONY: check check-python check-shell
 check: ## run all tests
-	@$(MAKE) --no-print-directory -C tests check
-
-.PHONY: check-python
 check-python: ## run python tests
-	@$(MAKE) --no-print-directory -C tests check-python
-
-.PHONY: check-python
 check-shell: ## run shell tests
-	@$(MAKE) --no-print-directory -C tests check-shell
+check check-python check-shell:
+	@$(MAKE) --no-print-directory -C tests $@
 
 .PHONY: release
 release: dist ## package and upload a release
