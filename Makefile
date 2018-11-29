@@ -26,7 +26,6 @@ clean-test: ## Remove test and coverage artifacts.
 	rm -fr htmlcov/
 	rm -fr .pytest_cache
 
-.PHONY: check check-python check-shell
 check check-python check-shell:
 	@$(MAKE) --no-print-directory -C tests $@
 
