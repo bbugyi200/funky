@@ -11,8 +11,8 @@ Funks are manipulated using the `funky` and `gfunky` commands. These commands ha
 
 ### <a name="cli">Command-line Interface</cli>
 ```
-usage: funky [-h] [-d] [-v] [--version] [-c] [-a FUNK] [-r [FUNK]] [-e FUNK]
-             [-R OLD NEW]
+usage: funky [-h] [-d] [-v] [--version] [--color {y,n}] [-a FUNK] [-r [FUNK]]
+             [-e FUNK] [-R OLD NEW]
              [FUNK]
 
 Funky makes ZSH shell functions more powerful and easier to manage.
@@ -22,7 +22,7 @@ optional arguments:
   -d, --debug    Enable debug mode.
   -v, --verbose  Enable verbose output.
   --version      show program's version number and exit
-  -c, --color    Colorize output.
+  --color {y,n}  Colorize funk definitions.
 
 Action Commands:
   All of these options act on the current set of local funks in some way. If
