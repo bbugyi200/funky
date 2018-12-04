@@ -9,6 +9,7 @@ releases.
 Changed:
 
 * The `--color` option now accepts 'y' and 'n' arguments.
+* Append `$@` to absolute directory path when using `cd` funk definition shortcuts.
 
 ### v3.2.0 (2018-11-27)
 

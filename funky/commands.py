@@ -243,7 +243,7 @@ class Edit(Command):
     def _apply_shortcuts(self, cmd_string):
         """Formats command string for correct execution and display."""
         if cmd_string.startswith('./') and ' ' not in cmd_string:
-            cmd_string = 'cd {} || return 1'.format(cmd_string.replace('./', '{}/'.format(os.getcwd())))
+            cmd_string = 'cd {}/"$@" || return 1'.format(cmd_string.replace('./', '{}/'.format(os.getcwd())))
 
         bad_keys = [r'\$', r'\n', 'return', 'done', 'fi']
         if re.search('({})'.format('|'.join(bad_keys)), cmd_string):
