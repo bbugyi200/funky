@@ -68,6 +68,16 @@ A funk definition of the form `./relative/path/to/directory` will be automatical
 cd /absolute/path/to/directory/"$@" || return 1
 ```
 
+#### Simulate Shell Variables
+
+A funk definition of the form `"Some string here..."` will be automatically changed to
+
+``` bash
+echo "Some string here..."
+```
+
+This allows you to use funks to simulate shell variables via [command substitution](https://www.gnu.org/software/bash/manual/html_node/Command-Substitution.html).
+
 #### The "$@" Special Parameter
 
 This project originally used aliases. The decision to migrate to shell functions was made based on

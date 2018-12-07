@@ -6,6 +6,10 @@ releases.
 
 ### Unreleased
 
+Added:
+
+* Funk definition shortcut for simulating shell variables (by quoting the funk definition).
+
 Changed:
 
 * The `--color` option now accepts 'y' and 'n' arguments.

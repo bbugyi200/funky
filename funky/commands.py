@@ -245,6 +245,11 @@ class Edit(Command):
         if cmd_string.startswith('./') and ' ' not in cmd_string:
             cmd_string = 'cd {}/"$@" || return 1'.format(cmd_string.replace('./', '{}/'.format(os.getcwd())))
 
+        double_quoted_conds = [cmd_string.startswith('"'), cmd_string.endswith('"')]
+        single_quoted_conds = [cmd_string.startswith("'"), cmd_string.endswith("'")]
+        if all(double_quoted_conds) or all(single_quoted_conds):
+            cmd_string = 'echo {}'.format(cmd_string)
+
         bad_keys = [r'\$', r'\n', 'return', 'done', 'fi']
         if re.search('({})'.format('|'.join(bad_keys)), cmd_string):
             new_cmd_string = cmd_string
