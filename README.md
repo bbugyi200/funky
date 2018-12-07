@@ -73,7 +73,7 @@ cd /absolute/path/to/directory/"$@" || return 1
 A funk definition of the form `"Some string here..."` will be automatically changed to
 
 ``` bash
-echo "Some string here..."
+echo "Some string here..." "$@"
 ```
 
 This allows you to use funks to simulate shell variables via [command substitution](https://www.gnu.org/software/bash/manual/html_node/Command-Substitution.html).
