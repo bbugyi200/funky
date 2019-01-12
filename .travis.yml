@@ -1,9 +1,11 @@
 language: python
 
 python:
+    - 3.7
     - 3.6
     - 3.5
     - 3.4
+    - 2.7
 
 sudo: required
 
@@ -18,6 +20,7 @@ script:
     - ./tests/scripts/shell/test_funky.sh
 
 os: linux
+dist: xenial
 
 addons:
   apt:
