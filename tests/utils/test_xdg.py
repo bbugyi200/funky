@@ -2,7 +2,7 @@
 
 import getpass
 import os
-import unittest.mock as mock
+import mock
 
 import pytest
 

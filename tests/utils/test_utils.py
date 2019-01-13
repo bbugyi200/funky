@@ -1,6 +1,6 @@
 """Tests miscellaneous utilities."""
 
-import unittest.mock as mock
+import mock
 
 import pytest
 
