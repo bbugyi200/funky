@@ -3,7 +3,7 @@
 import getpass
 import logging
 import os
-import unittest.mock as mock
+import mock
 
 import pytest
 

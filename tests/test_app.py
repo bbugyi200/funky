@@ -2,7 +2,7 @@
 
 import argparse
 import functools
-import unittest.mock as mock
+import mock
 
 import pytest
 
