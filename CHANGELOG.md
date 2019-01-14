@@ -15,6 +15,10 @@ Changed:
 * The `--color` option now accepts 'y' and 'n' arguments.
 * Append `$@` to absolute directory path when using `cd` funk definition shortcuts.
 
+Fixed:
+
+* Lingering Python 2.7.X compatibility issues.
+
 ### v3.2.0 (2018-11-27)
 
 Added:
