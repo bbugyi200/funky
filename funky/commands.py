@@ -8,6 +8,7 @@ import json
 import os
 import re
 import shlex
+from six import string_types
 import subprocess as sp
 import tempfile
 
@@ -44,7 +45,7 @@ class Command():
     def __init__(self, args, color=False, global_=False, verbose=False):
         try:
             iter(args)
-            if isinstance(args, str):
+            if isinstance(args, string_types):
                 raise ValueError
         except (TypeError, ValueError):
             args = [args]
@@ -72,7 +73,7 @@ class Command():
         """Removes the database file."""
         try:
             os.remove(self.ACTIVE_DB_FILENAME)
-        except FileNotFoundError:
+        except (IOError, OSError):
             pass
 
     def commit(self):
@@ -89,7 +90,7 @@ class Command():
         try:
             with open(DB_FILENAME, 'r') as f:
                 return json.load(f)
-        except FileNotFoundError:
+        except (IOError, OSError):
             return {}
 
     @abstractmethod

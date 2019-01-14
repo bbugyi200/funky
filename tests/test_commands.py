@@ -297,7 +297,8 @@ def setup_edit_patches():
 def fake_db(funk_dict):
     """Setup/teardown a local funk database"""
     _fake_db = _fake_db_factory(commands.Command.FUNKY_DB_FILENAME, funk_dict)
-    yield from _fake_db()
+    for item in _fake_db():
+        yield item
 
 
 def _fake_db_factory(DB_FILENAME, funk_dict_builder):
@@ -309,7 +310,7 @@ def _fake_db_factory(DB_FILENAME, funk_dict_builder):
         yield my_funk_dict
         try:
             os.remove(DB_FILENAME)
-        except FileNotFoundError:
+        except OSError:
             pass
     return _fake_db
 
