@@ -8,7 +8,7 @@ releases.
 
 Fixed:
 
-* Module `six` not included in requirements
+* Module `six` not included in requirements.
 
 ### v3.3.0 (2019-01-13)
 
