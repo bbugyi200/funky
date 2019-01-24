@@ -14,7 +14,7 @@ py==1.7.0
 Pygments==2.2.0
 pytest==3.4.2
 pytest-cov==2.5.1
-PyYAML==3.13
+PyYaml>=4.2b1
 requests==2.21.0
 six==1.12.0
 tox==2.9.1
