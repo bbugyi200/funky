@@ -61,7 +61,7 @@ _maybe_source_locals
 chpwd() {
     if [[ -f "$_xdg_data_dir"/localpath ]] && [[ $PWD != "$(cat "$_xdg_data_dir"/localpath)/"* ]]; then
         _maybe_source_globals
-        rm -f "$_xdg_data_dir"/localpath
+        command rm -f "$_xdg_data_dir"/localpath
     fi
 
     if [[ $PWD != "$_home_dir" ]] && [[ -f $PWD/.funky ]]; then

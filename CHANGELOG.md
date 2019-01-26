@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file. This projec
 [Semantic Versioning](https://semver.org/), though minor breaking changes can happen in minor
 releases.
 
+### Unreleased
+
+Fixed:
+
+* Use `command rm` over `rm` so user aliases are skipped.
+
 ### v3.3.1 (2019-01-24)
 
 Fixed:
