@@ -18,7 +18,7 @@ def _copy_sh_ext(install):
     root = install.root if install.root else ''
 
     if 'XDG_DATA_HOME' in os.environ:
-        xdg_data_dir = root + os.environ['XDG_DATA_HOME']
+        xdg_data_dir = root + os.environ['XDG_DATA_HOME'] + "/funky"
     else:
         home = 'Users' if sys.platform == 'darwin' else 'home'
         user = getpass.getuser()
