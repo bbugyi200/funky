@@ -62,7 +62,7 @@ Normally when defining a funk, the provided raw definition (the final contents o
 
 #### Special `cd` Funks
 
-A funk definition of the form `./relative/path/to/directory` will be automatically changed to
+A funk definition of the form `@./relative/path/to/directory` will be automatically changed to
 
 ``` bash
 cd /absolute/path/to/directory/"$@" || return 1

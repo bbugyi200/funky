@@ -12,9 +12,9 @@ from six import string_types
 import subprocess as sp
 import tempfile
 
-from pygments import highlight
-from pygments.lexers import BashLexer
-from pygments.formatters import TerminalFormatter
+from pygments import highlight  # type: ignore
+from pygments.lexers import BashLexer  # type: ignore
+from pygments.formatters import TerminalFormatter  # type: ignore
 
 from funky import errors
 from funky import utils
@@ -243,8 +243,8 @@ class Edit(Command):
 
     def _apply_shortcuts(self, cmd_string):
         """Formats command string for correct execution and display."""
-        if cmd_string.startswith('./') and ' ' not in cmd_string:
-            cmd_string = 'cd {}/"$@" || return 1'.format(cmd_string.replace('./', '{}/'.format(os.getcwd())))
+        if cmd_string.startswith('@./'):
+            cmd_string = 'cd {}/"$@" || return 1'.format(cmd_string.replace('@./', '{}/'.format(os.getcwd())))
 
         double_quoted_conds = [cmd_string.startswith('"'), cmd_string.endswith('"')]
         single_quoted_conds = [cmd_string.startswith("'"), cmd_string.endswith("'")]

@@ -8,6 +8,7 @@ releases.
 
 Fixed:
 
+* Old shortcut for `cd` commands prevented funk definitions for running executables (e.g. `./prog`).
 * Use `command rm` over `rm` so user aliases are skipped.
 
 ### v3.3.1 (2019-01-24)
