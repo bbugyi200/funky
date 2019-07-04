@@ -120,7 +120,24 @@ def test_show_all(capsys, cleandir, show_expected, fake_db):
     assert captured.out == expected
 
 
-def test_show_failure(cleandir, show_cmd):
+def test_show_failure__NOT_DEFINED(cleandir, fake_db):
+    """Tests show command fails when the requested funk is not defined."""
+    with pytest.raises(errors.FunkNotDefinedError):
+        show_cmd = commands.Show("bad_funk", False)
+        show_cmd()
+
+
+def test_show_failure__NONE_ARE_DEFINED(cleandir, fake_db):
+    """Tests show command fails when the given funk pattern matches no funks.
+
+    A funk pattern is (at the time of this writing) any string ending in '..'.
+    """
+    with pytest.raises(errors.FunkNotDefinedError):
+        show_cmd = commands.Show("bad_funk_pattern..", False)
+        show_cmd()
+
+
+def test_show_failure__NO_DB(cleandir, show_cmd):
     """Tests show command fails properly when no local funk database exists."""
     with pytest.raises(errors.FunkNotDefinedError):
         show_cmd()
@@ -177,6 +194,15 @@ def test_edit_format(sp, tempfile, setup_edit_patches, cleandir, fake_db, funk_d
     assert loaded_funks[some_funk] == '{} "$@"'.format(edited_cmd_string)
 
 
+@mock.patch('funky.commands.tempfile')
+@mock.patch('funky.commands.sp')
+def test_edit_funk_not_defined(sp, tempfile, setup_edit_patches, cleandir, fake_db):
+    """Tests that the edit command fails when the funk is not defined."""
+    with pytest.raises(errors.FunkNotDefinedError):
+        edit_cmd = commands.Edit(["bad_funk"])
+        edit_cmd()
+
+
 # ---------- Remove Command ----------
 def test_remove(cleandir, fake_db, remove_cmd):
     """Tests remove command."""
@@ -216,6 +242,13 @@ def test_remove_all(getch, y_or_n, cleandir, fake_db):
         expected = isfile
 
     assert expected
+
+
+def test_remove_funk_not_exist(cleandir, fake_db):
+    """Tests remove command fails when funk doesn't exist."""
+    with pytest.raises(errors.FunkNotDefinedError):
+        remove_cmd = commands.Remove(["bad_funk"])
+        remove_cmd()
 
 
 ###############################################################################
