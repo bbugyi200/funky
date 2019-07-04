@@ -11,8 +11,8 @@ sudo: required
 
 install: 
     - pip install -U tox-travis
-    - pip install codecov
-    - pip install -r requirements_dev.txt
+    - pipenv lock -r > requirements.txt
+    - pip install -r requirements.txt
     - ./scripts/install-deps
 
 script:

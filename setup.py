@@ -32,7 +32,7 @@ with open('README.md') as readme_file:
 setup(
     author="Bryan M Bugyi",
     author_email='bryanbugyi34@gmail.com',
-    install_requires=['pygments'],
+    install_requires=['future', 'pygments', 'six'],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
