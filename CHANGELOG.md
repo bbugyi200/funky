@@ -6,6 +6,10 @@ releases.
 
 ### Unreleased
 
+Removed:
+
+* Support for Python 2.7.X, 3.4, and 3.5.
+
 Fixed:
 
 * Old shortcut for `cd` commands prevented funk definitions for running executables (e.g. `./prog`).
