@@ -9,6 +9,7 @@ sudo: required
 install: 
     - pip install -U tox-travis
     - pipenv lock -r > requirements.txt
+    - pipenv lock --dev -r >> requirements.txt
     - pip install -r requirements.txt
     - ./scripts/install-deps
 
