@@ -1,5 +1,5 @@
 #########################################
-#  funky Shell Integration Script  #
+#  funky Shell Integration Script       #
 #########################################
 
 ##### WHAT DOES THIS SCRIPT DO?
@@ -17,13 +17,13 @@
 ##### Create temporary funky directory
 # ensure running as root
 if [ "$EUID" -eq 0 ]; then
-    _home_dir=/root
+    _home_dir=/root  # LCOV_EXCL_LINE
 else
     _home_dir="$HOME"
 fi
 
 if [[ -n "$XDG_DATA_HOME" ]]; then
-    _xdg_data_dir="$XDG_DATA_HOME"/funky
+    _xdg_data_dir="$XDG_DATA_HOME"/funky  # LCOV_EXCL_LINE
 else
     _xdg_data_dir="$_home_dir"/.local/share/funky
 fi
@@ -38,13 +38,13 @@ _source_globals() { source <(command funky --verbose --global); }
 _source_locals() { source <(command funky --verbose); }
 
 _maybe_source_locals() {
-    if [[ -f $PWD/.funky ]]; then
+    if [[ -f "$PWD"/.funky ]]; then
         _source_locals
     fi
 }
 
 _maybe_source_globals() {
-    if [[ -f ~/.funky ]]; then
+    if [[ -f "${_home_dir}"/.funky ]]; then
         _source_globals
     fi
 }
@@ -59,12 +59,12 @@ _maybe_source_locals
 # - Lazily loads global funks and local funks while attempting to maintain parent's local
 #   funks.
 chpwd() {
-    if [[ -f "$_xdg_data_dir"/localpath ]] && [[ $PWD != "$(cat "$_xdg_data_dir"/localpath)/"* ]]; then
+    if [[ -f "$_xdg_data_dir"/localpath ]] && [[ "$PWD" != "$(cat "$_xdg_data_dir"/localpath)/"* ]]; then
         _maybe_source_globals
         command rm -f "$_xdg_data_dir"/localpath
     fi
 
-    if [[ $PWD != "$_home_dir" ]] && [[ -f $PWD/.funky ]]; then
+    if [[ "$PWD" != "$_home_dir" ]] && [[ -f "$PWD"/.funky ]]; then
         _source_locals
         if [[ ! -f $_xdg_data_dir/localpath ]]; then
             echo "$PWD" > "$_xdg_data_dir"/localpath
@@ -76,6 +76,8 @@ PROMPT_COMMAND=chpwd
 
 ##### Wrapper used to interact with local funks
 unalias funky &> /dev/null
+
+# LCOV_EXCL_START
 funky() {
     touch "$_xdg_data_dir"/timestamp
 
@@ -84,9 +86,12 @@ funky() {
         _source_locals
     fi
 }
+# LCOV_EXCL_STOP
 
 ##### Wrapper used to interact with global funks
 unalias gfunky &> /dev/null
+
+# LCOV_EXCL_START
 gfunky() {
     touch "$_xdg_data_dir"/timestamp
     command funky --global --color=y "$@"
@@ -95,3 +100,4 @@ gfunky() {
         _maybe_source_locals
     fi
 }
+# LCOV_EXCL_STOP
