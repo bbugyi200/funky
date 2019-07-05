@@ -226,7 +226,7 @@ class Edit(Command):
 
     def _editor_cmd_list(self, startinsert=False):
         """Generates and returns editor command list."""
-        if 'EDITOR' in os.environ:
+        if 'EDITOR' in os.environ:  # pragma: no cover
             editor_cmd_list = shlex.split(os.environ['EDITOR'])
             log.logger.debug('Editor command set to $EDITOR: {}'.format(editor_cmd_list))
         else:  # pragma: no cover
