@@ -9,8 +9,10 @@ sudo: required
 install: 
     - pip install -U tox-travis
     - pipenv lock -r > requirements.txt
-    - pipenv lock --dev -r >> requirements.txt
     - pip install -r requirements.txt
+    - pipenv lock --dev -r >> requirements_dev.txt
+    - pip install -r requirements_dev.txt
+    - python setup.py install
     - ./scripts/install-deps
 
 script:
@@ -34,6 +36,10 @@ after_success: |
     bash <(curl -s https://codecov.io/bash) -cF python &&
     # ---------- Generate Shell Coverage Report ----------
     deactivate &&
+    sudo apt-get install python3-setuptools &&
+    sudo apt install python3-pip &&
+    sudo pip3 install -r requirements.txt &&
+    sudo python3 setup.py install &&
     wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
     tar xzf master.tar.gz &&
     cd kcov-master &&

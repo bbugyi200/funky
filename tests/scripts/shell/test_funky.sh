@@ -4,27 +4,15 @@
 
 OLD_HOME="${HOME}"; export HOME=/tmp/home
 
-if ! command -v funky; then
-    need_funky=true
-fi
-
 source ./scripts/shell/funky.sh 2> /dev/null
 
 oneTimeSetUp() { 
-    if [[ "${need_funky}" = true ]]; then
-        python setup.py install
-    fi
-
     mkdir -p /tmp/A/B
     echo '{"my_funk": "echo my_funk_def", "my_override_funk": "echo is_local"}' > /tmp/A/.funky
     echo '{"my_global_funk": "echo my_global_funk_def", "my_override_funk": "echo is_global"}' > "${HOME}"/.funky
 }
 
 oneTimeTearDown() {
-    if [[ "${need_funky}" = true ]]; then
-        pip uninstall -y pyfunky
-    fi
-
     export HOME="${OLD_HOME}"
 
     rm -rf /tmp/A
