@@ -62,6 +62,6 @@ setup(
     test_suite='tests',
     tests_require=['pytest'],
     url='https://github.com/bbugyi200/funky',
-    version='3.3.1',
+    version='3.4.0',
     zip_safe=False,
 )
