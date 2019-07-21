@@ -13,9 +13,18 @@ from funky import commands
 from funky import errors
 
 
-pytestmark = pytest.mark.usefixtures('cleandir')
+@pytest.fixture(autouse=True)
+def cleandir():
+    """Run tests in an empty directory."""
+    newpath = tempfile.mkdtemp()
+    os.chdir(newpath)
+    yield
+    shutil.rmtree(newpath)
 
 
+#####################################################################
+#  Tests                                                            #
+#####################################################################
 class Test_Add_and_Edit:
     """Tests for the Add and Edit commands."""
     @pytest.fixture(autouse=True)
@@ -298,15 +307,6 @@ class TestRemove:
 ###############################################################################
 #  Pytest Fixtures                                                            #
 ###############################################################################
-@pytest.fixture
-def cleandir():
-    """Run tests in an empty directory."""
-    newpath = tempfile.mkdtemp()
-    os.chdir(newpath)
-    yield
-    shutil.rmtree(newpath)
-
-
 @pytest.fixture
 def fake_db(funk_dict):
     """Setup/teardown a local funk database"""
