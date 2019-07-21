@@ -6,10 +6,26 @@
 
 ![demo]
 
-## Usage
-Funks are manipulated using the `funky` and `gfunky` commands. These commands have the same user interface, which is specified in the [Command-line Interface](#cli) section. The difference between the two commands is treated in the [Local vs Global](#lvg) section.
+## Table of Contents
 
-### <a name="cli">Command-line Interface</cli>
+* [Usage](#usage)
+   * [Command-line Interface](#command-line-interface)
+   * [Local vs Global](#local-vs-global)
+   * [Funk Definition Shortcuts](#funk-definition-shortcuts)
+      * [Special cd Funks](#special-cd-funks)
+      * [Simulate Shell Variables](#simulate-shell-variables)
+      * [The "$@" Special Parameter](#the--special-parameter)
+* [Installation](#installation)
+   * [Using pip to Install](#using-pip-to-install)
+   * [Building from Source](#building-from-source)
+   * [Additional Installation Steps](#additional-installation-steps)
+* [Similar Projects](#similar-projects)
+* [Contributions](#contributions)
+
+## Usage
+Funks are manipulated using the `funky` and `gfunky` commands. These commands have the same user interface, which is specified in the [Command-line Interface](#command-line-interface) section. The difference between the two commands is treated in the [Local vs Global](#local-vs-global) section.
+
+### Command-line Interface
 ```
 usage: funky [-h] [-d] [-v] [--version] [--color {y,n}] [-a FUNK] [-r [FUNK]]
              [-e FUNK] [-R OLD NEW]
@@ -42,12 +58,12 @@ Action Commands:
                  the trailing '..') will be displayed.
 ```
 
-### <a name="lvg">Local vs Global</a>
+### Local vs Global
 
 **Local** funks are stored using a hidden database file that is located in the same directory
 where the funk was created. These can be manipulated using the action command options described
 above. Once created, a local funk can be used just like any other command or normal funk---as
-long as you have activated the provided shell extension (see [Additional Install Steps](#AIS)) and are
+long as you have activated the provided shell extension (see [Additional Install Steps](#additional-installation-steps)) and are
 inside of the directory where the local funk was originally defined.
 
 **Global** funks, on the other hand, are stored in your home directory (``/home/<user>``) and can
@@ -100,7 +116,7 @@ See the official [Bash docs] for more information on Bash's special parameters.
 
 ## Installation
 
-#### Using `pip` to Install
+### Using `pip` to Install
 
 To install funky, run this command in your terminal:
 
@@ -117,7 +133,7 @@ you through the process.
 [Python installation guide]: http://docs.python-guide.org/en/latest/starting/installation/
 
 
-#### Building from Source
+### Building from Source
 
 You can either clone the public repository:
 
@@ -137,7 +153,7 @@ Once you have a copy of the source, you can install funky by running:
 make install
 ```
 
-#### <a name="AIS">Additional Installation Steps</a>
+### Additional Installation Steps
 
 For the best experience, funky needs to be integrated into your shell environment using the
 provided shell script.
