@@ -21,7 +21,7 @@ def getch(prompt=None):
     Returns:
         The single character that was read.
     """
-    if prompt:  # pragma: no cover
+    if prompt:
         sys.stdout.write(prompt)
 
     sys.stdout.flush()

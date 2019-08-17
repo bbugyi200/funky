@@ -20,7 +20,7 @@ class FunkNotDefinedError(FunkyError):
         global_ = kwargs.pop('global_', False)
 
         if funk is None:
-            if global_:  # pragma: no cover
+            if global_:
                 msg = 'No global funks are defined.'
             else:
                 msg = 'No local funks are defined in the current directory.'

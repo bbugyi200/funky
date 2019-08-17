@@ -17,13 +17,13 @@
 ##### Create temporary funky directory
 # ensure running as root
 if [ "$EUID" -eq 0 ]; then
-    _home_dir=/root  # LCOV_EXCL_LINE
+    _home_dir=/root
 else
     _home_dir="$HOME"
 fi
 
 if [[ -n "$XDG_DATA_HOME" ]]; then
-    _xdg_data_dir="$XDG_DATA_HOME"/funky  # LCOV_EXCL_LINE
+    _xdg_data_dir="$XDG_DATA_HOME"/funky
 else
     _xdg_data_dir="$_home_dir"/.local/share/funky
 fi
@@ -77,7 +77,6 @@ PROMPT_COMMAND=chpwd
 ##### Wrapper used to interact with local funks
 unalias funky &> /dev/null
 
-# LCOV_EXCL_START
 funky() {
     touch "$_xdg_data_dir"/timestamp
 
@@ -86,12 +85,10 @@ funky() {
         _source_locals
     fi
 }
-# LCOV_EXCL_STOP
 
 ##### Wrapper used to interact with global funks
 unalias gfunky &> /dev/null
 
-# LCOV_EXCL_START
 gfunky() {
     touch "$_xdg_data_dir"/timestamp
     command funky --global --color=y "$@"
@@ -100,4 +97,3 @@ gfunky() {
         _maybe_source_locals
     fi
 }
-# LCOV_EXCL_STOP

@@ -7,7 +7,7 @@ import shutil
 import sys
 
 
-def run(install):  # pragma: no cover
+def run(install):
     """Runs all post install hooks."""
     _copy_sh_ext(install)
 
@@ -23,7 +23,7 @@ def _copy_sh_ext(install):
         home = 'Users' if sys.platform == 'darwin' else 'home'
         user = getpass.getuser()
 
-        if user == 'root':  # pragma: no cover
+        if user == 'root':
             xdg_data_dir = root + "/usr/share/funky"
         else:
             xdg_data_dir = root + "/{}/{}/.local/share/funky".format(home, user)
@@ -36,7 +36,7 @@ def _copy_sh_ext(install):
     shutil.copyfile(src, dest)
 
 
-def _create_dir(directory):  # pragma: no cover
+def _create_dir(directory):
     """Create directory."""
     try:
         os.makedirs(directory)

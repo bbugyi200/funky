@@ -1,5 +1,3 @@
-"""Tests for the 'add' command."""
-
 import collections
 import json
 import os
@@ -237,7 +235,7 @@ class TestShow:
     def show_cmd(self, args, show_expected):
         """Builds and returns show command."""
         cmd = commands.Show(args.args, color=args.color)
-        cmd.expected = show_expected[args.args[0]]
+        setattr(cmd, 'expected', show_expected[args.args[0]])
         return cmd
 
     @pytest.fixture

@@ -31,7 +31,7 @@ def getdir(userdir):
     return getters[userdir]()
 
 
-def _getter_factory(envvar, dirfmt):  # pragma: no cover
+def _getter_factory(envvar, dirfmt):
     """ Returns XDG getter function that serves to fetch some XDG standard directory.
 
     Args:
@@ -56,7 +56,7 @@ def _getter_factory(envvar, dirfmt):  # pragma: no cover
     return _getter
 
 
-def _create_dir(directory):  # pragma: no cover
+def _create_dir(directory):
     """ Create directory if it does not already exist.
 
     Args:

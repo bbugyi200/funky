@@ -23,7 +23,7 @@ def init_logger(debug=False, verbose=False):
     root = logging.getLogger()
 
     if debug:
-        if verbose:  # pragma: no cover
+        if verbose:
             level = logging.VDEBUG
         else:
             level = logging.DEBUG
@@ -48,7 +48,7 @@ def init_logger(debug=False, verbose=False):
         root.debug('Debug mode enabled.')
 
 
-def _add_vdebug_level(logging):  # pragma: no cover
+def _add_vdebug_level(logging):
     """Adds custom logging level for verbose debug logs."""
     VDEBUG_LEVEL_NUM = 5
     logging.addLevelName(VDEBUG_LEVEL_NUM, "VDEBUG")

@@ -51,7 +51,7 @@ class Command():
             args = [args]
 
         if global_:
-            self.ACTIVE_DB_FILENAME = self.GLOBAL_FUNKY_DB_FILENAME  # pragma: no cover
+            self.ACTIVE_DB_FILENAME = self.GLOBAL_FUNKY_DB_FILENAME
         else:
             self.ACTIVE_DB_FILENAME = self.FUNKY_DB_FILENAME
 
@@ -119,7 +119,7 @@ class Show(Command):
             show_output = ''.join([unalias_out, show_output])
 
         if self.color:
-            final_output = highlight(show_output, BashLexer(), TerminalFormatter()).strip()  # pragma: no cover
+            final_output = highlight(show_output, BashLexer(), TerminalFormatter()).strip()
         else:
             final_output = show_output
 
@@ -209,7 +209,7 @@ class Edit(Command):
         editor_cmd_list.append(tf.name)
         try:
             sp.check_call(editor_cmd_list)
-        except sp.CalledProcessError:  # pragma: no cover
+        except sp.CalledProcessError:
             raise errors.FunkyError('Failed to open editor using: {}'.format(editor_cmd_list))
 
         tf = open(tf.name, 'r')
@@ -226,26 +226,26 @@ class Edit(Command):
 
     def _editor_cmd_list(self, startinsert=False):
         """Generates and returns editor command list."""
-        if 'EDITOR' in os.environ:  # pragma: no cover
+        if 'EDITOR' in os.environ:
             editor_cmd_list = shlex.split(os.environ['EDITOR'])
             log.logger.debug('Editor command set to $EDITOR: {}'.format(editor_cmd_list))
-        else:  # pragma: no cover
+        else:
             editor_cmd_list = ['vim']
             log.logger.debug('Editor command falling back to default: {}'.format(editor_cmd_list))
 
-        if any('vim' in arg for arg in editor_cmd_list) and startinsert:  # pragma: no cover
+        if any('vim' in arg for arg in editor_cmd_list) and startinsert:
             editor_cmd_list.append('+startinsert')
 
         return editor_cmd_list
 
     def _apply_shortcuts(self, cmd_string):
         """Formats command string for correct execution and display."""
-        if cmd_string.startswith('@./'):  # pragma: no cover
+        if cmd_string.startswith('@./'):
             cmd_string = 'cd {}/"$@" || return 1'.format(cmd_string.replace('@./', '{}/'.format(os.getcwd())))
 
         double_quoted_conds = [cmd_string.startswith('"'), cmd_string.endswith('"')]
         single_quoted_conds = [cmd_string.startswith("'"), cmd_string.endswith("'")]
-        if all(double_quoted_conds) or all(single_quoted_conds):  # pragma: no cover
+        if all(double_quoted_conds) or all(single_quoted_conds):
             cmd_string = 'echo {}'.format(cmd_string)
 
         bad_keys = [r'\$', r'\n', 'return', 'done', 'fi']
@@ -281,7 +281,7 @@ class Remove(Edit):
         if self.funk and self.funk not in self.funk_dict:
             raise errors.FunkNotDefinedError(funk=self.funk)
 
-        if not self.funk_dict:  # pragma: no cover
+        if not self.funk_dict:
             raise errors.FunkNotDefinedError(global_=self.global_)
 
         if self.funk is None:
@@ -306,7 +306,7 @@ class Add(Edit):
     def __call__(self):
         Command.__call__(self)
         already_exists = False
-        if self.funk in self.funk_dict:  # pragma: no cover
+        if self.funk in self.funk_dict:
             already_exists = True
             msg_fmt = 'Funk "{}" is already defined. Running edit command.'
             log.logger.info(msg_fmt.format(self.funk))
