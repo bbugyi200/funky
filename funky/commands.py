@@ -21,7 +21,7 @@ from funky import utils
 from funky.utils import log
 
 
-class Command():
+class Command:
     """Abstract base command class.
 
     To use a command, the corresponding command class should be used to build a command instance.
@@ -37,10 +37,11 @@ class Command():
     IMPORTANT: The class docstring of a Command subclass is used by argparse to generate output
                for the help command.
     """
+
     __metaclass__ = ABCMeta
 
-    FUNKY_DB_FILENAME = '.funky'
-    GLOBAL_FUNKY_DB_FILENAME = '{}/.funky'.format(os.path.expanduser('~'))
+    FUNKY_DB_FILENAME = ".funky"
+    GLOBAL_FUNKY_DB_FILENAME = "{}/.funky".format(os.path.expanduser("~"))
 
     def __init__(self, args, color=False, global_=False, verbose=False):
         try:
@@ -62,12 +63,12 @@ class Command():
         self.global_ = global_
         self.funk_dict = self.load(self.ACTIVE_DB_FILENAME)
 
-        log.logger.vdebug('Existing Funks: {}'.format(self.funk_dict))
+        log.logger.vdebug("Existing Funks: {}".format(self.funk_dict))
 
     def abort(self):
         """Print abort message."""
         print()
-        log.logger.info('OK. Aborting...')
+        log.logger.info("OK. Aborting...")
 
     def purge_db(self):
         """Removes the database file."""
@@ -79,23 +80,27 @@ class Command():
     def commit(self):
         """Saves funk changes to database."""
         if self.funk_dict:
-            log.logger.debug('Committing changes to database: {}'.format(self.ACTIVE_DB_FILENAME))
-            with open(self.ACTIVE_DB_FILENAME, 'w') as f:
+            log.logger.debug(
+                "Committing changes to database: {}".format(
+                    self.ACTIVE_DB_FILENAME
+                )
+            )
+            with open(self.ACTIVE_DB_FILENAME, "w") as f:
                 json.dump(self.funk_dict, f)
         else:
-            log.logger.debug('Removing {}.'.format(self.ACTIVE_DB_FILENAME))
+            log.logger.debug("Removing {}.".format(self.ACTIVE_DB_FILENAME))
             self.purge_db()
 
     def load(self, DB_FILENAME):
         try:
-            with open(DB_FILENAME, 'r') as f:
+            with open(DB_FILENAME, "r") as f:
                 return json.load(f)
         except (IOError, OSError):
             return {}
 
     @abstractmethod
     def __call__(self):
-        log.logger.debug('Running {} command.'.format(self.__class__.__name__))
+        log.logger.debug("Running {} command.".format(self.__class__.__name__))
 
 
 class Show(Command):
@@ -105,21 +110,26 @@ class Show(Command):
     ends in two periods ('..'), it is treated as a prefix instead of an exact match: all funks
     that start with FUNK (not including the trailing '..') will be displayed.
     """
+
     def show(self, funk):
         """Print funk and funk command definition to stdout."""
         cmd_string = self.funk_dict[funk]
-        if '\n' in cmd_string:
-            show_output = '{0}() {{\n\t{1}\n}}'.format(funk, cmd_string.replace('\n', '\n\t'))
+        if "\n" in cmd_string:
+            show_output = "{0}() {{\n\t{1}\n}}".format(
+                funk, cmd_string.replace("\n", "\n\t")
+            )
         else:
-            show_output = '{0}() {{ {1}; }}'.format(funk, cmd_string)
+            show_output = "{0}() {{ {1}; }}".format(funk, cmd_string)
 
         if self.verbose:
-            unalias_out = 'unalias {} &> /dev/null\n'.format(funk)
+            unalias_out = "unalias {} &> /dev/null\n".format(funk)
 
-            show_output = ''.join([unalias_out, show_output])
+            show_output = "".join([unalias_out, show_output])
 
         if self.color:
-            final_output = highlight(show_output, BashLexer(), TerminalFormatter()).strip()
+            final_output = highlight(
+                show_output, BashLexer(), TerminalFormatter()
+            ).strip()
         else:
             final_output = show_output
 
@@ -127,9 +137,11 @@ class Show(Command):
 
     def show_search(self, prefix):
         """Prints all funks that start with @prefix to stdout."""
-        log.logger.debug('Running show command for all defined funks.')
-        sorted_funks = sorted([funk for funk in self.funk_dict if funk.startswith(prefix)],
-                              key=lambda x: x.lower())
+        log.logger.debug("Running show command for all defined funks.")
+        sorted_funks = sorted(
+            [funk for funk in self.funk_dict if funk.startswith(prefix)],
+            key=lambda x: x.lower(),
+        )
 
         if not sorted_funks:
             raise errors.FunkNotDefinedError(funk=self.funk)
@@ -146,8 +158,8 @@ class Show(Command):
             raise errors.FunkNotDefinedError(global_=self.global_)
 
         if self.funk is None:
-            self.show_search(prefix='')
-        elif self.funk[-2:] == '..':
+            self.show_search(prefix="")
+        elif self.funk[-2:] == "..":
             self.show_search(prefix=self.funk[:-2])
         elif self.funk not in self.funk_dict:
             raise errors.FunkNotDefinedError(funk=self.funk)
@@ -157,6 +169,7 @@ class Show(Command):
 
 class Rename(Command):
     """Rename an existing funk. OLD funk is renamed to NEW."""
+
     def __call__(self):
         super().__call__()
         if self.funk not in self.funk_dict:
@@ -164,8 +177,10 @@ class Rename(Command):
 
         new_funk = self.args[0]
         if new_funk in self.funk_dict:
-            y_or_n = utils.getch('"{}" is already in use. Overwrite? (y/n): '.format(new_funk))
-            if y_or_n == 'y':
+            y_or_n = utils.getch(
+                '"{}" is already in use. Overwrite? (y/n): '.format(new_funk)
+            )
+            if y_or_n == "y":
                 print()
             else:
                 return self.abort()
@@ -180,6 +195,7 @@ class Rename(Command):
 
 class Edit(Command):
     """Edit an existing funk."""
+
     def remove_funk(self):
         """Removes the funk defined at instance creation time."""
         self.funk_dict.pop(self.funk)
@@ -195,11 +211,13 @@ class Edit(Command):
         Returns (str):
             Contents of temp file after $EDITOR closes.
         """
-        tf = tempfile.NamedTemporaryFile(prefix='{}.'.format(self.funk),
-                                         suffix='.sh',
-                                         dir='/var/tmp',
-                                         mode='w',
-                                         delete=False)
+        tf = tempfile.NamedTemporaryFile(
+            prefix="{}.".format(self.funk),
+            suffix=".sh",
+            dir="/var/tmp",
+            mode="w",
+            delete=False,
+        )
         if self.funk in self.funk_dict:
             tf.write(self.funk_dict[self.funk])
         tf.close()
@@ -210,15 +228,17 @@ class Edit(Command):
         try:
             sp.check_call(editor_cmd_list)
         except sp.CalledProcessError:
-            raise errors.FunkyError('Failed to open editor using: {}'.format(editor_cmd_list))
+            raise errors.FunkyError(
+                "Failed to open editor using: {}".format(editor_cmd_list)
+            )
 
-        tf = open(tf.name, 'r')
+        tf = open(tf.name, "r")
         edited_cmd_string = tf.read()
         tf.close()
         os.unlink(tf.name)
 
-        if edited_cmd_string.strip() == '':
-            raise errors.BlankDefinition('Funk definition cannot be blank.')
+        if edited_cmd_string.strip() == "":
+            raise errors.BlankDefinition("Funk definition cannot be blank.")
 
         log.logger.debug('New Command String: "%s"', edited_cmd_string)
         formatted_cmd_string = self._apply_shortcuts(edited_cmd_string.strip())
@@ -226,30 +246,44 @@ class Edit(Command):
 
     def _editor_cmd_list(self, startinsert=False):
         """Generates and returns editor command list."""
-        if 'EDITOR' in os.environ:
-            editor_cmd_list = shlex.split(os.environ['EDITOR'])
-            log.logger.debug('Editor command set to $EDITOR: {}'.format(editor_cmd_list))
+        if "EDITOR" in os.environ:
+            editor_cmd_list = shlex.split(os.environ["EDITOR"])
+            log.logger.debug(
+                "Editor command set to $EDITOR: {}".format(editor_cmd_list)
+            )
         else:
-            editor_cmd_list = ['vim']
-            log.logger.debug('Editor command falling back to default: {}'.format(editor_cmd_list))
+            editor_cmd_list = ["vim"]
+            log.logger.debug(
+                "Editor command falling back to default: {}".format(
+                    editor_cmd_list
+                )
+            )
 
-        if any('vim' in arg for arg in editor_cmd_list) and startinsert:
-            editor_cmd_list.append('+startinsert')
+        if any("vim" in arg for arg in editor_cmd_list) and startinsert:
+            editor_cmd_list.append("+startinsert")
 
         return editor_cmd_list
 
     def _apply_shortcuts(self, cmd_string):
         """Formats command string for correct execution and display."""
-        if cmd_string.startswith('@./'):
-            cmd_string = 'cd {}/"$@" || return 1'.format(cmd_string.replace('@./', '{}/'.format(os.getcwd())))
+        if cmd_string.startswith("@./"):
+            cmd_string = 'cd {}/"$@" || return 1'.format(
+                cmd_string.replace("@./", "{}/".format(os.getcwd()))
+            )
 
-        double_quoted_conds = [cmd_string.startswith('"'), cmd_string.endswith('"')]
-        single_quoted_conds = [cmd_string.startswith("'"), cmd_string.endswith("'")]
+        double_quoted_conds = [
+            cmd_string.startswith('"'),
+            cmd_string.endswith('"'),
+        ]
+        single_quoted_conds = [
+            cmd_string.startswith("'"),
+            cmd_string.endswith("'"),
+        ]
         if all(double_quoted_conds) or all(single_quoted_conds):
-            cmd_string = 'echo {}'.format(cmd_string)
+            cmd_string = "echo {}".format(cmd_string)
 
-        bad_keys = [r'\$', r'\n', 'return', 'done', 'fi']
-        if re.search('({})'.format('|'.join(bad_keys)), cmd_string):
+        bad_keys = [r"\$", r"\n", "return", "done", "fi"]
+        if re.search("({})".format("|".join(bad_keys)), cmd_string):
             new_cmd_string = cmd_string
         else:
             new_cmd_string = '{} "$@"'.format(cmd_string)
@@ -276,6 +310,7 @@ class Remove(Edit):
     Remove an existing funk. Or (if FUNK is not given) remove all funks defined in this
     directory.
     """
+
     def __call__(self):
         Command.__call__(self)
         if self.funk and self.funk not in self.funk_dict:
@@ -285,13 +320,17 @@ class Remove(Edit):
             raise errors.FunkNotDefinedError(global_=self.global_)
 
         if self.funk is None:
-            log.logger.debug('Prompting to destroy local funk database.')
-            prompt = 'Remove all local funks defined in this directory? (y/n): '
+            log.logger.debug("Prompting to destroy local funk database.")
+            prompt = (
+                "Remove all local funks defined in this directory? (y/n): "
+            )
             y_or_n = utils.getch(prompt)
-            if y_or_n == 'y':
+            if y_or_n == "y":
                 self.funk_dict = {}
                 print()
-                log.logger.info('Done. The local funk database has been removed.')
+                log.logger.info(
+                    "Done. The local funk database has been removed."
+                )
             else:
                 self.abort = self.abort()
                 return self.abort
@@ -303,6 +342,7 @@ class Remove(Edit):
 
 class Add(Edit):
     """Add a new funk."""
+
     def __call__(self):
         Command.__call__(self)
         already_exists = False
@@ -313,7 +353,11 @@ class Add(Edit):
 
         try:
             self.edit_funk(startinsert=(not already_exists))
-            log.logger.info('%s funk "%s".', 'Edited' if already_exists else 'Added', self.funk)
+            log.logger.info(
+                '%s funk "%s".',
+                "Edited" if already_exists else "Added",
+                self.funk,
+            )
         except errors.BlankDefinition as e:
             raise errors.FunkyError(str(e))
 

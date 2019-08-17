@@ -6,8 +6,9 @@ from builtins import bytes, dict, int, range, str, super  # noqa
 
 class FunkyError(Exception):
     """Base custom exception class."""
+
     def __init__(self, *args, **kwargs):
-        returncode = kwargs.pop('returncode', 1)
+        returncode = kwargs.pop("returncode", 1)
 
         super().__init__(*args, **kwargs)
         self.returncode = returncode
@@ -15,18 +16,21 @@ class FunkyError(Exception):
 
 class FunkNotDefinedError(FunkyError):
     """Raised when an undefined funk is referenced in a mannor that is not allowed."""
+
     def __init__(self, *args, **kwargs):
-        funk = kwargs.pop('funk', None)
-        global_ = kwargs.pop('global_', False)
+        funk = kwargs.pop("funk", None)
+        global_ = kwargs.pop("global_", False)
 
         if funk is None:
             if global_:
-                msg = 'No global funks are defined.'
+                msg = "No global funks are defined."
             else:
-                msg = 'No local funks are defined in the current directory.'
+                msg = "No local funks are defined in the current directory."
         else:
-            msg_fmt = '"{}" does not match any local funks defined in the current '\
-                'directory.'.format(funk)
+            msg_fmt = (
+                '"{}" does not match any local funks defined in the current '
+                "directory.".format(funk)
+            )
             msg = msg_fmt.format(funk)
 
         super().__init__(msg, *args, **kwargs)

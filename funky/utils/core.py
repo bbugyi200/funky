@@ -9,7 +9,7 @@ import sys
 import tty
 import termios
 
-__all__ = ['getch']
+__all__ = ["getch"]
 
 
 def getch(prompt=None):

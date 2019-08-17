@@ -25,9 +25,10 @@ def cleandir():
 #####################################################################
 class Test_Add_and_Edit:
     """Tests for the Add and Edit commands."""
+
     @pytest.fixture(autouse=True)
     def setup(self, mocker):
-        mocker.patch('funky.commands.sp')
+        mocker.patch("funky.commands.sp")
 
     def test_add(self, patch_tempfile, add_cmd, funk_dict):
         """Tests add command."""
@@ -41,32 +42,34 @@ class Test_Add_and_Edit:
 
     def test_add_empty(self, patch_tempfile):
         """Tests that add command does NOT accept empty funk definitions."""
-        funk_cmd_string = ''
+        funk_cmd_string = ""
         patch_tempfile(funk_cmd_string)
 
         with pytest.raises(errors.FunkyError):
-            cmd = commands.Add(['new_funk'])
+            cmd = commands.Add(["new_funk"])
             cmd()
 
-    @pytest.mark.usefixtures('cleandir', 'fake_db')
+    @pytest.mark.usefixtures("cleandir", "fake_db")
     def test_edit(self, patch_tempfile, edit_cmd):
         """Tests edit command."""
-        edited_cmd_string = 'TEST COMMAND STRING'
+        edited_cmd_string = "TEST COMMAND STRING"
         patch_tempfile(edited_cmd_string)
 
         edit_cmd()
 
         loaded_funks = load_funks()
-        assert loaded_funks[edit_cmd.funk] == '{} "$@"'.format(edited_cmd_string)
+        assert loaded_funks[edit_cmd.funk] == '{} "$@"'.format(
+            edited_cmd_string
+        )
 
-    @pytest.mark.usefixtures('cleandir', 'fake_db')
+    @pytest.mark.usefixtures("cleandir", "fake_db")
     def test_edit_empty(self, patch_tempfile, funk_dict):
         """Tests that a funk definition left empty results in the funk being removed.
 
         This function also tests that the funky database is deleted after all local funks have
         been removed.
         """
-        edited_cmd_string = ''
+        edited_cmd_string = ""
 
         assert os.path.isfile(commands.Command.FUNKY_DB_FILENAME)
 
@@ -78,10 +81,10 @@ class Test_Add_and_Edit:
 
         assert not os.path.isfile(commands.Command.FUNKY_DB_FILENAME)
 
-    @pytest.mark.usefixtures('cleandir', 'fake_db')
+    @pytest.mark.usefixtures("cleandir", "fake_db")
     def test_edit_format(self, patch_tempfile, funk_dict):
         """Tests that the edit command reformats command strings when needed."""
-        edited_cmd_string = 'EDITED CMD STRING'
+        edited_cmd_string = "EDITED CMD STRING"
 
         patch_tempfile(edited_cmd_string)
 
@@ -92,7 +95,7 @@ class Test_Add_and_Edit:
         loaded_funks = load_funks()
         assert loaded_funks[some_funk] == '{} "$@"'.format(edited_cmd_string)
 
-    @pytest.mark.usefixtures('cleandir', 'fake_db')
+    @pytest.mark.usefixtures("cleandir", "fake_db")
     def test_edit_funk_not_defined(self):
         """Tests that the edit command fails when the funk is not defined."""
         with pytest.raises(errors.FunkNotDefinedError):
@@ -114,14 +117,14 @@ class Test_Add_and_Edit:
     @pytest.fixture
     def patch_tempfile(self, mocker):
         """Setup sp and tempfile patches for testing edit and add commands."""
-        tempfile = mocker.patch('funky.commands.tempfile')
+        tempfile = mocker.patch("funky.commands.tempfile")
 
         def _patch_tempfile(cmd_string):
-            tmpfilename = '/tmp/test_edit.txt'
-            with open(tmpfilename, 'w') as f:
+            tmpfilename = "/tmp/test_edit.txt"
+            with open(tmpfilename, "w") as f:
                 f.write(cmd_string)
 
-            fileMock = mock.Mock(name='fileMock')
+            fileMock = mock.Mock(name="fileMock")
             fileMock.name = tmpfilename
             tempfile.NamedTemporaryFile = mock.Mock()
             tempfile.NamedTemporaryFile.return_value = fileMock
@@ -129,7 +132,7 @@ class Test_Add_and_Edit:
         return _patch_tempfile
 
 
-@pytest.mark.usefixtures('cleandir', 'fake_db')
+@pytest.mark.usefixtures("cleandir", "fake_db")
 class TestRename:
     def test_rename(self, rename_cmd, funk_dict):
         """Test rename command."""
@@ -140,12 +143,12 @@ class TestRename:
 
     def test_rename_fail(self):
         """Test that rename command fails when OLD funk does not exist."""
-        cmd = commands.Rename(['bad_funk', 'NEW'])
+        cmd = commands.Rename(["bad_funk", "NEW"])
         with pytest.raises(errors.FunkNotDefinedError):
             cmd()
 
-    @pytest.mark.parametrize('y_or_n', ['y', 'n'])
-    @mock.patch('funky.utils.getch')
+    @pytest.mark.parametrize("y_or_n", ["y", "n"])
+    @mock.patch("funky.utils.getch")
     def test_rename_overwrite(self, getch, y_or_n, funk_dict):
         """Test that rename overwrites existing function names properly."""
         getch.side_effect = lambda x: y_or_n
@@ -165,11 +168,11 @@ class TestRename:
     @pytest.fixture
     def rename_cmd(self, args):
         """Builds and returns 'rename' command"""
-        cmd = commands.Rename([args.args[0], 'NEW'])
+        cmd = commands.Rename([args.args[0], "NEW"])
         return cmd
 
 
-@pytest.mark.usefixtures('cleandir', 'fake_db')
+@pytest.mark.usefixtures("cleandir", "fake_db")
 class TestShow:
     def test_show(self, capsys, show_cmd):
         """Tests show command."""
@@ -179,10 +182,12 @@ class TestShow:
 
     def test_show_prefix(self, capsys, show_expected):
         """Tests show command when funk prefix is used."""
-        cmd = commands.Show('T..')
+        cmd = commands.Show("T..")
         cmd()
         captured = capsys.readouterr()
-        assert captured.out == '{}{}'.format(show_expected['T'], show_expected['TT'])
+        assert captured.out == "{}{}".format(
+            show_expected["T"], show_expected["TT"]
+        )
 
     def test_show_verbose(self, capsys, funk_dict):
         """Tests show command with verbose output."""
@@ -192,19 +197,17 @@ class TestShow:
 
         count_no_newlines = 0
         for cmd_string in funk_dict.values():
-            if '\n' not in cmd_string:
+            if "\n" not in cmd_string:
                 count_no_newlines += 1
 
-        assert captured.out.count('unalias') == len(funk_dict)
+        assert captured.out.count("unalias") == len(funk_dict)
 
     def test_show_all(self, capsys, show_expected):
         """Tests show command when no specific funk is provided."""
         show_cmd = commands.Show(None, color=False)
         show_cmd()
-        expected = '{0}{1}{2}'.format(
-            show_expected['multiline'],
-            show_expected['T'],
-            show_expected['TT'],
+        expected = "{0}{1}{2}".format(
+            show_expected["multiline"], show_expected["T"], show_expected["TT"]
         )
         captured = capsys.readouterr()
         assert captured.out == expected
@@ -225,7 +228,7 @@ class TestShow:
             show_cmd()
 
     # Disables the 'fake_db' fixture for this test.
-    @pytest.mark.parametrize('fake_db', [None])
+    @pytest.mark.parametrize("fake_db", [None])
     def test_show_failure__NO_DB(self, show_cmd):
         """Tests show command fails properly when no local funk database exists."""
         with pytest.raises(errors.FunkNotDefinedError):
@@ -235,22 +238,24 @@ class TestShow:
     def show_cmd(self, args, show_expected):
         """Builds and returns show command."""
         cmd = commands.Show(args.args, color=args.color)
-        setattr(cmd, 'expected', show_expected[args.args[0]])
+        setattr(cmd, "expected", show_expected[args.args[0]])
         return cmd
 
     @pytest.fixture
     def show_expected(self, funk_dict):
         """Expected results for show command tests BEFORE prefix matching feature was added."""
         show_expected = {
-            'T': 'T() {{ {0}; }}\n'.format(funk_dict['T']),
-            'TT': 'TT() {{ {0}; }}\n'.format(funk_dict['TT']),
-            'multiline': 'multiline() {{\n\t{0}\n}}\n'.format(funk_dict['multiline'].replace('\n', '\n\t'))
+            "T": "T() {{ {0}; }}\n".format(funk_dict["T"]),
+            "TT": "TT() {{ {0}; }}\n".format(funk_dict["TT"]),
+            "multiline": "multiline() {{\n\t{0}\n}}\n".format(
+                funk_dict["multiline"].replace("\n", "\n\t")
+            ),
         }
 
         return show_expected
 
 
-@pytest.mark.usefixtures('cleandir', 'fake_db')
+@pytest.mark.usefixtures("cleandir", "fake_db")
 class TestRemove:
     def test_remove(self, remove_cmd):
         """Tests remove command."""
@@ -268,8 +273,8 @@ class TestRemove:
 
         assert not os.path.isfile(commands.Command.FUNKY_DB_FILENAME)
 
-    @pytest.mark.parametrize('y_or_n', ['y', 'n'])
-    @mock.patch('funky.utils.getch')
+    @pytest.mark.parametrize("y_or_n", ["y", "n"])
+    @mock.patch("funky.utils.getch")
     def test_remove_all(self, getch, y_or_n):
         """Tests that the local funk database is removed when no funk is provided and the
         user confirms.
@@ -282,7 +287,7 @@ class TestRemove:
         remove_cmd()
 
         isfile = os.path.isfile(commands.Command.FUNKY_DB_FILENAME)
-        if y_or_n == 'y':
+        if y_or_n == "y":
             expected = not isfile
         else:
             expected = isfile
@@ -315,36 +320,41 @@ def fake_db(funk_dict):
 
 def _fake_db_factory(DB_FILENAME, funk_dict_builder):
     """Builds a generator fixture for creating a fake database."""
+
     def _fake_db():
         my_funk_dict = funk_dict_builder
-        with open(DB_FILENAME, 'w') as f:
+        with open(DB_FILENAME, "w") as f:
             json.dump(my_funk_dict, f)
         yield my_funk_dict
         try:
             os.remove(DB_FILENAME)
         except OSError:
             pass
+
     return _fake_db
 
 
 @pytest.fixture
 def funk_dict():
     funk_dict = {
-        'multiline': 'echo Hello\necho world!',
-        'T': 'echo RUN $1',
-        'TT': 'echo CHICKEN $@',
+        "multiline": "echo Hello\necho world!",
+        "T": "echo RUN $1",
+        "TT": "echo CHICKEN $@",
     }
     return funk_dict
 
 
-@pytest.fixture(params=[
-    (['T', 'PROGRAM'], False),
-    (['TT', 'WING'], False),
-    (['multiline'], False)
-], ids=['T', 'TT', 'multiline'])
+@pytest.fixture(
+    params=[
+        (["T", "PROGRAM"], False),
+        (["TT", "WING"], False),
+        (["multiline"], False),
+    ],
+    ids=["T", "TT", "multiline"],
+)
 def args(request):
     """Returns a named tuple of command arguments and expected results."""
-    Args = collections.namedtuple('Args', ['args', 'color'])
+    Args = collections.namedtuple("Args", ["args", "color"])
     return Args(request.param[0], request.param[1])
 
 
@@ -353,6 +363,6 @@ def args(request):
 ###############################################################################
 def load_funks():
     """Loads funks from database file"""
-    with open(commands.Command.FUNKY_DB_FILENAME, 'r') as f:
+    with open(commands.Command.FUNKY_DB_FILENAME, "r") as f:
         loaded_funks = json.load(f)
     return loaded_funks

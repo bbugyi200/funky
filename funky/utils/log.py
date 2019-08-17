@@ -39,13 +39,13 @@ def init_logger(debug=False, verbose=False):
     root.addHandler(sh)
 
     if debug:
-        logfile_path = '{}/debug.log'.format(xdg.getdir('data'))
+        logfile_path = "{}/debug.log".format(xdg.getdir("data"))
         fh = logging.FileHandler(logfile_path)
         formatter = _getFormatter(verbose=True)
         fh.setFormatter(formatter)
         fh.setLevel(level)
         root.addHandler(fh)
-        root.debug('Debug mode enabled.')
+        root.debug("Debug mode enabled.")
 
 
 def _add_vdebug_level(logging):
@@ -70,11 +70,13 @@ def _getFormatter(verbose=False):
     Returns:
         logging.Formatter object.
     """
-    base_formatting = '[%(levelname)s] %(message)s'
+    base_formatting = "[%(levelname)s] %(message)s"
 
     if verbose:
-        formatter = logging.Formatter('[%(process)s] (%(asctime)s) {}'.format(base_formatting),
-                                      datefmt='%Y-%m-%d %H:%M:%S')
+        formatter = logging.Formatter(
+            "[%(process)s] (%(asctime)s) {}".format(base_formatting),
+            datefmt="%Y-%m-%d %H:%M:%S",
+        )
     else:
         formatter = logging.Formatter(base_formatting)
 

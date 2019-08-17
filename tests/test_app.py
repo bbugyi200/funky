@@ -11,26 +11,29 @@ from funky import app
 from funky import errors
 
 
-@pytest.mark.parametrize('argv,cmd_cls_string', [
-    (['-a', 'new_funk'], 'Add'),
-    (['-e', 'new_funk'], 'Edit'),
-    (['-r', 'new_funk'], 'Remove'),
-])
-@mock.patch('funky.app.commands')
+@pytest.mark.parametrize(
+    "argv,cmd_cls_string",
+    [
+        (["-a", "new_funk"], "Add"),
+        (["-e", "new_funk"], "Edit"),
+        (["-r", "new_funk"], "Remove"),
+    ],
+)
+@mock.patch("funky.app.commands")
 def test_main(commands, argv, cmd_cls_string):
     """Tests that arguments are parsed correctly."""
     setattr(commands, cmd_cls_string, mock.Mock())
     cmd_class = getattr(commands, cmd_cls_string)
     app.main(argv)
 
-    cmd_class.assert_called_once_with(argv[1:], color=False, global_=False, verbose=False)
+    cmd_class.assert_called_once_with(
+        argv[1:], color=False, global_=False, verbose=False
+    )
     app._CmdAction.flag = None
 
 
-@pytest.mark.parametrize('argv', [
-    ['-a', 'new_funk', '-e', 'existing_funk'],
-])
-@mock.patch('funky.utils.log.logger')
+@pytest.mark.parametrize("argv", [["-a", "new_funk", "-e", "existing_funk"]])
+@mock.patch("funky.utils.log.logger")
 def test_main_validate_args(logger, argv):
     """Tests that arguments are validated properly."""
     assert app.main(argv) == 2
@@ -39,9 +42,10 @@ def test_main_validate_args(logger, argv):
     funky.app._CmdAction.option_string = None
 
 
-@mock.patch('funky.app._get_argparser')
+@mock.patch("funky.app._get_argparser")
 def test_main_exceptions(_get_argparser):
     """Tests that main handles exceptions appropriately."""
+
     class TestError(Exception):
         pass
 
@@ -49,7 +53,7 @@ def test_main_exceptions(_get_argparser):
         if opt == 1:
             raise errors.FunkyError(returncode=5)
         elif opt == 2:
-            raise TestError('Test Exception')
+            raise TestError("Test Exception")
 
     _get_argparser.side_effect = functools.partial(raise_error, 1)
     assert app.main() == 5
