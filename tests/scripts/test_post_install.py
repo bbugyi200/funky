@@ -1,7 +1,7 @@
 from collections import namedtuple
 import os
 
-import pytest
+import pytest  # pylint: disable=unused-import
 
 from scripts import post_install
 
@@ -12,7 +12,7 @@ def test_copy_sh_ext__ENVVAR_DEFINED():
 
     Install = namedtuple("Install", ["root"])
     install = Install(None)
-    post_install._copy_sh_ext(install)
+    post_install._copy_sh_ext(install)  # pylint: disable=protected-access
 
     assert os.path.exists("/tmp/funky/funky.sh")
     os.system("rm -rf /tmp/funky")
@@ -31,7 +31,7 @@ def test_copy_sh_ext__ENVVAR_NOT_DEFINED():
 
     Install = namedtuple("Install", ["root"])
     install = Install("/tmp/")
-    post_install._copy_sh_ext(install)
+    post_install._copy_sh_ext(install)  # pylint: disable=protected-access
 
     os.path.exists(
         f"/tmp/home/{os.environ['USER']}/.local/share/funky/funky.sh"

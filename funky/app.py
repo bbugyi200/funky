@@ -1,7 +1,7 @@
 """Initialize and run funky.
 
-Do not execute this file directly. Use __main__.py by executing this modules containing directory.
-In other words, use `python funky`.
+Do not execute this file directly. Use __main__.py by executing this modules
+containing directory.  In other words, use `python funky`.
 """
 
 import argparse
@@ -28,8 +28,8 @@ def main(argv=None):
 
         log.init_logger(debug=args.debug, verbose=args.verbose)
         log.logger.debug("Starting funky.")
-        log.logger.vdebug("argv = {}".format(argv))
-        log.logger.vdebug("Command-line Arguments: {}".format(args))
+        log.logger.vdebug("argv = {}".format(argv))  # type: ignore
+        log.logger.vdebug("Command-line Arguments: {}".format(args))  # type: ignore
 
         _CmdAction.command(args)
     except errors.ArgumentError as e:
@@ -41,7 +41,7 @@ def main(argv=None):
         log.logger.error(str(e))
         return e.returncode
     except Exception as e:
-        log.logger.exception("{}: {}".format(type(e).__name__, str(e)))
+        log.logger.exception("%s: %s", type(e).__name__, str(e))
         raise
 
 
@@ -49,7 +49,8 @@ def _get_argparser(verbose=False):
     """Get command-line arguments.
 
     Args:
-        verbose (bool): If True, do not suppress the help output of any arguments.
+        verbose (bool): If True, do not suppress the help output of any
+                        arguments.
 
     Returns:
         argparse.ArgumentParser object.
@@ -88,9 +89,12 @@ def _get_argparser(verbose=False):
 
     command_group = parser.add_argument_group(
         title="Action Commands",
-        description="All of these options act on the current set of local funks in some way. If "
-        "no action command is provided, the default action is to display all of the "
-        "local funks currently in scope. These commands are mutually exclusive.",
+        description=(
+            "All of these options act on the current set of local funks in "
+            "some way. If no action command is provided, the default action "
+            "is to display all of the local funks currently in scope. These "
+            "commands are mutually exclusive."
+        ),
     )
     command_group.add_argument(
         _CmdFlag.ADD,
@@ -141,14 +145,15 @@ class _CmdAction(argparse.Action):
     flag = None
     option_string = None
 
-    def __call__(self, parser, namespace, values, option_string):
+    def __call__(self, parser, namespace, values, option_string=None):
         if self.__class__.flag is None:
             self.__class__.flag = option_string
             self.__class__.option_string = option_string
         elif option_string is not None:
             raise errors.ArgumentError(
-                "Option {} can not be used with option {}. All action commands are mutually "
-                "exclusive.".format(
+                "Option {} can not be used with option {}. All action "
+                "commands are mutually exclusive."
+                .format(
                     option_string, self.__class__.option_string
                 )
             )
@@ -175,7 +180,7 @@ class _CmdAction(argparse.Action):
             _CmdFlag.SHOW: commands.Show,
         }[cls.flag]
 
-        cmd = cmd_builder(
+        cmd = cmd_builder(  # type: ignore
             args.command_args,
             color=(args.color[0] == "y"),
             global_=args.global_,
@@ -187,8 +192,8 @@ class _CmdAction(argparse.Action):
 class _CmdFlag:
     """Command Flags
 
-    The value of each command flag will be used by argparse to generate the option string
-    corresponding to that command.
+    The value of each command flag will be used by argparse to generate the
+    option string corresponding to that command.
     """
 
     ADD = "-a"

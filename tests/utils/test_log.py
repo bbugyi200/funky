@@ -3,7 +3,6 @@
 import getpass
 import logging
 import os
-import mock
 
 import pytest
 

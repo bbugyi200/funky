@@ -11,8 +11,8 @@ def getdir(userdir):
     """ Get XDG User Directory.
 
     Args:
-        userdir (str): one of the four defined XDG user directories ('config', 'data', 'runtime',
-            or 'cache').
+        userdir (str): one of the four defined XDG user directories ('config',
+                       'data', 'runtime', or 'cache').
 
     Returns:
         Full user directory path, as specified by the XDG standard.
@@ -36,15 +36,19 @@ def getdir(userdir):
 
 
 def _getter_factory(envvar, dirfmt):
-    """ Returns XDG getter function that serves to fetch some XDG standard directory.
+    """
+    Returns XDG getter function that serves to fetch some XDG standard
+    directory.
 
     Args:
-        envvar (str): one of the four defined XDG environment variables that correspond to the XDG
-            user directories.
-        dirfmt: format string used to model the default path for the given XDG user directory.
+        envvar (str): one of the four defined XDG environment variables that
+                      correspond to the XDG user directories.
+        dirfmt: format string used to model the default path for the given XDG
+                       user directory.
 
     Returns:
-        Function that retrieves the full path for the desired XDG user directory.
+        Function that retrieves the full path for the desired XDG user
+        directory.
     """
 
     def _getter():

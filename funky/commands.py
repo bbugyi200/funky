@@ -1,17 +1,17 @@
 """Command definitions."""
 
 from __future__ import division, absolute_import, print_function
-from builtins import bytes, dict, int, range, str, super  # noqa
+from builtins import bytes, dict, int, range, str, super  # pylint: disable=redefined-builtin,unused-import
 
 from abc import ABCMeta, abstractmethod
 import json
 import os
 import re
 import shlex
-from six import string_types
 import subprocess as sp
 import tempfile
 
+from six import string_types
 from pygments import highlight  # type: ignore
 from pygments.lexers import BashLexer  # type: ignore
 from pygments.formatters import TerminalFormatter  # type: ignore
@@ -24,18 +24,21 @@ from funky.utils import log
 class Command:
     """Abstract base command class.
 
-    To use a command, the corresponding command class should be used to build a command instance.
-    A command instance is a callable object.
+    To use a command, the corresponding command class should be used to build a
+    command instance.  A command instance is a callable object.
 
     Args:
-        args (iter): The first element is necessarily a funk name. The others elements
-            (if any exist) vary depending on what command is being used.
+        args (iter): The first element is necessarily a funk name. The others
+                     elements (if any exist) vary depending on what command is
+                     being used.
         color (bool): If True, colorize output (if command produces output).
-        global_ (bool): If True, the global database will be used instead of the local database.
-        verbose (bool): If True, Show command displays verbose command definition.
+        global_ (bool): If True, the global database will be used instead of the
+                        local database.
+        verbose (bool): If True, Show command displays verbose command
+                        definition.
 
-    IMPORTANT: The class docstring of a Command subclass is used by argparse to generate output
-               for the help command.
+    IMPORTANT: The class docstring of a Command subclass is used by argparse to
+               generate output for the help command.
     """
 
     __metaclass__ = ABCMeta
@@ -63,9 +66,10 @@ class Command:
         self.global_ = global_
         self.funk_dict = self.load(self.ACTIVE_DB_FILENAME)
 
-        log.logger.vdebug("Existing Funks: {}".format(self.funk_dict))
+        log.logger.vdebug("Existing Funks: {}".format(self.funk_dict))  # type: ignore
 
-    def abort(self):
+    @staticmethod
+    def abort():
         """Print abort message."""
         print()
         log.logger.info("OK. Aborting...")
@@ -81,17 +85,17 @@ class Command:
         """Saves funk changes to database."""
         if self.funk_dict:
             log.logger.debug(
-                "Committing changes to database: {}".format(
-                    self.ACTIVE_DB_FILENAME
-                )
+                "Committing changes to database: %s",
+                self.ACTIVE_DB_FILENAME
             )
             with open(self.ACTIVE_DB_FILENAME, "w") as f:
                 json.dump(self.funk_dict, f)
         else:
-            log.logger.debug("Removing {}.".format(self.ACTIVE_DB_FILENAME))
+            log.logger.debug("Removing %s.", self.ACTIVE_DB_FILENAME)
             self.purge_db()
 
-    def load(self, DB_FILENAME):
+    @staticmethod
+    def load(DB_FILENAME):
         try:
             with open(DB_FILENAME, "r") as f:
                 return json.load(f)
@@ -100,15 +104,16 @@ class Command:
 
     @abstractmethod
     def __call__(self):
-        log.logger.debug("Running {} command.".format(self.__class__.__name__))
+        log.logger.debug("Running %s command.", self.__class__.__name__)
 
 
 class Show(Command):
     """
-    When no action command is specified, the default action is to display existing funks. An
-    funk name (FUNK) can optionally be provided as an argument to display only FUNK. If FUNK
-    ends in two periods ('..'), it is treated as a prefix instead of an exact match: all funks
-    that start with FUNK (not including the trailing '..') will be displayed.
+    When no action command is specified, the default action is to display
+    existing funks. An funk name (FUNK) can optionally be provided as an
+    argument to display only FUNK. If FUNK ends in two periods ('..'), it is
+    treated as a prefix instead of an exact match: all funks that start with
+    FUNK (not including the trailing '..') will be displayed.
     """
 
     def show(self, funk):
@@ -188,8 +193,11 @@ class Rename(Command):
         self.funk_dict[new_funk] = self.funk_dict[self.funk]
         self.funk_dict.pop(self.funk)
 
-        msg_fmt = 'Funk "{}" has successfully been renamed to "{}".'
-        log.logger.info(msg_fmt.format(self.funk, new_funk))
+        log.logger.info(
+            'Funk "%s" has successfully been renamed to "%s".',
+            self.funk,
+            new_funk,
+        )
         self.commit()
 
 
@@ -199,14 +207,14 @@ class Edit(Command):
     def remove_funk(self):
         """Removes the funk defined at instance creation time."""
         self.funk_dict.pop(self.funk)
-        log.logger.info('Removed funk "{}".'.format(self.funk))
+        log.logger.info('Removed funk "%s".', self.funk)
 
     def edit_funk(self, startinsert=False):
         """Opens up funk definition using temp file in $EDITOR for editing.
 
         Args:
-            funk (optional): The funk to edit. If not given, this function uses the funk defined
-                at instance creation time.
+            funk (optional): The funk to edit. If not given, this function uses
+                             the funk defined at instance creation time.
 
         Returns (str):
             Contents of temp file after $EDITOR closes.
@@ -244,19 +252,19 @@ class Edit(Command):
         formatted_cmd_string = self._apply_shortcuts(edited_cmd_string.strip())
         self.funk_dict[self.funk] = formatted_cmd_string
 
-    def _editor_cmd_list(self, startinsert=False):
+    @staticmethod
+    def _editor_cmd_list(startinsert=False):
         """Generates and returns editor command list."""
         if "EDITOR" in os.environ:
             editor_cmd_list = shlex.split(os.environ["EDITOR"])
             log.logger.debug(
-                "Editor command set to $EDITOR: {}".format(editor_cmd_list)
+                "Editor command set to $EDITOR: %s", editor_cmd_list
             )
         else:
             editor_cmd_list = ["vim"]
             log.logger.debug(
-                "Editor command falling back to default: {}".format(
-                    editor_cmd_list
-                )
+                "Editor command falling back to default: %s",
+                editor_cmd_list,
             )
 
         if any("vim" in arg for arg in editor_cmd_list) and startinsert:
@@ -264,7 +272,8 @@ class Edit(Command):
 
         return editor_cmd_list
 
-    def _apply_shortcuts(self, cmd_string):
+    @staticmethod
+    def _apply_shortcuts(cmd_string):
         """Formats command string for correct execution and display."""
         if cmd_string.startswith("@./"):
             cmd_string = 'cd {}/"$@" || return 1'.format(
@@ -307,8 +316,8 @@ class Edit(Command):
 
 class Remove(Edit):
     """
-    Remove an existing funk. Or (if FUNK is not given) remove all funks defined in this
-    directory.
+    Remove an existing funk. Or (if FUNK is not given) remove all funks defined
+    in this directory.
     """
 
     def __call__(self):
@@ -348,8 +357,10 @@ class Add(Edit):
         already_exists = False
         if self.funk in self.funk_dict:
             already_exists = True
-            msg_fmt = 'Funk "{}" is already defined. Running edit command.'
-            log.logger.info(msg_fmt.format(self.funk))
+            log.logger.info(
+                'Funk "%s" is already defined. Running edit command.',
+                self.funk,
+            )
 
         try:
             self.edit_funk(startinsert=(not already_exists))

@@ -1,3 +1,5 @@
+# pylint: disable=no-self-use,redefined-outer-name
+
 import collections
 import json
 import os
@@ -64,10 +66,12 @@ class Test_Add_and_Edit:
 
     @pytest.mark.usefixtures("cleandir", "fake_db")
     def test_edit_empty(self, patch_tempfile, funk_dict):
-        """Tests that a funk definition left empty results in the funk being removed.
+        """
+        Tests that a funk definition left empty results in the funk being
+        removed.
 
-        This function also tests that the funky database is deleted after all local funks have
-        been removed.
+        This function also tests that the funky database is deleted after all
+        local funks have been removed.
         """
         edited_cmd_string = ""
 
@@ -219,9 +223,11 @@ class TestShow:
             show_cmd()
 
     def test_show_failure__NONE_ARE_DEFINED(self):
-        """Tests show command fails when the given funk pattern matches no funks.
+        """
+        Tests show command fails when the given funk pattern matches no funks.
 
-        A funk pattern is (at the time of this writing) any string ending in '..'.
+        A funk pattern is (at the time of this writing) any string ending in
+        '..'.
         """
         with pytest.raises(errors.FunkNotDefinedError):
             show_cmd = commands.Show("bad_funk_pattern..", False)
@@ -230,7 +236,9 @@ class TestShow:
     # Disables the 'fake_db' fixture for this test.
     @pytest.mark.parametrize("fake_db", [None])
     def test_show_failure__NO_DB(self, show_cmd):
-        """Tests show command fails properly when no local funk database exists."""
+        """
+        Tests show command fails properly when no local funk database exists.
+        """
         with pytest.raises(errors.FunkNotDefinedError):
             show_cmd()
 
@@ -243,7 +251,10 @@ class TestShow:
 
     @pytest.fixture
     def show_expected(self, funk_dict):
-        """Expected results for show command tests BEFORE prefix matching feature was added."""
+        """
+        Expected results for show command tests BEFORE prefix matching feature
+        was added.
+        """
         show_expected = {
             "T": "T() {{ {0}; }}\n".format(funk_dict["T"]),
             "TT": "TT() {{ {0}; }}\n".format(funk_dict["TT"]),
@@ -264,7 +275,9 @@ class TestRemove:
         assert remove_cmd.funk not in loaded_funks
 
     def test_remove_last(self, funk_dict):
-        """Tests that local funk database is removed when last funk is removed."""
+        """
+        Tests that local funk database is removed when last funk is removed.
+        """
         assert os.path.isfile(commands.Command.FUNKY_DB_FILENAME)
 
         for funk in funk_dict:
@@ -276,8 +289,9 @@ class TestRemove:
     @pytest.mark.parametrize("y_or_n", ["y", "n"])
     @mock.patch("funky.utils.getch")
     def test_remove_all(self, getch, y_or_n):
-        """Tests that the local funk database is removed when no funk is provided and the
-        user confirms.
+        """
+        Tests that the local funk database is removed when no funk is provided
+        and the user confirms.
         """
         getch.side_effect = lambda x: y_or_n
 
@@ -336,12 +350,12 @@ def _fake_db_factory(DB_FILENAME, funk_dict_builder):
 
 @pytest.fixture
 def funk_dict():
-    funk_dict = {
+    funk_dict_ = {
         "multiline": "echo Hello\necho world!",
         "T": "echo RUN $1",
         "TT": "echo CHICKEN $@",
     }
-    return funk_dict
+    return funk_dict_
 
 
 @pytest.fixture(

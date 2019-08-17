@@ -1,8 +1,6 @@
 """Tests the funky.utils.xdg utilities."""
 
 import getpass
-import os
-import mock
 
 import pytest
 

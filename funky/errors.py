@@ -1,7 +1,7 @@
 """This module holds all custom exception class definitions."""
 
 from __future__ import division, absolute_import, print_function
-from builtins import bytes, dict, int, range, str, super  # noqa
+from builtins import bytes, dict, int, range, str, super  # pylint: disable=redefined-builtin,unused-import
 
 
 class FunkyError(Exception):
@@ -10,12 +10,14 @@ class FunkyError(Exception):
     def __init__(self, *args, **kwargs):
         returncode = kwargs.pop("returncode", 1)
 
-        super().__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)  # type: ignore
         self.returncode = returncode
 
 
 class FunkNotDefinedError(FunkyError):
-    """Raised when an undefined funk is referenced in a mannor that is not allowed."""
+    """
+    Raised when an undefined funk is referenced in a mannor that is not allowed.
+    """
 
     def __init__(self, *args, **kwargs):
         funk = kwargs.pop("funk", None)
@@ -41,4 +43,6 @@ class ArgumentError(FunkyError):
 
 
 class BlankDefinition(FunkyError):
-    """Raised when the user attempts to define a funk using a blank definition."""
+    """
+    Raised when the user attempts to define a funk using a blank definition.
+    """

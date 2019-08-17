@@ -1,6 +1,5 @@
 """Tests for main application (entry point)."""
 
-import argparse
 import functools
 import mock
 
@@ -29,7 +28,7 @@ def test_main(commands, argv, cmd_cls_string):
     cmd_class.assert_called_once_with(
         argv[1:], color=False, global_=False, verbose=False
     )
-    app._CmdAction.flag = None
+    app._CmdAction.flag = None  # pylint: disable=protected-access
 
 
 @pytest.mark.parametrize("argv", [["-a", "new_funk", "-e", "existing_funk"]])
@@ -38,8 +37,8 @@ def test_main_validate_args(logger, argv):
     """Tests that arguments are validated properly."""
     assert app.main(argv) == 2
     logger.error.called_once()
-    funky.app._CmdAction.flag = None
-    funky.app._CmdAction.option_string = None
+    funky.app._CmdAction.flag = None  # pylint: disable=protected-access
+    funky.app._CmdAction.option_string = None  # pylint: disable=protected-access
 
 
 @mock.patch("funky.app._get_argparser")
@@ -49,7 +48,7 @@ def test_main_exceptions(_get_argparser):
     class TestError(Exception):
         pass
 
-    def raise_error(opt, verbose=False):
+    def raise_error(opt, verbose=True):  # pylint: disable=unused-argument
         if opt == 1:
             raise errors.FunkyError(returncode=5)
         elif opt == 2:
