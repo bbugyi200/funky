@@ -8,5 +8,13 @@ Funky uses two different types of tests:
 You can **run all the tests** using the `make check` command.
 
 
+# Debugging with pdb/pudb
+
+Simply running `pudb funky/__main__.py` will cause the relative imports within the codebase to fail. Instead, you must explicitly tell funky that you wish to debug it. This can be accomplished, for example, with the following command:
+``` bash
+DEBUG_FUNKY=1 pudb funky/__main__.py
+```
+
+
 [pytest]: https://github.com/pytest-dev/pytest
 [shunit2]: https://github.com/kward/shunit2
