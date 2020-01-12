@@ -8,10 +8,8 @@ sudo: required
 
 install: 
     - pip install -U tox-travis
-    - pipenv lock -r > requirements.txt
+    - poetry export -f requirements --dev --without-hashes > requirements.txt
     - pip install -r requirements.txt
-    - pipenv lock --dev -r >> requirements_dev.txt
-    - pip install -r requirements_dev.txt
     - python setup.py install
     - ./scripts/install-deps
 

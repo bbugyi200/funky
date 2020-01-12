@@ -33,7 +33,7 @@ check: check-python check-shell ## Run all tests.
 .PHONY: check-python
 check-python: ## Run Python tests.
 	@printf "\n%s\n" "---------- Running Python Tests ----------"
-	pipenv run ./tests/runtests $(pytest_opts)
+	poetry run `pwd`/tests/runtests $(pytest_opts)
 
 .PHONY: check-shell
 check-shell: ## Run Shell tests.
