@@ -8,6 +8,7 @@ sudo: required
 
 install: 
     - pip install -U tox-travis
+    - pip install poetry
     - poetry export -f requirements --dev --without-hashes > requirements.txt
     - pip install -r requirements.txt
     - python setup.py install
