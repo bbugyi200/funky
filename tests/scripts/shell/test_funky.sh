@@ -1,8 +1,7 @@
 #!/bin/bash
 
-# shellcheck disable=SC2154
-
 OLD_HOME="${HOME}"; export HOME=/tmp/home
+export FUNKY_CMD="python ${PWD}/funky"
 
 source ./scripts/shell/funky.sh 2> /dev/null
 
@@ -14,6 +13,7 @@ oneTimeSetUp() {
 
 oneTimeTearDown() {
     export HOME="${OLD_HOME}"
+    unset FUNKY_CMD
 
     rm -rf /tmp/A
     rm -rf /tmp/home

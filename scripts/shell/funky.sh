@@ -1,6 +1,9 @@
+#!/bin/bash
+
 #########################################
 #  funky Shell Integration Script       #
 #########################################
+
 
 ##### WHAT DOES THIS SCRIPT DO?
 # - Source local and global funks on startup.
@@ -12,7 +15,7 @@
 # be sourced directly into your .zshrc file. See the official docs for more
 # information:
 # 
-# https://funky.readthedocs.io/en/latest/installation.html#additional-installation-steps
+# https://github.com/bbugyi200/funky#additional-installation-steps
 
 ##### Create temporary funky directory
 # ensure running as root
@@ -32,10 +35,10 @@ fi
 
 ##### Function used for sourcing funks
 
-# shellcheck disable=SC1090
-_source_globals() { source <(command funky --verbose --global); }
-# shellcheck disable=SC1090
-_source_locals() { source <(command funky --verbose); }
+FUNKY_CMD="${FUNKY_CMD:="$(command -v funky)"}"
+
+_source_globals() { source <(${FUNKY_CMD} --verbose --global); }
+_source_locals() { source <(${FUNKY_CMD} --verbose); }
 
 _maybe_source_locals() {
     if [[ -f "$PWD"/.funky ]]; then
@@ -80,7 +83,7 @@ unalias funky &> /dev/null
 funky() {
     touch "$_xdg_data_dir"/timestamp
 
-    command funky --color=y "$@"
+    ${FUNKY_CMD} --color=y "$@"
     if [[ .funky -nt "$_xdg_data_dir"/timestamp ]]; then
         _source_locals
     fi
@@ -91,7 +94,7 @@ unalias gfunky &> /dev/null
 
 gfunky() {
     touch "$_xdg_data_dir"/timestamp
-    command funky --global --color=y "$@"
+    ${FUNKY_CMD} --global --color=y "$@"
     if [[ ~/.funky -nt "$_xdg_data_dir"/timestamp ]]; then
         _source_globals
         _maybe_source_locals
