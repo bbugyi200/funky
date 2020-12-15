@@ -21,7 +21,7 @@ class PostInstallCommand(install):
 class PostDevelopCommand(develop):
     """Post-installation for develop mode."""
     def run(self):
-        post_install.run()
+        post_install.run(self)
         develop.run(self)
 
 
