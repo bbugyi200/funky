@@ -16,11 +16,6 @@
 #     https://github.com/bbugyi200/funky#additional-installation-steps
 ##############################################################################
 
-# TODO(bbugyi): Add tests for new behavior.
-# TODO(bbugyi): Make funky development environment easier to setup.
-# TODO(bbugyi): Allow funky to be installed via -e.
-# TODO(bbugyi): Add Dockerfile to funky.
-
 # The FUNKY_CMD envvar must be overridable (e.g. by test_funky.sh).
 FUNKY_CMD="${FUNKY_CMD:="$(command -v funky)"}"
 
