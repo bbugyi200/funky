@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if ! command -v shunit2 &>/dev/null; then
+if ! command -v shunit2 &>/dev/null && ! [[ -f ./shunit2 ]]; then
     printf 1>&2 "[ERROR] shunit2 is not installed: https://github.com/kward/shunit2\n"
     exit 1
 fi
