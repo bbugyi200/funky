@@ -94,7 +94,8 @@ _maybe_source_locals
 ##### SOURCE APPROPRIATE FUNKS EVERYTIME THE DIRECTORY IS CHANGED
 #
 # * Is run everytime the directory is changed.
-# * Lazily loads global funks and local funks.
+# * Lazily loads global funks and local funks while attempting to maintain
+#   parent's local funks.
 chpwd() {
     if [[ -f "$_ACTIVE_LOCALPATH" ]] && ! [[ "$PWD" == $(cat "$_ACTIVE_LOCALPATH") || "$PWD" == "$(cat "$_ACTIVE_LOCALPATH")/"* ]]; then
         _maybe_unset_locals
