@@ -65,11 +65,9 @@ _unset_locals() {
 
 # Activate local funks, if necessary.
 _maybe_source_locals() {
-    if [[ -f "$PWD"/.funky ]]; then
+    if [[ -f "$PWD"/.funky ]] && [[ "$PWD" != "${_home_dir}" ]]; then
         _source_locals
-        if [[ "$PWD" != "$_home_dir" ]]; then
-            _save_locals
-        fi
+        _save_locals
     fi
 }
 
@@ -123,7 +121,7 @@ funky() {
     ${FUNKY_CMD} --color=y "$@"
     if [[ .funky -nt "$_xdg_data_dir"/timestamp ]]; then
         _maybe_unset_locals
-        _source_locals
+        _maybe_source_locals
     fi
 }
 
@@ -134,7 +132,7 @@ gfunky() {
     ${FUNKY_CMD} --global --color=y "$@"
     if [[ ~/.funky -nt "$_xdg_data_dir"/timestamp ]]; then
         _maybe_unset_locals
-        _source_globals
+        _maybe_source_globals
         _maybe_source_locals
     fi
 }
