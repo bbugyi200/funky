@@ -38,7 +38,7 @@ check-python: ## Run Python tests.
 .PHONY: check-shell
 check-shell: ## Run Shell tests.
 	@printf "\n%s\n" "---------- Running Shell Tests ----------"
-	PYTHONPATH=$(PWD):$(PYTHONPATH) $(PWD)/tests/scripts/shell/test_funky.sh
+	$(PWD)/tests/scripts/shell/test_funky.sh
 
 .PHONY: release
 release: dist ## Package and upload a release.
