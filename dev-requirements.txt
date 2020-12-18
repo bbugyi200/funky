@@ -1,0 +1,9 @@
+-r requirements.txt
+
+codecov
+coverage
+mock
+mypy
+pytest
+pytest-cov
+pytest-mock

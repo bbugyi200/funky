@@ -1,17 +1,15 @@
 language: python
 
 python:
-    - 3.9
-    - 3.8
     - 3.7
+    - 3.8
+    - 3.9
 
 sudo: required
 
 install: 
     - pip install -U tox-travis
-    - pip install poetry
-    - poetry export -f requirements.txt --dev --without-hashes -o requirements.txt
-    - pip install -r requirements.txt
+    - pip install -r dev-requirements.txt
     - python setup.py install
     - ./scripts/install-deps
 
