@@ -87,7 +87,7 @@ _maybe_source_globals() {
 
 # Unset old local funks, if necessary.
 _maybe_unset_locals() {
-    if [[ -f "$OLDPWD"/.funky ]] && [[ -f "$_ACTIVE_ALIASES" ]]; then
+    if [[ -f "$_ACTIVE_ALIASES" ]]; then
         _unset_locals
     fi
 }
@@ -99,12 +99,11 @@ _maybe_source_locals
 ##### SOURCE APPROPRIATE FUNKS EVERYTIME THE DIRECTORY IS CHANGED
 #
 # * Is run everytime the directory is changed.
-# * Lazily loads global funks and local funks while attempting to maintain parent's local
-#   funks.
+# * Lazily loads global funks and local funks.
 chpwd() {
-    if [[ -f "$_ACTIVE_LOCALPATH" ]] && ! [[ "$PWD" =~ $(cat "$_ACTIVE_LOCALPATH")/? ]]; then
-        _maybe_source_globals
+    if [[ -f "$_ACTIVE_LOCALPATH" ]] && ! [[ "$PWD" == $(cat "$_ACTIVE_LOCALPATH") || "$PWD" == "$(cat "$_ACTIVE_LOCALPATH")/"* ]]; then
         _maybe_unset_locals
+        _maybe_source_globals
         command rm -f "$_ACTIVE_LOCALPATH"
         unset _ACTIVE_LOCALPATH
     fi
@@ -138,8 +137,8 @@ gfunky() {
     touch "$_xdg_data_dir"/timestamp
     ${FUNKY_CMD} --global --color=y "$@"
     if [[ ~/.funky -nt "$_xdg_data_dir"/timestamp ]]; then
-        _source_globals
         _maybe_unset_locals
+        _source_globals
         _maybe_source_locals
     fi
 }
