@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if ! command -v shunit2 &>/dev/null; then
+    printf 1>&2 "[ERROR] shunit2 is not installed: https://github.com/kward/shunit2\n"
+    exit 1
+fi
+
 OLD_HOME="${HOME}"; export HOME=/tmp/home
 export FUNKY_CMD="python ${PWD}/funky"
 

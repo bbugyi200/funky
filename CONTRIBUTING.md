@@ -51,7 +51,7 @@ Ready to contribute? Here's how to setup `funky` for local development.
     $ make check
     ```
     
-   > **NOTE**: You must have [shunit2] installed to run the shell tests (e.g.  `test_funky.sh`)
+   > **NOTE**: You must have [shunit2] installed to run the shell tests (e.g.  `test_funky.sh`).
 
 6. Additionally, any code added / changed is expected to meet flake8 style guidelines.
    Make sure by running::
