@@ -39,7 +39,7 @@ fi
 _source_globals() { source <(${FUNKY_CMD} --verbose --global); }
 
 # Source local (per-directory) funks.
-_source_locals() { source <(${FUNKY_CMD} --verbose); }
+_source_locals() { source <(${FUNKY_CMD} --verbose) && _save_locals; }
 
 # Get the current TTY number.
 _tty_number() { tty | sed 's/[^0-9]*//'; }
@@ -81,7 +81,6 @@ _maybe_source_globals() {
 _maybe_source_locals() {
     if [[ -f "$PWD"/.funky ]] && [[ "$PWD" != "${_home_dir}" ]]; then
         _source_locals
-        _save_locals
     fi
 }
 
