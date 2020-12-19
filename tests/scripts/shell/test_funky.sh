@@ -80,13 +80,6 @@ test_chpwd() {
 
     assert_funk_defined "my_funk" "/tmp/A's my_funk() funk is NOT defined when in /tmp/A!" "${LINENO}"
 
-    cd /tmp/A/B || return 1
-    chpwd
-    assertEquals "is_local" "$(my_override_funk)"
-    assertEquals "/tmp/A" "$(cat /tmp/home/.local/share/funky/"${localpath}")"
-
-    assert_funk_defined "my_funk" "/tmp/A's my_funk() funk is NOT defined when in /tmp/A/B!" "${LINENO}"
-
     cd /tmp || return 1
     chpwd
     assertEquals "is_global" "$(my_override_funk)"

@@ -97,10 +97,9 @@ _setup_funks
 ##### SOURCE APPROPRIATE FUNKS EVERYTIME THE DIRECTORY IS CHANGED
 #
 # * Is run everytime the directory is changed.
-# * Lazily loads global funks and local funks while attempting to maintain
-#   parent's local funks.
+# * Lazily loads global funks and local funks.
 chpwd() {
-    if [[ -f "$_ACTIVE_LOCALPATH" ]] && ! [[ "$PWD" == $(cat "$_ACTIVE_LOCALPATH") || "$PWD" == "$(cat "$_ACTIVE_LOCALPATH")/"* ]]; then
+    if [[ -f "$_ACTIVE_LOCALPATH" ]] && ! [[ "$PWD" == $(cat "$_ACTIVE_LOCALPATH") ]]; then
         _maybe_unset_locals
         _maybe_source_globals
 
