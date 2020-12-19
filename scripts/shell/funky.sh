@@ -63,11 +63,10 @@ _unset_locals() {
     unset _ACTIVE_ALIASES
 }
 
-# Activate local funks, if necessary.
-_maybe_source_locals() {
-    if [[ -f "$PWD"/.funky ]] && [[ "$PWD" != "${_home_dir}" ]]; then
-        _source_locals
-        _save_locals
+# Unset old local funks, if necessary.
+_maybe_unset_locals() {
+    if [[ -f "$_ACTIVE_ALIASES" ]]; then
+        _unset_locals
     fi
 }
 
@@ -78,16 +77,23 @@ _maybe_source_globals() {
     fi
 }
 
-# Unset old local funks, if necessary.
-_maybe_unset_locals() {
-    if [[ -f "$_ACTIVE_ALIASES" ]]; then
-        _unset_locals
+# Activate local funks, if necessary.
+_maybe_source_locals() {
+    if [[ -f "$PWD"/.funky ]] && [[ "$PWD" != "${_home_dir}" ]]; then
+        _source_locals
+        _save_locals
     fi
 }
 
+# Setup the proper funk environment.
+function _setup_funks() {
+    _maybe_unset_locals
+    _maybe_source_globals
+    _maybe_source_locals
+}
+
 ##### SOURCE FUNKS ON STARTUP
-_maybe_source_globals
-_maybe_source_locals
+_setup_funks
 
 ##### SOURCE APPROPRIATE FUNKS EVERYTIME THE DIRECTORY IS CHANGED
 #
@@ -98,12 +104,14 @@ chpwd() {
     if [[ -f "$_ACTIVE_LOCALPATH" ]] && ! [[ "$PWD" == $(cat "$_ACTIVE_LOCALPATH") || "$PWD" == "$(cat "$_ACTIVE_LOCALPATH")/"* ]]; then
         _maybe_unset_locals
         _maybe_source_globals
+
         command rm -f "$_ACTIVE_LOCALPATH"
         unset _ACTIVE_LOCALPATH
     fi
 
     if [[ "$PWD" != "$_home_dir" ]] && [[ -f "$PWD"/.funky ]]; then
         _maybe_source_locals
+
         if [[ ! -f "$_ACTIVE_LOCALPATH" ]]; then
             echo "$PWD" >"$_ACTIVE_LOCALPATH"
         fi
@@ -115,24 +123,21 @@ PROMPT_COMMAND=chpwd
 ##### FUNKY'S WRAPPER FUNCTIONS
 # Wrapper used to interact with local funks.
 unalias funky &>/dev/null
-funky() {
-    touch "$_xdg_data_dir"/timestamp
-
-    ${FUNKY_CMD} --color=y "$@"
-    if [[ .funky -nt "$_xdg_data_dir"/timestamp ]]; then
-        _maybe_unset_locals
-        _maybe_source_locals
-    fi
-}
+funky() { _funky .funky "$@"; }
 
 # Wrapper used to interact with global funks.
 unalias gfunky &>/dev/null
-gfunky() {
+gfunky() { _funky ~/.funky --global "$@"; }
+
+# Helper function used by funky's main wrapper functions.
+function _funky() {
+    local funk_defs_file="$1"
+    shift
+
     touch "$_xdg_data_dir"/timestamp
-    ${FUNKY_CMD} --global --color=y "$@"
-    if [[ ~/.funky -nt "$_xdg_data_dir"/timestamp ]]; then
-        _maybe_unset_locals
-        _maybe_source_globals
-        _maybe_source_locals
+
+    ${FUNKY_CMD} --color=y "$@"
+    if [[ "${funk_defs_file}" -nt "$_xdg_data_dir"/timestamp ]]; then
+        _setup_funks
     fi
 }
