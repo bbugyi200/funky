@@ -18,7 +18,7 @@ class PostInstallCommand(install):
 
     def run(self):
         post_install.run(self)
-        install.run(self)
+        super().run()
 
 
 class PostDevelopCommand(develop):
@@ -26,7 +26,7 @@ class PostDevelopCommand(develop):
 
     def run(self):
         post_install.run(self)
-        develop.run(self)
+        super().run()
 
 
 def long_description() -> str:
