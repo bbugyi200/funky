@@ -9,7 +9,6 @@
 ## Table of Contents
 
 * [Usage](#usage)
-   * [Command-line Interface](#command-line-interface)
    * [Local vs Global](#local-vs-global)
    * [Funk Definition Shortcuts](#funk-definition-shortcuts)
       * [Special cd Funks](#special-cd-funks)
@@ -24,39 +23,6 @@
 
 ## Usage
 Funks are manipulated using the `funky` and `gfunky` commands. These commands have the same user interface, which is specified in the [Command-line Interface](#command-line-interface) section. The difference between the two commands is treated in the [Local vs Global](#local-vs-global) section.
-
-### Command-line Interface
-```
-usage: funky [-h] [-d] [-v] [--version] [--color {y,n}] [-a FUNK] [-r [FUNK]]
-             [-e FUNK] [-R OLD NEW]
-             [FUNK]
-
-Funky makes ZSH shell functions more powerful and easier to manage.
-
-optional arguments:
-  -h, --help     show this help message and exit
-  -d, --debug    Enable debug mode.
-  -v, --verbose  Enable verbose output.
-  --version      show program's version number and exit
-  --color {y,n}  Colorize funk definitions.
-
-Action Commands:
-  All of these options act on the current set of local funks in some way. If
-  no action command is provided, the default action is to display all of the
-  local funks currently in scope. These commands are mutually exclusive.
-
-  -a FUNK        Add a new funk.
-  -r [FUNK]      Remove an existing funk. Or (if FUNK is not given) remove all
-                 funks defined in this directory.
-  -e FUNK        Edit an existing funk.
-  -R OLD NEW     Rename an existing funk. OLD funk is renamed to NEW.
-  FUNK           When no action command is specified, the default action is to
-                 display existing funks. An funk name (FUNK) can optionally be
-                 provided as an argument to display only FUNK. If FUNK ends in
-                 two periods ('..'), it is treated as a prefix instead of an
-                 exact match: all funks that start with FUNK (not including
-                 the trailing '..') will be displayed.
-```
 
 ### Local vs Global
 
