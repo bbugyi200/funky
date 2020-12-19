@@ -73,9 +73,8 @@ Ready to contribute? Here's how to setup `funky` for local development.
 
 ## Deploying
 
-A reminder for the maintainers on how to deploy.
-Make sure all your changes are committed.
-Then run:
+A reminder for the maintainers on how to deploy. Make sure all your changes
+are committed and that you have [bumpversion] installed. Then run:
 
 ``` 
 $ bumpversion patch # possible: major / minor / patch
@@ -85,5 +84,6 @@ $ git push --tags
 
 Travis will then deploy to PyPI if tests pass.
 
+[bumpversion]: https://github.com/c4urself/bump2version
 [shunit2]: https://github.com/kward/shunit2
 [virtualenvwrapper]: https://virtualenvwrapper.readthedocs.io/en/latest/index.html
