@@ -30,8 +30,7 @@ class PostDevelopCommand(develop):
 
 
 def long_description() -> str:
-    with open("README.md") as readme_file:
-        return readme_file.read()
+    return Path("README.md").read_text()
 
 
 def install_requires() -> List[str]:
@@ -42,8 +41,8 @@ def tests_require() -> List[str]:
     return _requires("dev-requirements.txt")
 
 
-def _requires(basename: str) -> List[str]:
-    reqtxt = Path(__file__).parent / basename
+def _requires(reqtxt_basename: str) -> List[str]:
+    reqtxt = Path(__file__).parent / reqtxt_basename
     reqs = reqtxt.read_text().split("\n")
     return [req for req in reqs if req and not req.startswith("-")]
 
