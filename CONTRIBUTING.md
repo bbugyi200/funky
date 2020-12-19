@@ -17,58 +17,61 @@ If you are proposing a feature:
 * Remember that this is a volunteer-driven project, and that contributions
   are welcome :)
 
-## Get Started!
+## Setup funky for Local Development
 
-Ready to contribute? Here's how to setup `funky` for local development.
+Ready to contribute? Here are the steps required to setup funky for local
+development.
 
-1. Fork the `funky` repo on GitHub.
+1. Fork the funky repo on GitHub.
 
 1. Clone your fork locally:
 
-    ```
+    ```console
     $ git clone git@github.com:your_name_here/funky.git
     ```
 
-1. Install your local copy into a virtualenv. Assuming you have [virtualenvwrapper]
-   installed, this is how you setup your fork for local development:
+1. Install your local copy of funky and all of funky's Python development
+   dependencies into a virtualenv. Assuming you have [virtualenvwrapper]
+   installed, the following commands should do the trick:
 
-    ```
+    ```console
     $ cd funky/
     $ mkvirtualenv funky
-    $ workon funky
     $ pip install -r dev-requirements.txt
     ```
     
-1. Install system developer dependencies (e.g. [shunit2]):
+1. Install system development dependencies (e.g. [shunit2]):
    
-   ```
+   ```console
    $ ./scripts/install-system-dev-deps
    ```
 
 1. Create a branch for local development:
-    ``` 
+
+    ``` console
     $ git checkout -b name-of-your-bugfix-or-feature
     ```
+
    Now you can make your changes locally.
 
 1. When you're done making changes, check that all the tests are still passing::
 
-    ``` 
+    ```console
     $ make check
     ```
 
-1. Additionally, any code added / changed is expected to meet flake8 style guidelines.
+1. Additionally, any code added / changed is expected to meet [flake8] style guidelines.
    Make sure by running::
 
-   ``` 
+   ```console
    $ flake8 funky tests
    ```
 
-1. Commit your changes and push your branch to GitHub::
+1. Commit your changes and push your branch to GitHub:
 
-    ``` 
+    ```console
     $ git add .
-    $ git commit -m "Your detailed description of your changes."
+    $ git commit -m "Detailed description of your changes."
     $ git push origin name-of-your-bugfix-or-feature
     ```
 
@@ -80,8 +83,8 @@ Ready to contribute? Here's how to setup `funky` for local development.
 A reminder for the maintainers on how to deploy. Make sure all your changes
 are committed and that you have [bumpversion] installed. Then run:
 
-``` 
-$ bumpversion patch # possible: major / minor / patch
+```console
+$ bumpversion patch  # possible values: major / minor / patch
 $ git push
 $ git push --tags
 ```
@@ -89,5 +92,6 @@ $ git push --tags
 TravisCI will then deploy to PyPI if tests pass.
 
 [bumpversion]: https://github.com/c4urself/bump2version
+[flake8]: https://github.com/PyCQA/flake8
 [shunit2]: https://github.com/kward/shunit2
 [virtualenvwrapper]: https://virtualenvwrapper.readthedocs.io/en/latest/index.html
