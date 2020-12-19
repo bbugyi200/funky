@@ -23,13 +23,13 @@ Ready to contribute? Here's how to setup `funky` for local development.
 
 1. Fork the `funky` repo on GitHub.
 
-2. Clone your fork locally:
+1. Clone your fork locally:
 
     ```
     $ git clone git@github.com:your_name_here/funky.git
     ```
 
-3. Install your local copy into a virtualenv. Assuming you have [virtualenvwrapper]
+1. Install your local copy into a virtualenv. Assuming you have [virtualenvwrapper]
    installed, this is how you setup your fork for local development:
 
     ```
@@ -38,29 +38,33 @@ Ready to contribute? Here's how to setup `funky` for local development.
     $ workon funky
     $ pip install -r dev-requirements.txt
     ```
+    
+1. Install system developer dependencies (e.g. [shunit2]):
+   
+   ```
+   $ ./scripts/install-system-dev-deps
+   ```
 
-4. Create a branch for local development:
+1. Create a branch for local development:
     ``` 
     $ git checkout -b name-of-your-bugfix-or-feature
     ```
    Now you can make your changes locally.
 
-5. When you're done making changes, check that all the tests are still passing::
+1. When you're done making changes, check that all the tests are still passing::
 
     ``` 
     $ make check
     ```
-    
-   > **NOTE**: You must have [shunit2] installed to run the shell tests (e.g.  `test_funky.sh`).
 
-6. Additionally, any code added / changed is expected to meet flake8 style guidelines.
+1. Additionally, any code added / changed is expected to meet flake8 style guidelines.
    Make sure by running::
 
    ``` 
    $ flake8 funky tests
    ```
 
-7. Commit your changes and push your branch to GitHub::
+1. Commit your changes and push your branch to GitHub::
 
     ``` 
     $ git add .
@@ -68,7 +72,7 @@ Ready to contribute? Here's how to setup `funky` for local development.
     $ git push origin name-of-your-bugfix-or-feature
     ```
 
-8. Submit a pull request through GitHub.
+1. Submit a pull request through GitHub.
 
 
 ## Deploying
@@ -82,7 +86,7 @@ $ git push
 $ git push --tags
 ```
 
-Travis will then deploy to PyPI if tests pass.
+TravisCI will then deploy to PyPI if tests pass.
 
 [bumpversion]: https://github.com/c4urself/bump2version
 [shunit2]: https://github.com/kward/shunit2

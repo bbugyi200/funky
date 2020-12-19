@@ -10,7 +10,7 @@ sudo: required
 install: 
     - pip install -U tox-travis
     - pip install -r dev-requirements.txt
-    - ./scripts/install-deps
+    - ./scripts/install-system-dev-deps
 
 script:
     - ./tests/runtests
