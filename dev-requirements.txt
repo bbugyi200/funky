@@ -1,7 +1,6 @@
--e .
-
 codecov
 coverage
+flake8
 mock
 mypy
 pytest

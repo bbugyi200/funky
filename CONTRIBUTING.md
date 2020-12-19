@@ -37,6 +37,7 @@ development.
     ```console
     $ cd funky/
     $ mkvirtualenv funky
+    $ python setup.py develop
     $ pip install -r dev-requirements.txt
     ```
     

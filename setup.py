@@ -3,7 +3,7 @@
 """The setup script."""
 
 from pathlib import Path
-from typing import List
+from typing import Iterator, List
 
 from setuptools import find_packages, setup
 from setuptools.command.develop import develop
@@ -34,17 +34,20 @@ def long_description() -> str:
 
 
 def install_requires() -> List[str]:
-    return _requires("requirements.txt")
+    return list(_requires("requirements.txt"))
 
 
 def tests_require() -> List[str]:
-    return _requires("dev-requirements.txt")
+    return list(_requires("dev-requirements.txt"))
 
 
-def _requires(reqtxt_basename: str) -> List[str]:
+def _requires(reqtxt_basename: str) -> Iterator[str]:
     reqtxt = Path(__file__).parent / reqtxt_basename
     reqs = reqtxt.read_text().split("\n")
-    return [req for req in reqs if req and not req.startswith("-")]
+    for req in reqs:
+        if not req or req.lstrip().startswith(("#", "-")):
+            continue
+        yield req
 
 
 setup(
