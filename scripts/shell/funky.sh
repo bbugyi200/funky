@@ -49,7 +49,7 @@ _save_locals() {
     export _ACTIVE_LOCALPATH="$_xdg_data_dir"/localpath-"$(_tty_number)"
     export _ACTIVE_ALIASES="$_xdg_data_dir"/localalias-"$(_tty_number)"
 
-    ${FUNKY_CMD} | perl -nE 'print s/\(.+$//gr if /^[^ ]+\(/' >"$_ACTIVE_ALIASES"
+    ${FUNKY_CMD} | perl -nE 'print s/\(.+$//gr if /^\S+\(/' >"$_ACTIVE_ALIASES"
 
     if [[ ! -f "$_ACTIVE_LOCALPATH" ]]; then
         echo "$PWD" >"$_ACTIVE_LOCALPATH"
