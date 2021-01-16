@@ -33,12 +33,12 @@ check: check-python check-shell ## Run all tests.
 .PHONY: check-python
 check-python: ## Run Python tests.
 	@printf "\n%s\n" "---------- Running Python Tests ----------"
-	poetry run `pwd`/tests/runtests $(pytest_opts)
+	$(PWD)/tests/runtests $(pytest_opts)
 
 .PHONY: check-shell
 check-shell: ## Run Shell tests.
 	@printf "\n%s\n" "---------- Running Shell Tests ----------"
-	./tests/scripts/shell/test_funky.sh
+	$(PWD)/tests/scripts/shell/test_funky.sh
 
 .PHONY: release
 release: dist ## Package and upload a release.

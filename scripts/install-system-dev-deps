@@ -1,0 +1,11 @@
+#!/bin/bash
+
+###############################################################################
+#  Install external development dependencies.
+###############################################################################
+
+mkdir lib
+cd lib || return 1
+
+git clone https://github.com/kward/shunit2
+cp shunit2/shunit2 ../
