@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file. This projec
 [Semantic Versioning](https://semver.org/), though minor breaking changes can happen in minor
 releases.
 
+### Unreleased
+
+Fixed:
+
+* Local funks are being run when in different folder, or after deletion (#164).
+
 ### v3.4.0 (2019-07-15)
 
 Removed:
