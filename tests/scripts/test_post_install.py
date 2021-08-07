@@ -29,6 +29,9 @@ def test_copy_sh_ext__ENVVAR_NOT_DEFINED():
     if "XDG_DATA_HOME" in os.environ:
         del os.environ["XDG_DATA_HOME"]
 
+    if "USER" not in os.environ:
+        os.environ["USER"] = "bryan"
+
     Install = namedtuple("Install", ["root"])
     install = Install("/tmp/")
     post_install._copy_sh_ext(install)  # pylint: disable=protected-access

@@ -1,0 +1,49 @@
+name: Test
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.7", "3.8", "3.9"]
+        os: [ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --upgrade tox
+
+      - name: Unit tests
+        run: |
+          tox -e ci-py -- -v --color=yes
+
+      - name: Publish coverage to Coveralls
+        uses: AndreMiras/coveralls-python-action@v20201129
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          parallel: true
+          flag-name: py${{ matrix.python-version }}-${{ matrix.os }}
+          debug: true
+
+  coveralls-finish:
+    needs: build
+    # If pushed / is a pull request against main repo
+    if:
+      (github.event_name == 'push' && github.repository == 'bbugyi200/funky') ||
+      github.event.pull_request.base.repo.full_name == 'bbugyi200/funky'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Coveralls finished
+        uses: AndreMiras/coveralls-python-action@v20201129
+        with:
+          parallel-finished: true
+          debug: true
