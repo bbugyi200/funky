@@ -13,6 +13,8 @@ jobs:
         os: [ubuntu-latest]
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
@@ -21,8 +23,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          python -m pip install --upgrade tox
+          python -m pip install -U pip tox coverage
 
       - name: Unit tests
         run: |
@@ -30,5 +31,4 @@ jobs:
 
       - name: Publish coverage to Coveralls
         run: |
-          coverage run --rcfile=.coveragerc ./tests/runtests &&
           bash <(curl -s https://codecov.io/bash) -cF py${{ matrix.python-version }}-${{ matrix.os }}
