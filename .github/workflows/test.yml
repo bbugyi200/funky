@@ -31,5 +31,3 @@ jobs:
       - name: Publish coverage to Coveralls
         run: |
           bash <(curl -s https://codecov.io/bash) -cF py${{ matrix.python-version }}-${{ matrix.os }}
-    with:
-      fetch-depth: 2
