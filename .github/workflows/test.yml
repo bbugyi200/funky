@@ -30,4 +30,5 @@ jobs:
 
       - name: Publish coverage to Coveralls
         run: |
+          coverage run --rcfile=.coveragerc ./tests/runtests &&
           bash <(curl -s https://codecov.io/bash) -cF py${{ matrix.python-version }}-${{ matrix.os }}
