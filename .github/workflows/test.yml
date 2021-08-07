@@ -26,7 +26,7 @@ jobs:
 
       - name: Unit tests
         run: |
-          tox -- -v --color=yes
+          tox -e py -- -v --color=yes
 
       - name: Publish coverage to Coveralls
         uses: AndreMiras/coveralls-python-action@v20201129
