@@ -13,7 +13,7 @@ def test_copy_sh_ext__ENVVAR_DEFINED(xdg_data_home: Path) -> None:
     assert os.path.exists(f"{xdg_data_home}/funky/funky.sh")
 
 
-def test_copy_sh_ext__ENVVAR_NOT_DEFINED():
+def test_copy_sh_ext__ENVVAR_NOT_DEFINED() -> None:
     old_data_dir = os.environ.get("XDG_DATA_HOME", None)
 
     if "XDG_DATA_HOME" in os.environ:

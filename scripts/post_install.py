@@ -5,6 +5,7 @@ import getpass
 import os
 import shutil
 import sys
+from typing import Any
 
 
 def run(install):
@@ -12,7 +13,7 @@ def run(install):
     _copy_sh_ext(install)
 
 
-def _copy_sh_ext(install):
+def _copy_sh_ext(install: Any) -> None:
     """Copy shell extension to funky config directory."""
     this_dir = os.path.dirname(os.path.realpath(__file__))
     root = install.root if install.root else ''

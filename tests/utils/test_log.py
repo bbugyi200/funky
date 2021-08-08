@@ -10,7 +10,7 @@ from funky.utils import log
 
 
 @pytest.mark.parametrize("debug", [False, True])
-def test_init_logger(debug):
+def test_init_logger(debug: bool) -> None:
     """Tests that loggers are initialized properly."""
     log.init_logger(debug=debug)
     assert log.logger.isEnabledFor(logging.DEBUG) == debug
