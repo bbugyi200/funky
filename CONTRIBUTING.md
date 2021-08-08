@@ -90,7 +90,7 @@ $ git push
 $ git push --tags
 ```
 
-TravisCI will then deploy to PyPI if tests pass.
+A new version of funky will then deploy to PyPI if tests pass.
 
 [bumpversion]: https://github.com/c4urself/bump2version
 [flake8]: https://github.com/PyCQA/flake8
