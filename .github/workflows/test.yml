@@ -1,4 +1,4 @@
-name: Test
+name: test
 on:  # yamllint disable-line rule:truthy
   push:
     branches: [master]

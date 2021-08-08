@@ -1,4 +1,4 @@
-name: pypi_upload
+name: publish
 on: [push]  # yamllint disable-line rule:truthy
 jobs:
   build:
