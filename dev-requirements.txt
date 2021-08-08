@@ -5,6 +5,7 @@ flake8
 isort
 mock
 mypy
+pylint
 pytest
 pytest-cov
 pytest-mock

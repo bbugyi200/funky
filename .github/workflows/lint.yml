@@ -34,3 +34,7 @@ jobs:
       - name: mypy
         run: |
           make mypy
+
+      - name: pylint
+        run: |
+          make pylint
