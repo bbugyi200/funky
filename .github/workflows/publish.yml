@@ -1,7 +1,5 @@
 name: pypi_upload
-on:  # yamllint disable-line rule:truthy
-  push:
-    branches: [master]
+on: [push]  # yamllint disable-line rule:truthy
 jobs:
   build:
     name: PyPI Upload
@@ -27,8 +25,13 @@ jobs:
         run: |
           python setup.py bdist_wheel
           python setup.py sdist
+      - name: Publish distribution to Test PyPI
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+          repository_url: https://test.pypi.org/legacy/
       - name: Publish distribution to PyPI
-        if: startsWith(github.ref, 'refs/tags')
+        if: github.repository == 'bbugyi200/funky' && startsWith(github.ref, 'refs/tags')
         uses: pypa/gh-action-pypi-publish@master
         with:
           password: ${{ secrets.PYPI_API_TOKEN }}

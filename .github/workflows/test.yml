@@ -1,3 +1,5 @@
+# TODO: Run test_funky.sh.
+# TODO: Only publish coverage report to codecov.io on Python3.9.
 name: Test
 on:  # yamllint disable-line rule:truthy
   push:
