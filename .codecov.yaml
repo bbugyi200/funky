@@ -1,9 +1,9 @@
 codecov:
   notify:
-    require_ci_to_pass: yes
+    require_ci_to_pass: true
 
 ignore:
-    - "tests/*"
+  - "tests/*"
 
 coverage:
   precision: 2
@@ -11,19 +11,19 @@ coverage:
   range: "70...100"
 
   status:
-    project: yes
-    patch: yes
-    changes: no
+    project: true
+    patch: true
+    changes: false
 
 parsers:
   gcov:
     branch_detection:
-      conditional: yes
-      loop: yes
-      method: no
-      macro: no
+      conditional: true
+      loop: true
+      method: false
+      macro: false
 
 comment:
   layout: "header, diff"
   behavior: default
-  require_changes: no
+  require_changes: false

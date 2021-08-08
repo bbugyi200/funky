@@ -1,0 +1,43 @@
+name: Test
+on:  # yamllint disable-line rule:truthy
+  push:
+    branches: [master]
+  pull_request:
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.7", "3.8", "3.9"]
+        os: [ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install -U pip tox
+
+      - name: Unit tests
+        run: |
+          make test-python
+
+      - name: Publish coverage to Coveralls
+        if: matrix.python-version == '3.9'
+        run: |
+          python -m pip install -U coverage
+          bash <(curl -s https://codecov.io/bash) -cF python
+
+      - name: Bash Tests
+        if: matrix.python-version == '3.9'
+        run: |
+          ./scripts/install-system-dev-deps
+          python -m pip install -e .
+          make test-shell

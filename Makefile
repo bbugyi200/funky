@@ -27,16 +27,25 @@ clean-test: ## Remove test and coverage artifacts.
 	rm -fr htmlcov/
 	rm -fr .pytest_cache
 
+.PHONY: test
+test: test-python test-shell ## Run all tests.
+
+.PHONY: test
+test-python: check-python ## Run Python tests.
+
+.PHONY: test
+test-shell: check-shell ## Run Shell tests.
+
 .PHONY: check
-check: check-python check-shell ## Run all tests.
+check: check-python check-shell
 
 .PHONY: check-python
-check-python: ## Run Python tests.
+check-python:
 	@printf "\n%s\n" "---------- Running Python Tests ----------"
-	$(PWD)/tests/runtests $(pytest_opts)
+	tox -e py -- -v --cov
 
 .PHONY: check-shell
-check-shell: ## Run Shell tests.
+check-shell:
 	@printf "\n%s\n" "---------- Running Shell Tests ----------"
 	$(PWD)/tests/scripts/shell/test_funky.sh
 
