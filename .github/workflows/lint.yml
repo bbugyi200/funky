@@ -16,7 +16,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install -U pip black
+          python -m pip install -U pip black isort
 
       - name: black
         run: |
