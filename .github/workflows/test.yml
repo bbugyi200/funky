@@ -1,5 +1,4 @@
 # TODO: Run test_funky.sh.
-# TODO: Only publish coverage report to codecov.io on Python3.9.
 name: Test
 on:  # yamllint disable-line rule:truthy
   push:
@@ -32,5 +31,6 @@ jobs:
           tox -e py -- -v --color=yes
 
       - name: Publish coverage to Coveralls
+        if: ${{ matrix.python-version }} == "3.9"
         run: |
-          bash <(curl -s https://codecov.io/bash) -cF py${{ matrix.python-version }}-${{ matrix.os }}
+          bash <(curl -s https://codecov.io/bash) -cF python
