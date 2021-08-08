@@ -23,7 +23,6 @@ jobs:
           --outdir dist/
       - name: Build wheels
         run: |
-          python setup.py bdist_wheel
           python setup.py sdist
       - name: Publish distribution to Test PyPI
         uses: pypa/gh-action-pypi-publish@master
