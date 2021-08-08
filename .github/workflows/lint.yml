@@ -21,20 +21,16 @@ jobs:
 
       - name: black
         run: |
-          python -m black --check funky
-          python -m black --check tests
+          make black
 
       - name: isort
         run: |
-          python -m isort --check-only funky
-          python -m isort --check-only tests
+          make isort
 
       - name: flake8
         run: |
-          python -m flake8 funky
-          python -m flake8 tests
+          make flake8
 
       - name: mypy
         run: |
-          python -m mypy funky
-          python -m mypy tests
+          make mypy
