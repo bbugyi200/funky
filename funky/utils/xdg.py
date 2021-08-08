@@ -4,11 +4,12 @@ import errno
 import getpass
 import os
 
+
 _user = getpass.getuser()
 
 
 def getdir(userdir):
-    """ Get XDG User Directory.
+    """Get XDG User Directory.
 
     Args:
         userdir (str): one of the four defined XDG user directories ('config',
@@ -67,7 +68,7 @@ def _getter_factory(envvar, dirfmt):
 
 
 def _create_dir(directory):
-    """ Create directory if it does not already exist.
+    """Create directory if it does not already exist.
 
     Args:
         directory: full directory path.

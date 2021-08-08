@@ -8,8 +8,7 @@ import argparse
 import sys
 
 import funky
-from funky import commands
-from funky import errors
+from funky import commands, errors
 from funky.utils import log
 
 
@@ -152,8 +151,7 @@ class _CmdAction(argparse.Action):
         elif option_string is not None:
             raise errors.ArgumentError(
                 "Option {} can not be used with option {}. All action "
-                "commands are mutually exclusive."
-                .format(
+                "commands are mutually exclusive.".format(
                     option_string, self.__class__.option_string
                 )
             )

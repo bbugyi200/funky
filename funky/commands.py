@@ -1,9 +1,16 @@
 """Command definitions."""
 
-from __future__ import division, absolute_import, print_function
-from builtins import bytes, dict, int, range, str, super  # pylint: disable=redefined-builtin,unused-import
+from __future__ import absolute_import, division, print_function
 
 from abc import ABCMeta, abstractmethod
+from builtins import (  # pylint: disable=redefined-builtin,unused-import
+    bytes,
+    dict,
+    int,
+    range,
+    str,
+    super,
+)
 import json
 import os
 import re
@@ -11,13 +18,12 @@ import shlex
 import subprocess as sp
 import tempfile
 
-from six import string_types
 from pygments import highlight  # type: ignore
-from pygments.lexers import BashLexer  # type: ignore
 from pygments.formatters import TerminalFormatter  # type: ignore
+from pygments.lexers import BashLexer  # type: ignore
+from six import string_types
 
-from funky import errors
-from funky import utils
+from funky import errors, utils
 from funky.utils import log
 
 
@@ -85,8 +91,7 @@ class Command:
         """Saves funk changes to database."""
         if self.funk_dict:
             log.logger.debug(
-                "Committing changes to database: %s",
-                self.ACTIVE_DB_FILENAME
+                "Committing changes to database: %s", self.ACTIVE_DB_FILENAME
             )
             with open(self.ACTIVE_DB_FILENAME, "w") as f:
                 json.dump(self.funk_dict, f)

@@ -6,6 +6,7 @@ import pytest
 
 import funky.utils.xdg as xdg
 
+
 user = getpass.getuser()
 
 
