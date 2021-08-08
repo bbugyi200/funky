@@ -1,14 +1,14 @@
 """Command definitions."""
 
 from __future__ import division, absolute_import, print_function
-from builtins import (
+from builtins import (  # pylint: disable=redefined-builtin,unused-import
     bytes,
     dict,
     int,
     range,
     str,
     super,
-)  # pylint: disable=redefined-builtin,unused-import
+)
 
 from abc import ABCMeta, abstractmethod
 import json
