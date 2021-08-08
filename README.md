@@ -2,7 +2,10 @@
 
 **Funky takes shell functions to the next level by making them easier to define, more flexible, and more interactive.**
 
-[![Build Status](https://travis-ci.org/bbugyi200/funky.svg?branch=master)](https://travis-ci.org/bbugyi200/funky) [![codecov](https://codecov.io/gh/bbugyi200/funky/branch/master/graph/badge.svg)](https://codecov.io/gh/bbugyi200/funky) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Test Workflow](https://github.com/bbugyi200/funky/actions/workflows/test.yml/badge.svg)](https://github.com/bbugyi200/funky/actions/workflows/test.yml)
+[![Publish Workflow](https://github.com/bbugyi200/funky/actions/workflows/publish.yml/badge.svg)](https://github.com/bbugyi200/funky/actions/workflows/publish.yml)
+[![Coverage](https://codecov.io/gh/bbugyi200/funky/branch/master/graph/badge.svg)](https://codecov.io/gh/bbugyi200/funky)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ![demo]
 
