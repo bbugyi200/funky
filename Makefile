@@ -42,7 +42,7 @@ check: check-python check-shell
 .PHONY: check-python
 check-python:
 	@printf "\n%s\n" "---------- Running Python Tests ----------"
-	$(PWD)/tests/runtests $(pytest_opts)
+	tox -e py -- -v --cov
 
 .PHONY: check-shell
 check-shell:

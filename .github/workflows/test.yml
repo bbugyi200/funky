@@ -27,7 +27,7 @@ jobs:
 
       - name: Unit tests
         run: |
-          tox -e py -- -v --color=yes
+          make test-python
 
       - name: Publish coverage to Coveralls
         if: matrix.python-version == '3.9'
@@ -40,4 +40,4 @@ jobs:
         run: |
           ./scripts/install-system-dev-deps
           python -m pip install -e .
-          ./tests/scripts/shell/test_funky.sh
+          make test-shell
