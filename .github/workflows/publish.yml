@@ -1,7 +1,7 @@
 name: publish
 on: [push]  # yamllint disable-line rule:truthy
 jobs:
-  build:
+  publish:
     name: PyPI Upload
     runs-on: ubuntu-latest
     steps:
