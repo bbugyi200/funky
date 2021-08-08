@@ -79,13 +79,13 @@ isort: ## Run isort checks.
 
 .PHONY: mypy
 mypy: ## Run mypy checks. 
-	python -m flake8 funky
-	python -m flake8 tests
+	python -m mypy funky
+	python -m mypy tests
 
 .PHONY: flake8
 flake8: ## Run flake8 checks. 
-	python -m mypy funky
-	python -m mypy tests
+	python -m flake8 funky
+	python -m flake8 tests
 
 .PHONY: pylint
 pylint: ## Run pylint checks. 
