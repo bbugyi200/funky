@@ -12,6 +12,12 @@ Fixed:
 
 * Local funks are being run when in different folder, or after deletion (#164).
 
+Miscellaneous:
+
+* Styled python source files using [black](https://github.com/psf/black).
+* Sorted imports using [isort](https://github.com/PyCQA/isort).
+* Migrated from TravisCI to GitHub actions (#169).
+
 ### v3.4.0 (2019-07-15)
 
 Removed:
