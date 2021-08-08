@@ -6,6 +6,8 @@ releases.
 
 ### Unreleased
 
+### v3.4.2 (2021-08-08)
+
 Miscellaneous:
 
 * Added mypy, flake8, and pylint checks to CI.
