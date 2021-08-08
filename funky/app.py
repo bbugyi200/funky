@@ -8,8 +8,7 @@ import argparse
 import sys
 
 import funky
-from funky import commands
-from funky import errors
+from funky import commands, errors
 from funky.utils import log
 
 

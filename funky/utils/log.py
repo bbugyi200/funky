@@ -8,6 +8,7 @@ import logging
 
 from funky.utils import xdg
 
+
 logger = logging.getLogger("funky")
 
 

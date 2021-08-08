@@ -1,6 +1,7 @@
 """This module holds all custom exception class definitions."""
 
-from __future__ import division, absolute_import, print_function
+from __future__ import absolute_import, division, print_function
+
 from builtins import (  # pylint: disable=redefined-builtin,unused-import
     bytes,
     dict,

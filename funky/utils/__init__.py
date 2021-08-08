@@ -1,8 +1,8 @@
 """Miscellaneous utility functions."""
 
 import sys
-import tty
 import termios
+import tty
 
 
 def getch(prompt=None):

@@ -2,8 +2,8 @@ import os
 from pathlib import Path
 from typing import Iterator
 
-from pytest import fixture
 from _pytest.tmpdir import TempPathFactory
+from pytest import fixture
 
 
 @fixture

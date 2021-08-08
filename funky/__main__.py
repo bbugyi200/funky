@@ -4,6 +4,7 @@ import importlib
 import os
 import sys
 
+
 if os.environ.get("DEBUG_FUNKY", None):
     parent_dir = os.path.abspath(os.path.dirname(__file__))
     sys.path.append(os.path.dirname(parent_dir))

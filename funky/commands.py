@@ -1,6 +1,8 @@
 """Command definitions."""
 
-from __future__ import division, absolute_import, print_function
+from __future__ import absolute_import, division, print_function
+
+from abc import ABCMeta, abstractmethod
 from builtins import (  # pylint: disable=redefined-builtin,unused-import
     bytes,
     dict,
@@ -9,8 +11,6 @@ from builtins import (  # pylint: disable=redefined-builtin,unused-import
     str,
     super,
 )
-
-from abc import ABCMeta, abstractmethod
 import json
 import os
 import re
@@ -18,13 +18,12 @@ import shlex
 import subprocess as sp
 import tempfile
 
-from six import string_types
 from pygments import highlight  # type: ignore
-from pygments.lexers import BashLexer  # type: ignore
 from pygments.formatters import TerminalFormatter  # type: ignore
+from pygments.lexers import BashLexer  # type: ignore
+from six import string_types
 
-from funky import errors
-from funky import utils
+from funky import errors, utils
 from funky.utils import log
 
 

@@ -5,12 +5,11 @@ import json
 import os
 import shutil
 import tempfile
-import mock
 
+import mock
 import pytest
 
-from funky import commands
-from funky import errors
+from funky import commands, errors
 
 
 @pytest.fixture(autouse=True)
