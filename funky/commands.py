@@ -3,7 +3,7 @@
 from __future__ import absolute_import, division, print_function
 
 from abc import ABCMeta, abstractmethod
-from builtins import (  # pylint: disable=redefined-builtin,unused-import
+from builtins import (  # noqa: F401  # pylint: disable=redefined-builtin,unused-import
     bytes,
     dict,
     int,
@@ -17,11 +17,11 @@ import re
 import shlex
 import subprocess as sp
 import tempfile
+from typing import Dict, List, Union
 
 from pygments import highlight  # type: ignore
 from pygments.formatters import TerminalFormatter  # type: ignore
 from pygments.lexers import BashLexer  # type: ignore
-from six import string_types
 
 from funky import errors, utils
 from funky.utils import log
@@ -52,12 +52,14 @@ class Command:
     FUNKY_DB_FILENAME = ".funky"
     GLOBAL_FUNKY_DB_FILENAME = "{}/.funky".format(os.path.expanduser("~"))
 
-    def __init__(self, args, color=False, global_=False, verbose=False):
-        try:
-            iter(args)
-            if isinstance(args, string_types):
-                raise ValueError
-        except (TypeError, ValueError):
+    def __init__(
+        self,
+        args: Union[None, str, List[str]],
+        color: bool = False,
+        global_: bool = False,
+        verbose: bool = False,
+    ) -> None:
+        if isinstance(args, str):
             args = [args]
 
         if global_:
@@ -65,8 +67,13 @@ class Command:
         else:
             self.ACTIVE_DB_FILENAME = self.FUNKY_DB_FILENAME
 
-        self.funk = args[0]
-        self.args = args[1:]
+        if args is None:
+            self.funk = None
+            self.args = []
+        else:
+            self.funk = args[0]
+            self.args = args[1:]
+
         self.color = color
         self.verbose = verbose
         self.global_ = global_
@@ -75,19 +82,19 @@ class Command:
         log.logger.vdebug("Existing Funks: {}".format(self.funk_dict))  # type: ignore
 
     @staticmethod
-    def abort():
+    def abort() -> None:
         """Print abort message."""
         print()
         log.logger.info("OK. Aborting...")
 
-    def purge_db(self):
+    def purge_db(self) -> None:
         """Removes the database file."""
         try:
             os.remove(self.ACTIVE_DB_FILENAME)
         except (IOError, OSError):
             pass
 
-    def commit(self):
+    def commit(self) -> None:
         """Saves funk changes to database."""
         if self.funk_dict:
             log.logger.debug(
@@ -100,15 +107,16 @@ class Command:
             self.purge_db()
 
     @staticmethod
-    def load(DB_FILENAME):
+    def load(DB_FILENAME: str) -> Dict[str, str]:
         try:
             with open(DB_FILENAME, "r") as f:
-                return json.load(f)
+                result: Dict[str, str] = json.load(f)
+                return result
         except (IOError, OSError):
             return {}
 
     @abstractmethod
-    def __call__(self):
+    def __call__(self) -> None:
         log.logger.debug("Running %s command.", self.__class__.__name__)
 
 
@@ -121,7 +129,7 @@ class Show(Command):
     FUNK (not including the trailing '..') will be displayed.
     """
 
-    def show(self, funk):
+    def show(self, funk: str) -> None:
         """Print funk and funk command definition to stdout."""
         cmd_string = self.funk_dict[funk]
         if "\n" in cmd_string:
@@ -145,7 +153,7 @@ class Show(Command):
 
         print(final_output)
 
-    def show_search(self, prefix):
+    def show_search(self, prefix: str) -> None:
         """Prints all funks that start with @prefix to stdout."""
         log.logger.debug("Running show command for all defined funks.")
         sorted_funks = sorted(
@@ -161,7 +169,7 @@ class Show(Command):
                 print()
             self.show(funk)
 
-    def __call__(self):
+    def __call__(self) -> None:
         super().__call__()
         if not self.funk_dict:
             self.purge_db()
@@ -180,7 +188,7 @@ class Show(Command):
 class Rename(Command):
     """Rename an existing funk. OLD funk is renamed to NEW."""
 
-    def __call__(self):
+    def __call__(self) -> None:
         super().__call__()
         if self.funk not in self.funk_dict:
             raise errors.FunkNotDefinedError(funk=self.funk)
@@ -209,12 +217,17 @@ class Rename(Command):
 class Edit(Command):
     """Edit an existing funk."""
 
-    def remove_funk(self):
+    NONE_FUNK_ERROR = (
+        "Logic Error: Must provide a funk name when using the --edit option."
+    )
+
+    def remove_funk(self) -> None:
         """Removes the funk defined at instance creation time."""
+        assert self.funk is not None, self.NONE_FUNK_ERROR
         self.funk_dict.pop(self.funk)
         log.logger.info('Removed funk "%s".', self.funk)
 
-    def edit_funk(self, startinsert=False):
+    def edit_funk(self, startinsert: bool = False) -> None:
         """Opens up funk definition using temp file in $EDITOR for editing.
 
         Args:
@@ -240,10 +253,10 @@ class Edit(Command):
         editor_cmd_list.append(tf.name)
         try:
             sp.check_call(editor_cmd_list)
-        except sp.CalledProcessError:
+        except sp.CalledProcessError as e:
             raise errors.FunkyError(
                 "Failed to open editor using: {}".format(editor_cmd_list)
-            )
+            ) from e
 
         tf = open(tf.name, "r")
         edited_cmd_string = tf.read()
@@ -255,10 +268,12 @@ class Edit(Command):
 
         log.logger.debug('New Command String: "%s"', edited_cmd_string)
         formatted_cmd_string = self._apply_shortcuts(edited_cmd_string.strip())
+
+        assert self.funk is not None, self.NONE_FUNK_ERROR
         self.funk_dict[self.funk] = formatted_cmd_string
 
     @staticmethod
-    def _editor_cmd_list(startinsert=False):
+    def _editor_cmd_list(startinsert: bool = False) -> List[str]:
         """Generates and returns editor command list."""
         if "EDITOR" in os.environ:
             editor_cmd_list = shlex.split(os.environ["EDITOR"])
@@ -278,7 +293,7 @@ class Edit(Command):
         return editor_cmd_list
 
     @staticmethod
-    def _apply_shortcuts(cmd_string):
+    def _apply_shortcuts(cmd_string: str) -> str:
         """Formats command string for correct execution and display."""
         if cmd_string.startswith("@./"):
             cmd_string = 'cd {}/"$@" || return 1'.format(
@@ -304,7 +319,7 @@ class Edit(Command):
 
         return new_cmd_string
 
-    def __call__(self):
+    def __call__(self) -> None:
         super().__call__()
         if self.funk and self.funk not in self.funk_dict:
             raise errors.FunkNotDefinedError(funk=self.funk)
@@ -325,7 +340,7 @@ class Remove(Edit):
     in this directory.
     """
 
-    def __call__(self):
+    def __call__(self) -> None:
         Command.__call__(self)
         if self.funk and self.funk not in self.funk_dict:
             raise errors.FunkNotDefinedError(funk=self.funk)
@@ -346,8 +361,7 @@ class Remove(Edit):
                     "Done. The local funk database has been removed."
                 )
             else:
-                self.abort = self.abort()
-                return self.abort
+                return self.abort()
         else:
             self.remove_funk()
 
@@ -357,7 +371,7 @@ class Remove(Edit):
 class Add(Edit):
     """Add a new funk."""
 
-    def __call__(self):
+    def __call__(self) -> None:
         Command.__call__(self)
         already_exists = False
         if self.funk in self.funk_dict:

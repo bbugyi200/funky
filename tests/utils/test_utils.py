@@ -1,7 +1,8 @@
 """Tests miscellaneous utilities."""
 
-import mock
-import pytest  # pylint: disable=unused-import
+from unittest import mock
+
+from _pytest.capture import CaptureFixture
 
 from funky import utils
 
@@ -10,7 +11,13 @@ from funky import utils
 @mock.patch("funky.utils.termios")
 @mock.patch("funky.utils.sys.stdin.fileno")
 @mock.patch("funky.utils.sys.stdin.read")
-def test_getch(read, fileno, _, __, capsys):
+def test_getch(
+    read: mock.MagicMock,
+    fileno: mock.MagicMock,
+    _: mock.MagicMock,
+    __: mock.MagicMock,
+    capsys: CaptureFixture,
+) -> None:
     """Tests getch utility function.
 
     TODO: This test is clearly terrible. I need to figure out how to test

@@ -1,6 +1,9 @@
 .PHONY: help
 help:  ## Print this message.
-	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST) | sort
+	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z0-9_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST) | sort
+
+.PHONY: all
+all: test lint ## Run all tests and lint checks.
 
 .PHONY: clean
 clean: clean-build clean-pyc clean-test ## Remove all build, test, coverage and Python artifacts.
@@ -60,3 +63,31 @@ dist: clean ## Builds source and wheel package.
 .PHONY: install
 install: clean ## Install the package to the active Python's site-packages.
 	python setup.py install
+
+.PHONY: lint
+lint: black isort mypy flake8 pylint ## Run lint checks.
+
+.PHONY: black
+black: ## Run black checks. 
+	python -m black --check funky
+	python -m black --check tests
+
+.PHONY: isort
+isort: ## Run isort checks. 
+	python -m isort --check-only funky
+	python -m isort --check-only tests
+
+.PHONY: mypy
+mypy: ## Run mypy checks. 
+	python -m mypy funky
+	python -m mypy tests
+
+.PHONY: flake8
+flake8: ## Run flake8 checks. 
+	python -m flake8 funky
+	python -m flake8 tests
+
+.PHONY: pylint
+pylint: ## Run pylint checks. 
+	pylint funky
+	pylint tests

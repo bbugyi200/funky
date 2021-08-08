@@ -3,12 +3,13 @@
 import errno
 import getpass
 import os
+from typing import Callable
 
 
 _user = getpass.getuser()
 
 
-def getdir(userdir):
+def getdir(userdir: str) -> str:
     """Get XDG User Directory.
 
     Args:
@@ -36,7 +37,7 @@ def getdir(userdir):
     return getters[userdir]()
 
 
-def _getter_factory(envvar, dirfmt):
+def _getter_factory(envvar: str, dirfmt: str) -> Callable[[], str]:
     """
     Returns XDG getter function that serves to fetch some XDG standard
     directory.
@@ -52,7 +53,7 @@ def _getter_factory(envvar, dirfmt):
         directory.
     """
 
-    def _getter():
+    def _getter() -> str:
         if envvar in os.environ:
             xdg_dir = "{}/funky".format(os.environ[envvar])
         else:
@@ -67,7 +68,7 @@ def _getter_factory(envvar, dirfmt):
     return _getter
 
 
-def _create_dir(directory):
+def _create_dir(directory: str) -> None:
     """Create directory if it does not already exist.
 
     Args:

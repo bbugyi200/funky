@@ -4,7 +4,7 @@ import getpass
 
 import pytest
 
-import funky.utils.xdg as xdg
+from funky.utils import xdg
 
 
 user = getpass.getuser()
@@ -18,12 +18,12 @@ user = getpass.getuser()
         ("cache", "/home/{}/.cache/funky".format(user)),
     ],
 )
-def test_getdir(key, expected):
+def test_getdir(key: str, expected: str) -> None:
     """Tests that each user directory returned meets the XDG standard."""
     assert expected == xdg.getdir(key)
 
 
-def test_getdir_failure():
+def test_getdir_failure() -> None:
     """Tests that xdg.getdir raises an exception for bad arguments."""
     with pytest.raises(ValueError):
         xdg.getdir("bad_key")

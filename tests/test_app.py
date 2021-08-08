@@ -1,8 +1,9 @@
 """Tests for main application (entry point)."""
 
 import functools
+from typing import List
+from unittest import mock
 
-import mock
 import pytest
 
 import funky
@@ -18,7 +19,9 @@ from funky import app, errors
     ],
 )
 @mock.patch("funky.app.commands")
-def test_main(commands, argv, cmd_cls_string):
+def test_main(
+    commands: mock.MagicMock, argv: List[str], cmd_cls_string: str
+) -> None:
     """Tests that arguments are parsed correctly."""
     setattr(commands, cmd_cls_string, mock.Mock())
     cmd_class = getattr(commands, cmd_cls_string)
@@ -32,7 +35,7 @@ def test_main(commands, argv, cmd_cls_string):
 
 @pytest.mark.parametrize("argv", [["-a", "new_funk", "-e", "existing_funk"]])
 @mock.patch("funky.utils.log.logger")
-def test_main_validate_args(logger, argv):
+def test_main_validate_args(logger: mock.MagicMock, argv: List[str]) -> None:
     """Tests that arguments are validated properly."""
     assert app.main(argv) == 2
     logger.error.called_once()
@@ -43,16 +46,19 @@ def test_main_validate_args(logger, argv):
 
 
 @mock.patch("funky.app._get_argparser")
-def test_main_exceptions(_get_argparser):
+def test_main_exceptions(_get_argparser: mock.MagicMock) -> None:
     """Tests that main handles exceptions appropriately."""
 
     class TestError(Exception):
         pass
 
-    def raise_error(opt, verbose=True):  # pylint: disable=unused-argument
+    def raise_error(opt: int, verbose: bool = True) -> None:
+        del verbose
+
         if opt == 1:
             raise errors.FunkyError(returncode=5)
-        elif opt == 2:
+
+        if opt == 2:
             raise TestError("Test Exception")
 
     _get_argparser.side_effect = functools.partial(raise_error, 1)

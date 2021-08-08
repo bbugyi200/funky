@@ -16,14 +16,25 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install -U pip black isort
+          python -m pip install -U pip
+          python -m pip install -r dev-requirements.txt
 
       - name: black
         run: |
-          python -m black --check funky
-          python -m black --check tests
+          make black
 
       - name: isort
         run: |
-          python -m isort --check-only funky
-          python -m isort --check-only tests
+          make isort
+
+      - name: flake8
+        run: |
+          make flake8
+
+      - name: mypy
+        run: |
+          make mypy
+
+      - name: pylint
+        run: |
+          make pylint

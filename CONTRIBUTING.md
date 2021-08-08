@@ -58,14 +58,13 @@ development.
 1. When you're done making changes, check that all the tests are still passing::
 
     ```console
-    $ make check
+    $ make test
     ```
 
-1. Additionally, any code added / changed is expected to meet [flake8] style guidelines.
-   Make sure by running::
+1. Additionally, any code added / changed is expected to pass all linting checks.
 
    ```console
-   $ flake8 funky tests
+   $ make lint
    ```
 
 1. Commit your changes and push your branch to GitHub:
@@ -93,6 +92,5 @@ $ git push --tags
 A new version of funky will then deploy to PyPI if tests pass.
 
 [bumpversion]: https://github.com/c4urself/bump2version
-[flake8]: https://github.com/PyCQA/flake8
 [shunit2]: https://github.com/kward/shunit2
 [virtualenvwrapper]: https://virtualenvwrapper.readthedocs.io/en/latest/index.html
