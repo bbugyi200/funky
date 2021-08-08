@@ -2,6 +2,9 @@
 help:  ## Print this message.
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z0-9_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST) | sort
 
+.PHONY: all
+all: test lint ## Run all tests and lint checks.
+
 .PHONY: clean
 clean: clean-build clean-pyc clean-test ## Remove all build, test, coverage and Python artifacts.
 

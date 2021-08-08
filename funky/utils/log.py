@@ -5,6 +5,7 @@ Attributes:
 """
 
 import logging
+from typing import Any
 
 from funky.utils import xdg
 
@@ -12,7 +13,7 @@ from funky.utils import xdg
 logger = logging.getLogger("funky")
 
 
-def init_logger(debug=False, verbose=False):
+def init_logger(debug: bool = False, verbose: bool = False) -> None:
     """Initializes the main logger.
 
     Args:
@@ -27,7 +28,7 @@ def init_logger(debug=False, verbose=False):
 
     if debug:
         if verbose:
-            level = logging.VDEBUG
+            level = logging.VDEBUG  # type: ignore[attr-defined]
         else:
             level = logging.DEBUG
     else:
@@ -51,12 +52,12 @@ def init_logger(debug=False, verbose=False):
         root.debug("Debug mode enabled.")
 
 
-def _add_vdebug_level(logging_):
+def _add_vdebug_level(logging_: Any) -> None:
     """Adds custom logging level for verbose debug logs."""
     VDEBUG_LEVEL_NUM = 5
     logging_.addLevelName(VDEBUG_LEVEL_NUM, "VDEBUG")
 
-    def vdebug(self, message, *args, **kwargs):
+    def vdebug(self: Any, message: str, *args: Any, **kwargs: Any) -> None:
         if self.isEnabledFor(VDEBUG_LEVEL_NUM):
             self._log(  # pylint: disable=protected-access
                 VDEBUG_LEVEL_NUM, message, args, **kwargs
@@ -66,7 +67,7 @@ def _add_vdebug_level(logging_):
     logging_.VDEBUG = VDEBUG_LEVEL_NUM
 
 
-def _getFormatter(verbose=False):
+def _getFormatter(verbose: bool = False) -> logging.Formatter:
     """Get log formatter.
 
     Args:

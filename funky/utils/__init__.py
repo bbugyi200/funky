@@ -5,7 +5,7 @@ import termios
 import tty
 
 
-def getch(prompt=None):
+def getch(prompt: str = None) -> str:
     """Reads a single character from stdin.
 
     Args:

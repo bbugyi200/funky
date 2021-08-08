@@ -6,6 +6,12 @@ releases.
 
 ### Unreleased
 
+Miscellaneous:
+
+* Added mypy and flake8 checks to CI.
+* Added type annotations so funky is now strictly typed.
+* Added `make lint` target so CI linting checks can be run locally.
+
 ### v3.4.1 (2021-08-08)
 
 Fixed:

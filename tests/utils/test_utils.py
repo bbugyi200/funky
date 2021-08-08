@@ -1,7 +1,6 @@
 """Tests miscellaneous utilities."""
 
 import mock
-import pytest  # pylint: disable=unused-import
 
 from funky import utils
 

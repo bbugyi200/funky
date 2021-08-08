@@ -6,22 +6,19 @@ containing directory.  In other words, use `python funky`.
 
 import argparse
 import sys
+from typing import List, Optional, Sequence, Union
 
 import funky
 from funky import commands, errors
 from funky.utils import log
 
 
-def main(argv=None):
+def main(argv: Sequence[str] = None) -> int:
     try:
         if argv is None:
             argv = sys.argv[1:]
 
-        verbose = (
-            True
-            if any(x in argv for x in ["--verbose", "-v", "-hv", "-vh"])
-            else False
-        )
+        verbose = any(x in argv for x in ["--verbose", "-v", "-hv", "-vh"])
         parser = _get_argparser(verbose=verbose)
         args = parser.parse_args(argv)
 
@@ -43,8 +40,10 @@ def main(argv=None):
         log.logger.exception("%s: %s", type(e).__name__, str(e))
         raise
 
+    return 0
 
-def _get_argparser(verbose=False):
+
+def _get_argparser(verbose: bool = False) -> argparse.ArgumentParser:
     """Get command-line arguments.
 
     Args:
@@ -82,8 +81,10 @@ def _get_argparser(verbose=False):
         help=("Enable global scope." if verbose else argparse.SUPPRESS),
     )
 
-    def format_docstring(doc):
+    def format_docstring(doc: Optional[str]) -> str:
         """Converts command docstring to argparse help doc"""
+        if doc is None:
+            doc = ""
         return doc.strip().replace("\n", " ")
 
     command_group = parser.add_argument_group(
@@ -141,10 +142,16 @@ def _get_argparser(verbose=False):
 class _CmdAction(argparse.Action):
     """Custom ArgumentParser Action for Action Commands"""
 
-    flag = None
+    flag: Optional[str] = None
     option_string = None
 
-    def __call__(self, parser, namespace, values, option_string=None):
+    def __call__(
+        self,
+        parser: argparse.ArgumentParser,
+        namespace: argparse.Namespace,
+        values: Union[None, str, Sequence[str]],
+        option_string: str = None,
+    ) -> None:
         if self.__class__.flag is None:
             self.__class__.flag = option_string
             self.__class__.option_string = option_string
@@ -158,17 +165,16 @@ class _CmdAction(argparse.Action):
         else:
             return
 
-        try:
-            iter(values)
-            if isinstance(values, str):
-                raise ValueError
-        except (TypeError, ValueError):
-            values = [values]
+        dest: List[Optional[str]]
+        if values is None or isinstance(values, str):
+            dest = [values]
+        else:
+            dest = list(values)
 
-        setattr(namespace, self.dest, values)
+        setattr(namespace, self.dest, dest)
 
     @classmethod
-    def command(cls, args):
+    def command(cls, args: argparse.Namespace) -> None:
         """Map from actions to commands."""
         cmd_builder = {
             _CmdFlag.ADD: commands.Add,
@@ -178,7 +184,7 @@ class _CmdAction(argparse.Action):
             _CmdFlag.SHOW: commands.Show,
         }[cls.flag]
 
-        cmd = cmd_builder(  # type: ignore
+        cmd = cmd_builder(  # type: ignore[abstract]
             args.command_args,
             color=(args.color[0] == "y"),
             global_=args.global_,
