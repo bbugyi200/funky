@@ -36,7 +36,6 @@ jobs:
           bash <(curl -s https://codecov.io/bash) -cF python
 
       - name: Bash Tests
-        if: matrix.python-version == '3.9'
         run: |
           ./scripts/install-system-dev-deps
           python -m pip install -e .
