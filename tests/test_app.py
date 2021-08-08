@@ -38,7 +38,9 @@ def test_main_validate_args(logger, argv):
     assert app.main(argv) == 2
     logger.error.called_once()
     funky.app._CmdAction.flag = None  # pylint: disable=protected-access
-    funky.app._CmdAction.option_string = None  # pylint: disable=protected-access
+    funky.app._CmdAction.option_string = (
+        None  # pylint: disable=protected-access
+    )
 
 
 @mock.patch("funky.app._get_argparser")

@@ -20,5 +20,5 @@ jobs:
 
       - name: Black
         run: |
-          python -m black --check -q funky
-          python -m black --check -q tests
+          python -m black --check funky
+          python -m black --check tests

@@ -1,7 +1,14 @@
 """This module holds all custom exception class definitions."""
 
 from __future__ import division, absolute_import, print_function
-from builtins import bytes, dict, int, range, str, super  # pylint: disable=redefined-builtin,unused-import
+from builtins import (
+    bytes,
+    dict,
+    int,
+    range,
+    str,
+    super,
+)  # pylint: disable=redefined-builtin,unused-import
 
 
 class FunkyError(Exception):

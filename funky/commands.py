@@ -1,7 +1,14 @@
 """Command definitions."""
 
 from __future__ import division, absolute_import, print_function
-from builtins import bytes, dict, int, range, str, super  # pylint: disable=redefined-builtin,unused-import
+from builtins import (
+    bytes,
+    dict,
+    int,
+    range,
+    str,
+    super,
+)  # pylint: disable=redefined-builtin,unused-import
 
 from abc import ABCMeta, abstractmethod
 import json
@@ -85,8 +92,7 @@ class Command:
         """Saves funk changes to database."""
         if self.funk_dict:
             log.logger.debug(
-                "Committing changes to database: %s",
-                self.ACTIVE_DB_FILENAME
+                "Committing changes to database: %s", self.ACTIVE_DB_FILENAME
             )
             with open(self.ACTIVE_DB_FILENAME, "w") as f:
                 json.dump(self.funk_dict, f)
