@@ -8,3 +8,4 @@ mypy
 pytest
 pytest-cov
 pytest-mock
+types-six
