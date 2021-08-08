@@ -1,6 +1,8 @@
+black
 codecov
 coverage
 flake8
+isort
 mock
 mypy
 pytest
