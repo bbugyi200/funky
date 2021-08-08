@@ -6,6 +6,8 @@ releases.
 
 ### Unreleased
 
+### v3.4.1 (2021-08-08)
+
 Fixed:
 
 * Local funks are being run when in different folder, or after deletion (#164).
