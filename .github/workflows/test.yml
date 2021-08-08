@@ -24,7 +24,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install -U pip tox coverage
+          python -m pip install -U pip tox
 
       - name: Unit tests
         run: |
@@ -33,4 +33,5 @@ jobs:
       - name: Publish coverage to Coveralls
         if: matrix.python-version == '3.9'
         run: |
+          python -m pip install -U coverage
           bash <(curl -s https://codecov.io/bash) -cF python
