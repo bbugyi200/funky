@@ -31,6 +31,6 @@ jobs:
           tox -e py -- -v --color=yes
 
       - name: Publish coverage to Coveralls
-        if: ${{ matrix.python-version }} == "3.9"
+        if: matrix.python-version == '3.9'
         run: |
           bash <(curl -s https://codecov.io/bash) -cF python
