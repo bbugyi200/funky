@@ -4,7 +4,7 @@ import json
 import os
 import shutil
 import tempfile
-from typing import Callable, Dict, Iterator, List, Literal, NamedTuple
+from typing import Callable, Dict, Iterator, List, NamedTuple
 from unittest import mock
 
 from _pytest.capture import CaptureFixture
@@ -179,7 +179,7 @@ class TestRename:
     def test_rename_overwrite(
         self,
         getch: mock.MagicMock,
-        y_or_n: Literal["y", "n"],
+        y_or_n: str,
         funk_dict: Dict[str, str],
     ) -> None:
         """Test that rename overwrites existing function names properly."""
@@ -326,9 +326,7 @@ class TestRemove:
 
     @pytest.mark.parametrize("y_or_n", ["y", "n"])
     @mock.patch("funky.utils.getch")
-    def test_remove_all(
-        self, getch: mock.MagicMock, y_or_n: Literal["y", "n"]
-    ) -> None:
+    def test_remove_all(self, getch: mock.MagicMock, y_or_n: str) -> None:
         """
         Tests that the local funk database is removed when no funk is provided
         and the user confirms.
