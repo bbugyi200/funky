@@ -65,7 +65,7 @@ install: clean ## Install the package to the active Python's site-packages.
 	python setup.py install
 
 .PHONY: lint
-lint: black isort mypy flake8 pylint ## Run lint checks.
+lint: black isort flake8 mypy pylint ## Run all linting checks.
 
 .PHONY: black
 black: ## Run black checks. 
