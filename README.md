@@ -146,8 +146,9 @@ If you install funky with root permissions, the ``funky.sh`` script will instead
 
 ## Similar Projects
 
-* [desk](https://github.com/jamesob/desk) - A lightweight workspace manager for the shell
-* [smartcd](https://github.com/cxreg/smartcd) - Alter your bash (or zsh) environment as you cd
+* [desk](https://github.com/jamesob/desk) - A lightweight workspace manager for the shell.
+* [smartcd](https://github.com/cxreg/smartcd) - Alter your bash (or zsh) environment as you cd.
+* [direnv](https://github.com/direnv/direnv) - is an extension for your shell. It augments existing shells with a new feature that can load and unload environment variables depending on the current directory.
 
 
 ## Contributions
