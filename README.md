@@ -20,6 +20,7 @@
       * [Special cd Funks](#special-cd-funks)
       * [Simulate Shell Variables](#simulate-shell-variables)
       * [The "$@" Special Parameter](#the--special-parameter)
+* [Articles / Blog Posts](#articles--blog-posts)
 * [Installation](#installation)
    * [Using pip to Install](#using-pip-to-install)
    * [Building from Source](#building-from-source)
@@ -84,6 +85,13 @@ alias.
 See the official [Bash docs] for more information on Bash's special parameters.
 
 [Bash docs]: https://www.gnu.org/software/bash/manual/html_node/Special-Parameters.html 
+
+## Articles / Blog Posts
+
+With the goal of listing alternative sources of documentation / tutorials, this
+section will be used to track any articles or blog posts which mention funky:
+
+* [6 Command Line Tools for Productive Programmers](https://earthly.dev/blog/command-line-tools/#funky) (2021-07-23)
 
 
 ## Installation
