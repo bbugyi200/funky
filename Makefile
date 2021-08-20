@@ -45,7 +45,7 @@ check: check-python check-shell
 .PHONY: check-python
 check-python:
 	@printf "\n%s\n" "---------- Running Python Tests ----------"
-	tox -e py -- -v --cov --cov-fail-under=90
+	tox -e py -- -v --cov --cov-fail-under=90 --cov-branch
 
 .PHONY: check-shell
 check-shell:
