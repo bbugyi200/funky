@@ -6,27 +6,8 @@ from pathlib import Path
 from typing import Iterator, List
 
 from setuptools import find_packages, setup
-from setuptools.command.develop import develop
-from setuptools.command.install import install
 
 import funky
-from scripts import post_install
-
-
-class PostInstallCommand(install):
-    """Post-installation for install mode."""
-
-    def run(self):
-        post_install.run(self)
-        super().run()
-
-
-class PostDevelopCommand(develop):
-    """Post-installation for develop mode."""
-
-    def run(self):
-        post_install.run(self)
-        super().run()
 
 
 def long_description() -> str:
@@ -63,10 +44,6 @@ setup(
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
     ],
-    cmdclass={
-        "install": PostInstallCommand,
-        "develop": PostDevelopCommand,
-    },
     description=funky.__doc__,
     entry_points={
         "console_scripts": [
@@ -79,6 +56,7 @@ setup(
     include_package_data=True,
     keywords="funky",
     name="pyfunky",
+    package_data={"scripts.shell": ["*.sh"]},
     packages=find_packages(),
     test_suite="tests",
     tests_require=tests_require(),

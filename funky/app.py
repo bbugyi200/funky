@@ -5,6 +5,8 @@ containing directory.  In other words, use `python funky`.
 """
 
 import argparse
+from importlib.resources import read_text
+from pathlib import Path
 import sys
 from typing import List, Optional, Sequence, Union
 
@@ -26,6 +28,29 @@ def main(argv: Sequence[str] = None) -> int:
         log.logger.debug("Starting funky.")
         log.logger.vdebug("argv = {}".format(argv))  # type: ignore
         log.logger.vdebug("Command-line Arguments: {}".format(args))  # type: ignore
+
+        if args.shell == "zsh":
+            funky_sh = read_text("scripts.shell", "funky.sh")
+            print(funky_sh)
+            return 0
+
+        if args.ensurepath:
+            zshrc = Path.home() / ".zshrc"
+            funky_init_cmd = "funky --init zsh"
+            if funky_init_cmd not in zshrc.read_text():
+                with zshrc.open("a") as f:
+                    cmd = (
+                        "\n# initialize funky\n"
+                        "command -v funky &>/dev/null &&"
+                        f' eval "$({funky_init_cmd})"'
+                    )
+                    log.logger.info(
+                        "Appending %d lines to your .zshrc file...",
+                        len(cmd.split("\n")),
+                    )
+                    f.write(cmd)
+
+            return 0
 
         _CmdAction.command(args)
     except errors.ArgumentError as e:
@@ -54,6 +79,21 @@ def _get_argparser(verbose: bool = False) -> argparse.ArgumentParser:
         argparse.ArgumentParser object.
     """
     parser = argparse.ArgumentParser(prog="funky", description=funky.__doc__)
+    parser.add_argument(
+        "--ensurepath",
+        action="store_true",
+        help="Ensure your shell is configured correctly.",
+    )
+    parser.add_argument(
+        "--init",
+        dest="shell",
+        default=None,
+        choices=["zsh"],
+        help=(
+            "Initialize your shell environments. This should be run from your"
+            " .bashrc / .zshrc file."
+        ),
+    )
     parser.add_argument(
         "-d", "--debug", action="store_true", help="Enable debug mode."
     )

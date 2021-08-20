@@ -6,6 +6,17 @@ releases.
 
 ### Unreleased
 
+### v3.5.0 (2021-08-20)
+
+Added:
+
+* New `--init SHELL` and `--ensurepath` options.
+
+Changed:
+
+* Installation now requires that you only run `funky --ensurepath` instead of needing to
+  source the `funky.sh` file directly.
+
 ### v3.4.2 (2021-08-08)
 
 Miscellaneous:
