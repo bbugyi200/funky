@@ -8,4 +8,5 @@ pylint
 pytest
 pytest-cov
 pytest-mock
+syrupy
 types-six

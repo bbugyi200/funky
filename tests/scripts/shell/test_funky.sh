@@ -8,7 +8,7 @@ fi
 OLD_HOME="${HOME}"; export HOME=/tmp/home
 export FUNKY_CMD="python3 -m funky"
 
-eval "$(${FUNKY_CMD} --init)"
+eval "$(${FUNKY_CMD} --init bash)"
 
 oneTimeSetUp() {
     mkdir -p "${HOME}"
