@@ -6,9 +6,9 @@ if ! command -v shunit2 &>/dev/null && ! [[ -f ./shunit2 ]]; then
 fi
 
 OLD_HOME="${HOME}"; export HOME=/tmp/home
-export FUNKY_CMD="python ${PWD}/funky"
+export FUNKY="python -m funky"
 
-source ./scripts/shell/funky.sh 2> /dev/null
+eval "$(${FUNKY} --init)"
 
 oneTimeSetUp() {
     mkdir -p "${HOME}"
@@ -19,7 +19,7 @@ oneTimeSetUp() {
 
 oneTimeTearDown() {
     export HOME="${OLD_HOME}"
-    unset FUNKY_CMD
+    unset FUNKY
 
     rm -rf /tmp/A
     rm -rf /tmp/home
