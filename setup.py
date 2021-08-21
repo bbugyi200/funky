@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-
-"""The setup script."""
-
 from pathlib import Path
 from typing import Iterator, List
 
