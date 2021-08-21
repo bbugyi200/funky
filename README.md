@@ -97,11 +97,11 @@ section will be used to track any articles or blog posts which mention funky:
 
 ### Using `pip` to Install
 
-To install funky, run this command in your terminal:
+To install funky, run the following commands in your terminal:
 
 ``` shell
-$ pip install pyfunky
-$ python3 -m funky --setup-shell
+python3 -m pip install pyfunky  # install funky
+python3 -m funky --setup-shell zsh  # hook funky into your shell ('zsh' or 'bash')
 ```
 
 This is the preferred method to install funky, as it will always install the most recent stable release.

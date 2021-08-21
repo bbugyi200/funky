@@ -15,6 +15,9 @@ from funky import commands, errors
 from funky.utils import log
 
 
+_SUPPORTED_SHELLS = ["bash", "zsh"]
+
+
 def main(argv: Sequence[str] = None) -> int:
     try:
         if argv is None:
@@ -30,10 +33,10 @@ def main(argv: Sequence[str] = None) -> int:
         log.logger.vdebug("Command-line Arguments: {}".format(args))  # type: ignore
 
         if args.init:
-            return run_init()
+            return run_init(args.init)
 
         if args.setup_shell:
-            return run_setup_shell()
+            return run_setup_shell(args.setup_shell)
 
         _CmdAction.command(args)
     except errors.ArgumentError as e:
@@ -51,25 +54,34 @@ def main(argv: Sequence[str] = None) -> int:
     return 0
 
 
-def run_init() -> int:
+def run_init(shell: str) -> int:
+    del shell  # all supported shells use the same code ATM
+
     funky_sh = read_text("scripts.shell", "funky.sh")
-    print(funky_sh)
+    print(funky_sh, end="")
     return 0
 
 
-def run_setup_shell() -> int:
-    zshrc = Path.home() / ".zshrc"
-    funky_init = "funky --init"
-    if funky_init not in zshrc.read_text():
-        with zshrc.open("a") as f:
+def run_setup_shell(shell: str) -> int:
+    if shell == "zsh":
+        config_base = ".zshrc"
+    else:
+        assert shell == "bash"
+        config_base = ".bashrc"
+
+    config_path = Path.home() / config_base
+    funky_init = f"funky --init {shell}"
+    if funky_init not in config_path.read_text():
+        with config_path.open("a") as f:
             cmd = (
-                "\n# initialize funky\n"
+                "\n# setup funky\n"
                 "command -v funky &>/dev/null &&"
                 f' eval "$({funky_init})"'
             )
             log.logger.info(
-                "Appending %d lines to your .zshrc file...",
+                "Appending %d lines to your %s file...",
                 len(cmd.split("\n")),
+                config_base,
             )
             f.write(cmd)
     return 0
@@ -90,12 +102,12 @@ def _get_argparser(verbose: bool = False) -> argparse.ArgumentParser:
     init_group = parser.add_mutually_exclusive_group()
     init_group.add_argument(
         "--setup-shell",
-        action="store_true",
+        choices=_SUPPORTED_SHELLS,
         help="Ensure your shell is configured correctly.",
     )
     init_group.add_argument(
         "--init",
-        action="store_true",
+        choices=_SUPPORTED_SHELLS,
         help=(
             "Initialize your shell environments. This should be run from your"
             " .bashrc / .zshrc file."

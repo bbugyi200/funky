@@ -10,12 +10,12 @@ releases.
 
 Added:
 
-* New `--init SHELL` and `--setup-shell` options.
+* New `--init SHELL` and `--setup-shell SHELL` options.
 
 Changed:
 
-* Installation now requires that you only run `funky --setup-shell` instead of needing to
-  source the `funky.sh` file directly.
+* Installation now requires that you only run `funky --setup-shell SHELL`
+  instead of needing to source the `funky.sh` file directly.
 
 ### v3.4.2 (2021-08-08)
 
