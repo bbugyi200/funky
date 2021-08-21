@@ -101,7 +101,7 @@ To install funky, run the following commands in your terminal:
 
 ``` shell
 python3 -m pip install pyfunky  # install funky
-python3 -m funky --setup-shell zsh  # hook funky into your shell ('zsh' or 'bash')
+python3 -m funky --setup-shell zsh  # hook funky into your shell (choose either 'zsh' or 'bash')
 ```
 
 This is the preferred method to install funky, as it will always install the most recent stable release.
