@@ -6,7 +6,7 @@ if ! command -v shunit2 &>/dev/null && ! [[ -f ./shunit2 ]]; then
 fi
 
 OLD_HOME="${HOME}"; export HOME=/tmp/home
-export FUNKY_CMD="python -m funky"
+export FUNKY_CMD="python3 -m funky"
 
 eval "$(${FUNKY_CMD} --init)"
 
