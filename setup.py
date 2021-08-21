@@ -57,6 +57,6 @@ setup(
     test_suite="tests",
     tests_require=tests_require(),
     url="https://github.com/bbugyi200/funky",
-    version="3.4.2",
+    version="3.5.0",
     zip_safe=False,
 )
