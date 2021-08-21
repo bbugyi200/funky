@@ -6,6 +6,16 @@ releases.
 
 ### Unreleased
 
+### v3.5.1 (2021-08-21)
+
+Security:
+
+* Fixed security vulnerabilities introduced by [pygments]. ([#168], [PR:#178])
+
+[#168]: https://github.com/bbugyi200/funky/issues/168
+[PR:#178]: https://github.com/bbugyi200/funky/pull/178
+[pygments]: https://github.com/pygments/pygments
+
 ### v3.5.0 (2021-08-21)
 
 Added:
