@@ -1,6 +1,6 @@
 #!/bin/bash
 
-##############################################################################
+#################################################################################
 #  funky Shell Integration Script
 #
 # ----- WHAT DOES THIS SCRIPT DO?
@@ -9,12 +9,10 @@
 # * Define two wrapper functions, `funky` and `gfunky`.
 #
 # ----- INSTALLATION
-# In order to take advantage of the full benefits of funky, this script must
-# be sourced directly into your .zshrc file. See the official docs for more
-# information:
-#
-#     https://github.com/bbugyi200/funky#additional-installation-steps
-##############################################################################
+# In order to take advantage of the full benefits of funky, this script must be
+# sourced directly into your .bashrc or .zshrc file. Use `funky --ensurepath`
+# to set this up automatically.
+#################################################################################
 
 # The FUNKY_CMD envvar must be overridable (e.g. by test_funky.sh).
 FUNKY_CMD="${FUNKY_CMD:="$(command -v funky)"}"
