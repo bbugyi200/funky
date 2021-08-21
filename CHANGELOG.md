@@ -6,16 +6,21 @@ releases.
 
 ### Unreleased
 
-### v3.5.0 (2021-08-20)
+### v3.5.0 (2021-08-21)
 
 Added:
 
-* New `--init SHELL` and `--setup-shell SHELL` options.
+* New `--init SHELL` and `--setup-shell SHELL` options. ([#166], [PR:#176])
 
 Changed:
 
-* Installation now requires that you only run `funky --setup-shell SHELL`
-  instead of needing to source the `funky.sh` file directly.
+* Installation now requires only that you run `funky --setup-shell SHELL`
+  instead of needing to source the `funky.sh` file directly. ([#163], [#166],
+  [PR:#176])
+
+[#163]: https://github.com/bbugyi200/funky/issues/163
+[#166]: https://github.com/bbugyi200/funky/issues/166
+[PR:#176]: https://github.com/bbugyi200/funky/pull/176
 
 ### v3.4.2 (2021-08-08)
 
