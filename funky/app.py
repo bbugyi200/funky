@@ -34,7 +34,7 @@ def main(argv: Sequence[str] = None) -> int:
             print(funky_sh)
             return 0
 
-        if args.ensurepath:
+        if args.setup_shell:
             zshrc = Path.home() / ".zshrc"
             funky_init_cmd = "funky --init zsh"
             if funky_init_cmd not in zshrc.read_text():
@@ -80,7 +80,7 @@ def _get_argparser(verbose: bool = False) -> argparse.ArgumentParser:
     """
     parser = argparse.ArgumentParser(prog="funky", description=funky.__doc__)
     parser.add_argument(
-        "--ensurepath",
+        "--setup-shell",
         action="store_true",
         help="Ensure your shell is configured correctly.",
     )

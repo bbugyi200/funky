@@ -10,11 +10,11 @@ releases.
 
 Added:
 
-* New `--init SHELL` and `--ensurepath` options.
+* New `--init SHELL` and `--setup-shell` options.
 
 Changed:
 
-* Installation now requires that you only run `funky --ensurepath` instead of needing to
+* Installation now requires that you only run `funky --setup-shell` instead of needing to
   source the `funky.sh` file directly.
 
 ### v3.4.2 (2021-08-08)
