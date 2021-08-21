@@ -100,7 +100,7 @@ section will be used to track any articles or blog posts which mention funky:
 To install funky, run the following commands in your terminal:
 
 ``` shell
-python3 -m pip install pyfunky  # install funky
+python3 -m pip install --user pyfunky  # install funky
 python3 -m funky --setup-shell zsh  # hook funky into your shell (choose either 'zsh' or 'bash')
 ```
 
