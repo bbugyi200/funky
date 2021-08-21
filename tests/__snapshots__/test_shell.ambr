@@ -286,3 +286,37 @@
   
   '
 ---
+# name: test_setup_shell[bash-None]
+  '
+  
+  # setup funky
+  command -v funky &>/dev/null && eval "$(funky --init bash)"
+  '
+---
+# name: test_setup_shell[bash-alias a='echo apple'\nalias b='echo berry'\nalias c='echo cherry'\n]
+  '
+  alias a='echo apple'
+  alias b='echo berry'
+  alias c='echo cherry'
+  
+  # setup funky
+  command -v funky &>/dev/null && eval "$(funky --init bash)"
+  '
+---
+# name: test_setup_shell[zsh-None]
+  '
+  
+  # setup funky
+  command -v funky &>/dev/null && eval "$(funky --init zsh)"
+  '
+---
+# name: test_setup_shell[zsh-alias a='echo apple'\nalias b='echo berry'\nalias c='echo cherry'\n]
+  '
+  alias a='echo apple'
+  alias b='echo berry'
+  alias c='echo cherry'
+  
+  # setup funky
+  command -v funky &>/dev/null && eval "$(funky --init zsh)"
+  '
+---

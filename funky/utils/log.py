@@ -25,6 +25,7 @@ def init_logger(debug: bool = False, verbose: bool = False) -> None:
     """
     _add_vdebug_level(logging)
     root = logging.getLogger()
+    root.handlers.clear()  # clear handlers so this function is idempotent
 
     if debug:
         if verbose:

@@ -71,7 +71,7 @@ def run_setup_shell(shell: str) -> int:
 
     config_path = Path.home() / config_base
     funky_init = f"funky --init {shell}"
-    if funky_init not in config_path.read_text():
+    if not config_path.exists() or funky_init not in config_path.read_text():
         with config_path.open("a") as f:
             cmd = (
                 "\n# setup funky\n"
