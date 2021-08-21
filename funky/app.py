@@ -30,27 +30,10 @@ def main(argv: Sequence[str] = None) -> int:
         log.logger.vdebug("Command-line Arguments: {}".format(args))  # type: ignore
 
         if args.init:
-            funky_sh = read_text("scripts.shell", "funky.sh")
-            print(funky_sh)
-            return 0
+            return run_init()
 
         if args.setup_shell:
-            zshrc = Path.home() / ".zshrc"
-            funky_init = "funky --init"
-            if funky_init not in zshrc.read_text():
-                with zshrc.open("a") as f:
-                    cmd = (
-                        "\n# initialize funky\n"
-                        "command -v funky &>/dev/null &&"
-                        f' eval "$({funky_init})"'
-                    )
-                    log.logger.info(
-                        "Appending %d lines to your .zshrc file...",
-                        len(cmd.split("\n")),
-                    )
-                    f.write(cmd)
-
-            return 0
+            return run_setup_shell()
 
         _CmdAction.command(args)
     except errors.ArgumentError as e:
@@ -68,6 +51,30 @@ def main(argv: Sequence[str] = None) -> int:
     return 0
 
 
+def run_init() -> int:
+    funky_sh = read_text("scripts.shell", "funky.sh")
+    print(funky_sh)
+    return 0
+
+
+def run_setup_shell() -> int:
+    zshrc = Path.home() / ".zshrc"
+    funky_init = "funky --init"
+    if funky_init not in zshrc.read_text():
+        with zshrc.open("a") as f:
+            cmd = (
+                "\n# initialize funky\n"
+                "command -v funky &>/dev/null &&"
+                f' eval "$({funky_init})"'
+            )
+            log.logger.info(
+                "Appending %d lines to your .zshrc file...",
+                len(cmd.split("\n")),
+            )
+            f.write(cmd)
+    return 0
+
+
 def _get_argparser(verbose: bool = False) -> argparse.ArgumentParser:
     """Get command-line arguments.
 
@@ -79,12 +86,14 @@ def _get_argparser(verbose: bool = False) -> argparse.ArgumentParser:
         argparse.ArgumentParser object.
     """
     parser = argparse.ArgumentParser(prog="funky", description=funky.__doc__)
-    parser.add_argument(
+
+    init_group = parser.add_mutually_exclusive_group()
+    init_group.add_argument(
         "--setup-shell",
         action="store_true",
         help="Ensure your shell is configured correctly.",
     )
-    parser.add_argument(
+    init_group.add_argument(
         "--init",
         action="store_true",
         help=(
@@ -92,6 +101,7 @@ def _get_argparser(verbose: bool = False) -> argparse.ArgumentParser:
             " .bashrc / .zshrc file."
         ),
     )
+
     parser.add_argument(
         "-d", "--debug", action="store_true", help="Enable debug mode."
     )
