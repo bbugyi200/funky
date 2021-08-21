@@ -29,20 +29,20 @@ def main(argv: Sequence[str] = None) -> int:
         log.logger.vdebug("argv = {}".format(argv))  # type: ignore
         log.logger.vdebug("Command-line Arguments: {}".format(args))  # type: ignore
 
-        if args.shell == "zsh":
+        if args.init:
             funky_sh = read_text("scripts.shell", "funky.sh")
             print(funky_sh)
             return 0
 
         if args.setup_shell:
             zshrc = Path.home() / ".zshrc"
-            funky_init_cmd = "funky --init zsh"
-            if funky_init_cmd not in zshrc.read_text():
+            funky_init = "funky --init"
+            if funky_init not in zshrc.read_text():
                 with zshrc.open("a") as f:
                     cmd = (
                         "\n# initialize funky\n"
                         "command -v funky &>/dev/null &&"
-                        f' eval "$({funky_init_cmd})"'
+                        f' eval "$({funky_init})"'
                     )
                     log.logger.info(
                         "Appending %d lines to your .zshrc file...",
@@ -86,9 +86,7 @@ def _get_argparser(verbose: bool = False) -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--init",
-        dest="shell",
-        default=None,
-        choices=["zsh"],
+        action="store_true",
         help=(
             "Initialize your shell environments. This should be run from your"
             " .bashrc / .zshrc file."
