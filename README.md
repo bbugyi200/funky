@@ -9,8 +9,9 @@
 [![Tests: pytest](https://img.shields.io/badge/tests-pytest-a0bf21)](https://github.com/pytest-dev/pytest)
 [![Tests: pytest](https://img.shields.io/badge/tests-tox-ffffff)](https://github.com/tox-dev/tox)
 [![Types: mypy](https://img.shields.io/badge/types-mypy-cd00cd)](https://github.com/python/mypy)
-[![pylint](https://img.shields.io/badge/linter-pylint-ffff00)](https://github.com/PyCQA/pylint)
-[![flake8](https://img.shields.io/badge/linter-flake8-008080)](https://github.com/PyCQA/flake8)
+[![Linter: pylint](https://img.shields.io/badge/linter-pylint-ffff00)](https://github.com/PyCQA/pylint)
+[![Linter: flake8](https://img.shields.io/badge/linter-flake8-008080)](https://github.com/PyCQA/flake8)
+[![Docstrings: pydocstyle](https://img.shields.io/badge/docstrings-pydocstyle-AFD3E6)](https://github.com/PyCQA/pydocstyle)
 [![Code Style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Imports: isort](https://img.shields.io/badge/imports-isort-ef8336)](https://github.com/PyCQA/isort)
 
