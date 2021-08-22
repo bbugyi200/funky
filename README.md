@@ -6,6 +6,7 @@
 [![Python Versions](https://img.shields.io/pypi/pyversions/pyfunky)](https://pypi.org/project/pyfunky/)
 [![Package Health](https://snyk.io/advisor/python/pyfunky/badge.svg)](https://snyk.io/advisor/python/pyfunky)
 
+[![Tests: pytest](https://img.shields.io/badge/tests-pytest-a0bf21)](https://github.com/pytest-dev/pytest)
 [![Types: mypy](https://img.shields.io/badge/types-mypy-0606f5)](https://github.com/python/mypy)
 [![pylint](https://img.shields.io/badge/linter-pylint-ffff00)](https://github.com/PyCQA/pylint)
 [![flake8](https://img.shields.io/badge/linter-flake8-008080)](https://github.com/PyCQA/flake8)
