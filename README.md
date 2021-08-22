@@ -32,6 +32,7 @@
       * [The "$@" Special Parameter](#the--special-parameter)
 * [Articles / Blog Posts](#articles--blog-posts)
 * [Installation](#installation)
+   * [Using pipx to Install](#using-pipx-to-install-preferred)
    * [Using pip to Install](#using-pip-to-install)
    * [Building from Source](#building-from-source)
 * [Similar Projects](#similar-projects)
@@ -105,6 +106,25 @@ section will be used to track any articles or blog posts which mention funky:
 
 ## Installation
 
+### Using `pipx` to Install (preferred)
+
+This package _could_ be installed using pip like any other Python package (in fact, see the
+section below this one for instructions). Given that we only need this package's entry points
+(e.g.  `funky`), however, we recommend you use [pipx] to install it instead (replace `SHELL`
+with either `bash` or `zsh`):
+
+```shell
+# install and setup pipx
+python3 -m pip install --user pipx
+python3 -m pipx ensurepath
+
+# install this package
+pipx install pyfunky
+funky --setup-shell SHELL  # hook funky into your shell
+```
+
+[pipx]: https://github.com/pypa/pipx
+
 ### Using `pip` to Install
 
 To install funky, run the following commands in your terminal (replace `SHELL`
@@ -112,10 +132,8 @@ with either `bash` or `zsh`):
 
 ``` shell
 python3 -m pip install --user pyfunky  # install funky
-python3 -m funky --setup-shell SHELL  # hook funky into your shell
+funky --setup-shell SHELL  # hook funky into your shell
 ```
-
-This is the preferred method to install funky, as it will always install the most recent stable release.
 
 If you don't have [pip] installed, this [Python installation guide] can guide
 you through the process.
@@ -149,7 +167,7 @@ can be accomplished with the following command (replace `SHELL` with either
 `bash` or `zsh`):
 
 ```shell
-python3 -m funky --setup-shell SHELL
+funky --setup-shell SHELL
 ```
 
 ## Similar Projects
