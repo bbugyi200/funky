@@ -239,11 +239,7 @@ class Edit(Command):
         """Opens up funk definition using temp file in $EDITOR for editing.
 
         Args:
-            funk (optional): The funk to edit. If not given, this function uses
-                             the funk defined at instance creation time.
-
-        Returns (str):
-            Contents of temp file after $EDITOR closes.
+            startinsert: If vim is your editor, should we start in insert mode?
         """
         tf = tempfile.NamedTemporaryFile(
             prefix="{}.".format(self.funk),

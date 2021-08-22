@@ -89,10 +89,10 @@ flake8: ## Run flake8 checks.
 
 .PHONY: pylint
 pylint: ## Run pylint checks.
-	pylint funky
-	pylint tests
+	python -m pylint funky
+	python -m pylint tests
 
 .PHONY: pydocstyle
 pydocstyle:  ## Run pydocstyle checks.
-	pydocstyle --select=D100,D101,D102,D103,D104,D105,D106 --match='.*\.py' funky
-	pydocstyle --select=D100,D101,D102,D103,D104,D105,D106 --match='.*\.py' tests
+	python -m pydocstyle funky
+	python -m pydocstyle tests

@@ -1,3 +1,19 @@
 [tool.black]
 line-length = 79
 experimental-string-processing = true
+
+[tool.pydocstyle]
+match = '.*\.py'
+select = [
+    "D100",
+    "D101",
+    "D102",
+    "D103",
+    "D104",
+    "D105",
+    "D106",
+    "D412",
+    "D414",
+    "D416",
+    "D417",
+]
