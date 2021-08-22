@@ -1,5 +1,7 @@
 # pylint: disable=no-self-use,redefined-outer-name
 
+"""Tests for funky's main commands."""
+
 import json
 import os
 import shutil
@@ -16,6 +18,8 @@ from funky import commands, errors
 
 
 class Args(NamedTuple):
+    """Arguments to be passed into a Command object."""
+
     args: List[str]
     color: bool
 
@@ -37,6 +41,7 @@ class Test_Add_and_Edit:
 
     @pytest.fixture(autouse=True)
     def setup(self, mocker: MockerFixture) -> None:
+        """Run before each test method."""
         mocker.patch("funky.commands.sp")
 
     def test_add(
@@ -158,6 +163,8 @@ class Test_Add_and_Edit:
 
 @pytest.mark.usefixtures("cleandir", "fake_db")
 class TestRename:
+    """Tests for the Rename command."""
+
     def test_rename(
         self, rename_cmd: commands.Rename, funk_dict: Dict[str, str]
     ) -> None:
@@ -206,6 +213,8 @@ class TestRename:
 
 @pytest.mark.usefixtures("cleandir", "fake_db")
 class TestShow:
+    """Tests for the Show command."""
+
     def test_show(
         self, capsys: CaptureFixture, show_cmd: commands.Show
     ) -> None:
@@ -306,6 +315,8 @@ class TestShow:
 
 @pytest.mark.usefixtures("cleandir", "fake_db")
 class TestRemove:
+    """Tests for the Remove command."""
+
     def test_remove(self, remove_cmd: commands.Remove) -> None:
         """Tests remove command."""
         remove_cmd()
@@ -390,6 +401,7 @@ def _fake_db_factory(
 
 @pytest.fixture
 def funk_dict() -> Dict[str, str]:
+    """Returns a sample mapping of funk names to funk definitions."""
     funk_dict_ = {
         "multiline": "echo Hello\necho world!",
         "T": "echo RUN $1",

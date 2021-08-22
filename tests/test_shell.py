@@ -25,6 +25,11 @@ SHELL_TO_CONFIG = {"bash": ".bashrc", "zsh": ".zshrc"}
 
 @fixture
 def tmp_home(tmp_path: Path) -> Iterator[Path]:
+    """Yields a temporary HOME directory.
+
+    NOTE: The HOME envvar will be set accordingly until this fixture's
+    teardown.
+    """
     old_home = os.environ.get("HOME")
     os.environ["HOME"] = str(tmp_path)
 
@@ -38,6 +43,7 @@ def tmp_home(tmp_path: Path) -> Iterator[Path]:
 
 @params("shell", ["bash", "zsh"])
 def test_init(shell: str, snapshot: Snapshot, capsys: CaptureFixture) -> None:
+    """Tests the --init option."""
     exit_code = app.main(["--init", shell])
     assert exit_code == 0
 
@@ -57,6 +63,7 @@ def test_init(shell: str, snapshot: Snapshot, capsys: CaptureFixture) -> None:
 def test_setup_shell(
     shell: str, contents: Optional[str], tmp_home: Path, snapshot: Snapshot
 ) -> None:
+    """Tests the --setup-shell option."""
     config_file = tmp_home / SHELL_TO_CONFIG[shell]
     if contents:
         config_file.write_text(contents)

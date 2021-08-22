@@ -77,7 +77,7 @@ class Command:
         self.color = color
         self.verbose = verbose
         self.global_ = global_
-        self.funk_dict = self.load(self.ACTIVE_DB_FILENAME)
+        self.funk_dict = self.read_db_file(self.ACTIVE_DB_FILENAME)
 
         log.logger.vdebug("Existing Funks: {}".format(self.funk_dict))  # type: ignore
 
@@ -107,9 +107,10 @@ class Command:
             self.purge_db()
 
     @staticmethod
-    def load(DB_FILENAME: str) -> Dict[str, str]:
+    def read_db_file(db_fname: str) -> Dict[str, str]:
+        """Reads the provided database file."""
         try:
-            with open(DB_FILENAME, "r") as f:
+            with open(db_fname, "r") as f:
                 result: Dict[str, str] = json.load(f)
                 return result
         except (IOError, OSError):
@@ -117,6 +118,11 @@ class Command:
 
     @abstractmethod
     def __call__(self) -> None:
+        """Runs the current command.
+
+        This is where a concrete Command class should implement its
+        functionality.
+        """
         log.logger.debug("Running %s command.", self.__class__.__name__)
 
 
@@ -170,6 +176,7 @@ class Show(Command):
             self.show(funk)
 
     def __call__(self) -> None:
+        """See Command.__call__."""
         super().__call__()
         if not self.funk_dict:
             self.purge_db()
@@ -189,6 +196,7 @@ class Rename(Command):
     """Rename an existing funk. OLD funk is renamed to NEW."""
 
     def __call__(self) -> None:
+        """See Command.__call__."""
         super().__call__()
         if self.funk not in self.funk_dict:
             raise errors.FunkNotDefinedError(funk=self.funk)
@@ -320,6 +328,7 @@ class Edit(Command):
         return new_cmd_string
 
     def __call__(self) -> None:
+        """See Command.__call__."""
         super().__call__()
         if self.funk and self.funk not in self.funk_dict:
             raise errors.FunkNotDefinedError(funk=self.funk)
@@ -341,6 +350,7 @@ class Remove(Edit):
     """
 
     def __call__(self) -> None:
+        """See Command.__call__."""
         Command.__call__(self)
         if self.funk and self.funk not in self.funk_dict:
             raise errors.FunkNotDefinedError(funk=self.funk)
@@ -372,6 +382,7 @@ class Add(Edit):
     """Add a new funk."""
 
     def __call__(self) -> None:
+        """See Command.__call__."""
         Command.__call__(self)
         already_exists = False
         if self.funk in self.funk_dict:
