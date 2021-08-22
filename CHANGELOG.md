@@ -6,6 +6,12 @@ releases.
 
 ### Unreleased
 
+Miscellaneous:
+    * Integrated pydocstyle into CI. ([#179], [PR:#181])
+
+[#179]: https://github.com/bbugyi200/funky/issues/179
+[PR:#181]: https://github.com/bbugyi200/funky/pull/181
+
 ### v3.5.5 (2021-08-22)
 
 Fixed:
