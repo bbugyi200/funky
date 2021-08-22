@@ -134,6 +134,14 @@ Once you have a copy of the source, you can install funky by running:
 make install
 ```
 
+The last thing you need to do is hook funky into your shell of choice, which
+can be accomplished with the following command (replace `SHELL` with either
+`bash` or `zsh`):
+
+```shell
+python3 -m funky --setup-shell SHELL
+```
+
 ## Similar Projects
 
 * [desk](https://github.com/jamesob/desk) - A lightweight workspace manager for the shell.
