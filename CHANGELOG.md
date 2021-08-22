@@ -6,6 +6,14 @@ releases.
 
 ### Unreleased
 
+### v3.5.3 (2021-08-22)
+
+Miscellaneous:
+
+* Update python versions supported in `setup.py` (>=3.7). ([c968dc])
+
+[c968dc]: https://github.com/bbugyi200/funky/commit/c968dc1722aef228039c0077bc6940730ad76987
+
 ### v3.5.2 (2021-08-22)
 
 Miscellaneous:
