@@ -2,13 +2,20 @@
 
 **Funky takes shell functions to the next level by making them easier to define, more flexible, and more interactive.**
 
+[![Project Version](https://img.shields.io/pypi/v/pyfunky)](https://pypi.org/project/pyfunky/)
+[![Python Versions](https://img.shields.io/pypi/pyversions/pyfunky)](https://pypi.org/project/pyfunky/)
+[![Package Health](https://snyk.io/advisor/python/pyfunky/badge.svg)](https://snyk.io/advisor/python/pyfunky)
+
+[![Types: mypy](https://img.shields.io/badge/types-mypy-0606f5)](https://github.com/python/mypy)
+[![pylint](https://img.shields.io/badge/linter-pylint-ffff00)](https://github.com/PyCQA/pylint)
+[![flake8](https://img.shields.io/badge/linter-flake8-008080)](https://github.com/PyCQA/flake8)
+[![Code Style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Imports: isort](https://img.shields.io/badge/imports-isort-ef8336)](https://github.com/PyCQA/isort)
+
 [![Test Workflow](https://github.com/bbugyi200/funky/actions/workflows/test.yml/badge.svg)](https://github.com/bbugyi200/funky/actions/workflows/test.yml)
 [![Lint Workflow](https://github.com/bbugyi200/funky/actions/workflows/lint.yml/badge.svg)](https://github.com/bbugyi200/funky/actions/workflows/lint.yml)
 [![Publish Workflow](https://github.com/bbugyi200/funky/actions/workflows/publish.yml/badge.svg)](https://github.com/bbugyi200/funky/actions/workflows/publish.yml)
 [![Coverage](https://codecov.io/gh/bbugyi200/funky/branch/master/graph/badge.svg)](https://codecov.io/gh/bbugyi200/funky)
-[![Version](https://img.shields.io/pypi/v/pyfunky)](https://pypi.org/project/pyfunky/)
-[![Code Style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
 
 ![demo]
 
