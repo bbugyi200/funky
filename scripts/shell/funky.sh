@@ -56,7 +56,7 @@ _save_locals() {
 
 # Unset funks from last directory.
 _unset_locals() {
-    source <(sed 's/^/unset -f /' "${_ACTIVE_ALIASES}")
+    source <(perl -nE 'print s{^(.*)$}{unset -f \1 &>/dev/null}gr' "${_ACTIVE_ALIASES}")
     command rm -f "$_ACTIVE_ALIASES"
     unset _ACTIVE_ALIASES
 }

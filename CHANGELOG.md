@@ -6,6 +6,12 @@ releases.
 
 ### Unreleased
 
+### v3.5.5 (2021-08-22)
+
+Fixed:
+
+* Suppressed stderr output when trying to unset an old function.
+
 ### v3.5.4 (2021-08-22)
 
 Miscellaneous:
