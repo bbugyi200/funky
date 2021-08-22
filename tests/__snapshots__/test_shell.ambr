@@ -12,8 +12,8 @@
   #
   # ----- INSTALLATION
   # In order to take advantage of the full benefits of funky, this script must be
-  # sourced directly into your .bashrc or .zshrc file. Use `funky --ensurepath`
-  # to set this up automatically.
+  # sourced directly into your .bashrc or .zshrc file. Use `funky --setup-shell
+  # SHELL` (where SHELL is either 'bash' or 'zsh') to set this up automatically.
   #################################################################################
   
   # The FUNKY_CMD envvar must be overridable (e.g. by test_funky.sh).
@@ -156,8 +156,8 @@
   #
   # ----- INSTALLATION
   # In order to take advantage of the full benefits of funky, this script must be
-  # sourced directly into your .bashrc or .zshrc file. Use `funky --ensurepath`
-  # to set this up automatically.
+  # sourced directly into your .bashrc or .zshrc file. Use `funky --setup-shell
+  # SHELL` (where SHELL is either 'bash' or 'zsh') to set this up automatically.
   #################################################################################
   
   # The FUNKY_CMD envvar must be overridable (e.g. by test_funky.sh).
