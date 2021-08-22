@@ -34,6 +34,7 @@ def _requires(reqtxt_basename: str) -> Iterator[str]:
 setup(
     author="Bryan M Bugyi",
     author_email="bryanbugyi34@gmail.com",
+    python_requires=">=3.7",
     install_requires=install_requires(),
     classifiers=[
         "Development Status :: 3 - Alpha",
@@ -41,8 +42,9 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Natural Language :: English",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.5",
-        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
     ],
     description=DESCRIPTION,
     entry_points={
