@@ -27,6 +27,10 @@ jobs:
         run: |
           make isort
 
+      - name: pydocstyle
+        run: |
+          make pydocstyle
+
       - name: flake8
         run: |
           make flake8
