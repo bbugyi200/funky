@@ -3,7 +3,11 @@ from typing import Iterator, List
 
 from setuptools import find_packages, setup
 
-import funky
+
+DESCRIPTION = (
+    "Funky takes shell functions to the next level by making them easier to"
+    " define, more flexible, and more interactive."
+)
 
 
 def long_description() -> str:
@@ -40,7 +44,7 @@ setup(
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
     ],
-    description=funky.__doc__,
+    description=DESCRIPTION,
     entry_points={
         "console_scripts": [
             "funky = funky.app:main",

@@ -1,4 +1,7 @@
-"""Funky makes ZSH shell functions more powerful and easier to manage."""
+"""
+Funky takes shell functions to the next level by making them easier to define,
+more flexible, and more interactive.
+"""
 
 __author__ = """Bryan M Bugyi"""
 __email__ = "bryanbugyi34@gmail.com"
