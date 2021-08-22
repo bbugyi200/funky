@@ -6,6 +6,8 @@ releases.
 
 ### Unreleased
 
+### v3.5.2 (2021-08-22)
+
 Miscellaneous:
 
 * Remove import of `funky` in `setup.py`. ([9a2c36])
