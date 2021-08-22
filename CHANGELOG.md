@@ -6,6 +6,12 @@ releases.
 
 ### Unreleased
 
+Miscellaneous:
+
+* Remove import of `funky` in `setup.py`. ([9a2c36]) 
+
+[9a2c36]: https://github.com/bbugyi200/funky/commit/9a2c36cf6ea32b28a28ed109392a9fe1d7cf0189
+
 ### v3.5.1 (2021-08-21)
 
 Security:
