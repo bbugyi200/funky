@@ -6,6 +6,12 @@ releases.
 
 ### Unreleased
 
+### v3.5.4 (2021-08-22)
+
+Miscellaneous:
+
+* Add Python3.10 classifier to `setup.py`.
+
 ### v3.5.3 (2021-08-22)
 
 Miscellaneous:
