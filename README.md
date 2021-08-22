@@ -7,7 +7,7 @@
 [![Package Health](https://snyk.io/advisor/python/pyfunky/badge.svg)](https://snyk.io/advisor/python/pyfunky)
 
 [![Tests: pytest](https://img.shields.io/badge/tests-pytest-a0bf21)](https://github.com/pytest-dev/pytest)
-[![Types: mypy](https://img.shields.io/badge/types-mypy-0606f5)](https://github.com/python/mypy)
+[![Types: mypy](https://img.shields.io/badge/types-mypy-cd00cd)](https://github.com/python/mypy)
 [![pylint](https://img.shields.io/badge/linter-pylint-ffff00)](https://github.com/PyCQA/pylint)
 [![flake8](https://img.shields.io/badge/linter-flake8-008080)](https://github.com/PyCQA/flake8)
 [![Code Style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
