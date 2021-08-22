@@ -19,6 +19,7 @@ _SUPPORTED_SHELLS = ["bash", "zsh"]
 
 
 def main(argv: Sequence[str] = None) -> int:
+    """Main entry point for funky."""
     try:
         if argv is None:
             argv = sys.argv[1:]
@@ -55,6 +56,7 @@ def main(argv: Sequence[str] = None) -> int:
 
 
 def run_init(shell: str) -> int:
+    """Active runner when the --init option is specified."""
     del shell  # all supported shells use the same code ATM
 
     funky_sh = read_text("scripts.shell", "funky.sh")
@@ -63,6 +65,7 @@ def run_init(shell: str) -> int:
 
 
 def run_setup_shell(shell: str) -> int:
+    """Active runner when the --setup-shell option is specified."""
     if shell == "zsh":
         config_base = ".zshrc"
     else:

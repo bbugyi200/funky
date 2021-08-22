@@ -4,6 +4,7 @@ coverage
 flake8
 isort
 mypy
+pydocstyle[toml]
 pylint
 pytest
 pytest-cov
