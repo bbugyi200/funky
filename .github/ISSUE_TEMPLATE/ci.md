@@ -1,8 +1,8 @@
 ---
-name: "CI / CD / GitHub"
-about: Related to CI, CD, or GitHub.
+name: "Continuous Integration"
+about: Related to this project's continuous integration pipeline.
 title: ''
-labels: "Type: CI / CD / GitHub"
+labels: "Type: CI"
 assignees: ''
 
 ---
