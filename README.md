@@ -109,9 +109,8 @@ funky --setup-shell SHELL
 ## Usage
 
 Funks are manipulated using the `funky` and `gfunky` commands. These commands
-have the same user interface, which is specified in the [Command-line
-Interface](#command-line-interface) section. The difference between the two
-commands is treated in the [Local vs Global](#local-vs-global) section.
+have the same user interface. The difference between the two commands is
+treated in the [Local vs Global](#local-vs-global) section.
 
 ### Local vs Global
 
