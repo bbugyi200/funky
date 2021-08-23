@@ -49,10 +49,10 @@ commands is treated in the [Local vs Global](#local-vs-global) section.
 
 **Local** funks are stored using a hidden database file that is located in the
 same directory where the funk was created. These can be manipulated using the
-options described in the demo above (run `funky -h` for more information). Once
-created, a local funk can be used just like any other command or normal funk as
-long as you are inside of the directory where the local funk was originally
-defined.
+options described in the demo above (run `funky -h` to see descriptions of
+these options). Once created, a local funk can be used just like any other
+command or normal funk as long as you are inside of the directory where the
+local funk was originally defined.
 
 **Global** funks, on the other hand, are stored in your home directory
 (``/home/<user>``) and can be used from any directory. Local funks can be used
