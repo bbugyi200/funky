@@ -54,9 +54,9 @@ you use [pipx] instead (replace `SHELL` with either `bash` or `zsh`):
 python3 -m pip install --user pipx
 python3 -m pipx ensurepath
 
-# install this package
+# install and setup funky
 pipx install pyfunky
-funky --setup-shell SHELL  # hook funky into your shell
+funky --setup-shell SHELL
 ```
 
 [pipx]: https://github.com/pypa/pipx
@@ -97,7 +97,7 @@ Once you have a copy of the source, you can install funky by running:
 make install
 ```
 
-The last thing you need to do is hook funky into your shell of choice, which
+The last thing you need to do is hook funky into your preferred shell, which
 can be accomplished with the following command (replace `SHELL` with either
 `bash` or `zsh`):
 
