@@ -26,7 +26,7 @@
 ## Table of Contents
 
 * [Installation](#installation)
-   * [Using pipx to Install](#using-pipx-to-install-preferred)
+   * [Using pipx to Install (preferred)](#using-pipx-to-install-preferred)
    * [Using pip to Install](#using-pip-to-install)
    * [Building from Source](#building-from-source)
 * [Usage](#usage)
