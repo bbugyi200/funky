@@ -44,10 +44,11 @@
 
 ### Using `pipx` to Install (preferred)
 
-This package _could_ be installed using pip like any other Python package (in fact, see the
-section below this one for instructions). Given that we only need this package's entry points
-(e.g.  `funky`), however, we recommend you use [pipx] to install it instead (replace `SHELL`
-with either `bash` or `zsh`):
+This package _could_ be installed using pip like any other Python package (in
+fact, see the section below this one for instructions). Given that we only need
+this package's entry points (e.g. the `funky` command), however, we recommend
+you use [pipx] to install it instead (replace `SHELL` with either `bash` or
+`zsh`):
 
 ```shell
 # install and setup pipx
