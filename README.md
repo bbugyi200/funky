@@ -22,8 +22,13 @@
 
 ![demo]
 
+
 ## Table of Contents
 
+* [Installation](#installation)
+   * [Using pipx to Install](#using-pipx-to-install-preferred)
+   * [Using pip to Install](#using-pip-to-install)
+   * [Building from Source](#building-from-source)
 * [Usage](#usage)
    * [Local vs Global](#local-vs-global)
    * [Funk Definition Shortcuts](#funk-definition-shortcuts)
@@ -31,12 +36,75 @@
       * [Simulate Shell Variables](#simulate-shell-variables)
       * [The "$@" Special Parameter](#the--special-parameter)
 * [Articles / Blog Posts](#articles--blog-posts)
-* [Installation](#installation)
-   * [Using pipx to Install](#using-pipx-to-install-preferred)
-   * [Using pip to Install](#using-pip-to-install)
-   * [Building from Source](#building-from-source)
 * [Similar Projects](#similar-projects)
 * [Contributions](#contributions)
+
+
+## Installation
+
+### Using `pipx` to Install (preferred)
+
+This package _could_ be installed using pip like any other Python package (in fact, see the
+section below this one for instructions). Given that we only need this package's entry points
+(e.g.  `funky`), however, we recommend you use [pipx] to install it instead (replace `SHELL`
+with either `bash` or `zsh`):
+
+```shell
+# install and setup pipx
+python3 -m pip install --user pipx
+python3 -m pipx ensurepath
+
+# install this package
+pipx install pyfunky
+funky --setup-shell SHELL  # hook funky into your shell
+```
+
+[pipx]: https://github.com/pypa/pipx
+
+### Using `pip` to Install
+
+To install funky, run the following commands in your terminal (replace `SHELL`
+with either `bash` or `zsh`):
+
+``` shell
+python3 -m pip install --user pyfunky  # install funky
+funky --setup-shell SHELL  # hook funky into your shell
+```
+
+If you don't have [pip] installed, this [Python installation guide] can guide
+you through the process.
+
+[pip]: https://pip.pypa.io
+[Python installation guide]: http://docs.python-guide.org/en/latest/starting/installation/
+
+### Building from Source
+
+You can either clone the public repository:
+
+``` shell
+$ git clone git://github.com/bbugyi200/funky
+```
+
+Or download the [tarball]:
+
+``` shell
+$ curl  -OL https://github.com/bbugyi200/funky/tarball/master
+```
+
+Once you have a copy of the source, you can install funky by running:
+
+``` shell
+make install
+```
+
+The last thing you need to do is hook funky into your shell of choice, which
+can be accomplished with the following command (replace `SHELL` with either
+`bash` or `zsh`):
+
+```shell
+funky --setup-shell SHELL
+```
+
 
 ## Usage
 
@@ -113,72 +181,6 @@ section will be used to track any articles or blog posts which mention funky:
 
 * [6 Command Line Tools for Productive Programmers](https://earthly.dev/blog/command-line-tools/#funky) (2021-07-23)
 
-
-## Installation
-
-### Using `pipx` to Install (preferred)
-
-This package _could_ be installed using pip like any other Python package (in fact, see the
-section below this one for instructions). Given that we only need this package's entry points
-(e.g.  `funky`), however, we recommend you use [pipx] to install it instead (replace `SHELL`
-with either `bash` or `zsh`):
-
-```shell
-# install and setup pipx
-python3 -m pip install --user pipx
-python3 -m pipx ensurepath
-
-# install this package
-pipx install pyfunky
-funky --setup-shell SHELL  # hook funky into your shell
-```
-
-[pipx]: https://github.com/pypa/pipx
-
-### Using `pip` to Install
-
-To install funky, run the following commands in your terminal (replace `SHELL`
-with either `bash` or `zsh`):
-
-``` shell
-python3 -m pip install --user pyfunky  # install funky
-funky --setup-shell SHELL  # hook funky into your shell
-```
-
-If you don't have [pip] installed, this [Python installation guide] can guide
-you through the process.
-
-[pip]: https://pip.pypa.io
-[Python installation guide]: http://docs.python-guide.org/en/latest/starting/installation/
-
-
-### Building from Source
-
-You can either clone the public repository:
-
-``` shell
-$ git clone git://github.com/bbugyi200/funky
-```
-
-Or download the [tarball]:
-
-``` shell
-$ curl  -OL https://github.com/bbugyi200/funky/tarball/master
-```
-
-Once you have a copy of the source, you can install funky by running:
-
-``` shell
-make install
-```
-
-The last thing you need to do is hook funky into your shell of choice, which
-can be accomplished with the following command (replace `SHELL` with either
-`bash` or `zsh`):
-
-```shell
-funky --setup-shell SHELL
-```
 
 ## Similar Projects
 
