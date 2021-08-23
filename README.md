@@ -39,25 +39,35 @@
 * [Contributions](#contributions)
 
 ## Usage
-Funks are manipulated using the `funky` and `gfunky` commands. These commands have the same user interface, which is specified in the [Command-line Interface](#command-line-interface) section. The difference between the two commands is treated in the [Local vs Global](#local-vs-global) section.
+
+Funks are manipulated using the `funky` and `gfunky` commands. These commands
+have the same user interface, which is specified in the [Command-line
+Interface](#command-line-interface) section. The difference between the two
+commands is treated in the [Local vs Global](#local-vs-global) section.
 
 ### Local vs Global
 
-**Local** funks are stored using a hidden database file that is located in the same directory
-where the funk was created. These can be manipulated using the action command options described
-above. Once created, a local funk can be used just like any other command or normal funk---as
-long as you have activated the provided shell extension (see [Additional Install Steps](#additional-installation-steps)) and are
-inside of the directory where the local funk was originally defined.
+**Local** funks are stored using a hidden database file that is located in the
+same directory where the funk was created. These can be manipulated using the
+options described in the demo above (run `funky -h` for more information). Once
+created, a local funk can be used just like any other command or normal funk as
+long as you are inside of the directory where the local funk was originally
+defined.
 
-**Global** funks, on the other hand, are stored in your home directory (``/home/<user>``) and can
-be used from any directory. Local funks can be used to override global funk definitions.
+**Global** funks, on the other hand, are stored in your home directory
+(``/home/<user>``) and can be used from any directory. Local funks can be used
+to override global funk definitions.
 
-Local and global funks can be manipulated (created, removed, edited, renamed, etc.) by using the
-``funky`` and ``gfunky`` commands, respectively.
+Local and global funks can be manipulated (created, removed, edited, renamed,
+etc.) by using the ``funky`` and ``gfunky`` commands, respectively.
 
 ### Funk Definition Shortcuts
 
-Normally when defining a funk, the provided raw definition (the final contents of the temp file) is inserted directly into the generated function definition. However, funky does try to make some alterations to the original funk definition when doing so is convenient. These *funky definition shortcuts* can make defining funks faster:
+Normally when defining a funk, the provided raw definition (the final contents
+of the temp file) is inserted directly into the generated function definition.
+However, funky does try to make some alterations to the original funk
+definition when doing so is convenient. These *funky definition shortcuts* can
+make defining funks faster:
 
 #### Special `cd` Funks
 
