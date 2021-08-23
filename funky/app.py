@@ -94,11 +94,7 @@ def _get_argparser(verbose: bool = False) -> argparse.ArgumentParser:
     """Get command-line arguments.
 
     Args:
-        verbose (bool): If True, do not suppress the help output of any
-                        arguments.
-
-    Returns:
-        argparse.ArgumentParser object.
+        verbose: If True, do not suppress the help output of any arguments.
     """
     parser = argparse.ArgumentParser(prog="funky", description=funky.__doc__)
 
