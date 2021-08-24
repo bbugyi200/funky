@@ -45,7 +45,7 @@
 This package _could_ be installed using pip like any other Python package (in
 fact, see the section below this one for instructions). Given that we only need
 this package's entry points (e.g. the `funky` command), however, we recommend
-you use [pipx] instead (replace `SHELL` with either `bash` or `zsh`):
+that [pipx] be used instead (replace `SHELL` with either `bash` or `zsh`):
 
 ```shell
 # install and setup pipx
