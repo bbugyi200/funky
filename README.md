@@ -61,15 +61,15 @@ funky --setup-shell SHELL
 
 ### Using `pip` to Install
 
-To install funky, run the following commands in your terminal (replace `SHELL`
-with either `bash` or `zsh`):
+To install funky using [pip], run the following commands in your terminal
+(replace `SHELL` with either `bash` or `zsh`):
 
 ``` shell
 python3 -m pip install --user pyfunky  # install funky
 funky --setup-shell SHELL  # hook funky into your shell
 ```
 
-If you don't have [pip] installed, this [Python installation guide] can guide
+If you don't have pip installed, this [Python installation guide] can guide
 you through the process.
 
 [pip]: https://pip.pypa.io
