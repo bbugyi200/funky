@@ -80,13 +80,13 @@ you through the process.
 You can either clone the public repository:
 
 ``` shell
-$ git clone git://github.com/bbugyi200/funky
+git clone git://github.com/bbugyi200/funky
 ```
 
 Or download the [tarball]:
 
 ``` shell
-$ curl  -OL https://github.com/bbugyi200/funky/tarball/master
+curl  -OL https://github.com/bbugyi200/funky/tarball/master
 ```
 
 Once you have a copy of the source, you can install funky by running:
